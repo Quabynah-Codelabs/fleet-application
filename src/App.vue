@@ -11,10 +11,18 @@
 </template>
 <script>
 import { FadeTransition } from "vue2-transitions";
+import firebaseapp from './firebase/firebaseinit'
 
 export default {
   components: {
     FadeTransition
+  }, 
+  mounted() {
+    if (firebaseapp.auth.currentUser && this.$router.currentRoute.name !== 'dashboard') {
+      console.log('We are not on the dashboard page although the user is logged in correctly')
+    } else {
+      console.log('We are not logged in yet')
+    }
   }
 };
 </script>

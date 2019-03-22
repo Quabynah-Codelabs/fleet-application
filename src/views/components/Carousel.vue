@@ -11,11 +11,12 @@
         <div class="container py-0 pb-lg">
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-5 mb-5 mb-lg-0">
-                    <h1 class="text-white font-weight-light">Bootstrap carousel</h1>
-                    <p class="lead text-white mt-4">Argon Design System comes with four pre-built pages to help you get
-                        started faster. You can change the text and images and you're good to go.</p>
-                    <a href="https://demos.creative-tim.com/argon-design-system/docs/components/alerts.html"
-                       class="btn btn-white mt-4">See all components</a>
+                    <h1 class="text-white font-weight-light">{{ appTitle }}</h1>
+                    <p class="lead text-white mt-4">{{ appDesc }}</p>
+                    <a href="/login"
+                       class="btn btn-white mt-4">Get started</a>
+                       <a href="/register"
+                       class="btn btn-info mt-4">Create new Account</a>
                 </div>
                 <div class="col-lg-6 mb-lg-auto">
                     <div class="rounded shadow-lg overflow-hidden transform-perspective-right">
@@ -40,6 +41,12 @@ export default {
   components: {
     BCarousel,
     BCarouselSlide
+  },
+  data: () => {
+      return {
+          appTitle: 'Fleet Management System',
+          appDesc: "This is a demonstration of the implementation of a Fleet management System. The project is intended for testing purposes only and may be highly unstable."
+      }
   }
 };
 </script>
