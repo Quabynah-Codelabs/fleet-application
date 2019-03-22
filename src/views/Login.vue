@@ -19,52 +19,41 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
-                            </div>
-                            <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/google.svg">
-                                    Google
-                                </base-button>
+                                <h3>Sign in to get started</h3>
                             </div>
                         </template>
                         <template>
                             <div class="text-center text-muted mb-4">
-                                <small>Or sign in with credentials</small>
+                                <small>Enter your email and password below</small>
                             </div>
-                            <form role="form">
+                            <form role="form" @submit="login">
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Email"
+                                            v-model="form.email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
                                 <base-input alternative
                                             type="password"
+                                            v-model="form.password"
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
-                                <base-checkbox>
+                                <base-checkbox :checked="form.rememberMe">
                                     Remember me
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Sign In</base-button>
+                                    <base-button @click="login" type="default" class="my-4">Sign In</base-button>
                                 </div>
                             </form>
                         </template>
                     </card>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="#" class="text-light">
-                                <small>Forgot password?</small>
-                            </a>
+                           
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-light">
+                            <a href="/register" class="text-light">
                                 <small>Create new account</small>
                             </a>
                         </div>
@@ -72,10 +61,46 @@
                 </div>
             </div>
         </div>
+        
     </section>
 </template>
 <script>
-export default {};
+import firebaseapp from '../firebase/firebaseinit'
+
+export default {
+    name: 'login',
+    data() {
+        return {
+            form : {
+                email: '',
+                password: '',
+                rememberMe: false
+            }
+        }
+    },
+    mounted:() => {
+        
+    },
+    methods: {
+        login: (ev) => {
+            ev.preventDefault()
+            firebaseapp.auth.signInWithEmailAndPassword('demo@gmail.com','quabynah4')
+            .then((userInfo) => {
+                alert(`Logged in as ${userInfo.user.email}!`)
+                window.localStorage.setItem('fleet-uid',userInfo.user.uid)
+                window.location = '/dashboard'
+            }).catch((reason) => {
+                alert(reason.message)
+            })
+        }
+    },
+    mounted() {
+        if (window.localStorage.getItem('fleet-uid') != null) {
+            alert(`You are signed in already as ${firebaseapp.auth.currentUser.email}`)
+            window.location = '/dashboard'
+        }
+    }
+};
 </script>
 <style>
 </style>

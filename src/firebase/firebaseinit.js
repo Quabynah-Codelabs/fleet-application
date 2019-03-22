@@ -9,7 +9,6 @@ const app = firebase.app
 
 // Export firebase conponents
 export default {
-    firebaseapp: app,
     firestore: firebase.firestore(),
     auth: firebase.auth(),
     storage: firebase.storage()
