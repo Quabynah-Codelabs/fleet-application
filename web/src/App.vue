@@ -17,8 +17,7 @@ export default {
     FadeTransition
   },
   mounted() {
-    console.log(window.localStorage.getItem('fleet-uid'));
-    
+    console.log(window.localStorage.getItem('fleet-uid'))
   }
 };
 </script>

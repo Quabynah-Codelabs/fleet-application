@@ -14,7 +14,7 @@ import Carousel from "./components/Carousel";
 import Icons from "./components/Icons";
 import Examples from "./components/Examples";
 import DownloadSection from "./components/DownloadSection";
-import firebaseapp from '@/firebase/firebaseinit'
+// import firebaseapp from '@/firebase/firebaseinit'
 
 export default {
   name: "components",

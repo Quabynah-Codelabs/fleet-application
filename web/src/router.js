@@ -41,15 +41,15 @@ export default new Router({
         footer: AppFooter
       }
     },
-    // {
-    //   path: "/profile",
-    //   name: "profile",
-    //   components: {
-    //     header: AppHeader,
-    //     default: Profile,
-    //     footer: AppFooter
-    //   }
-    // },
+    {
+      path: "/profile",
+      name: "profile",
+      components: {
+        header: AppHeader,
+        default: Profile,
+        footer: AppFooter
+      }
+    },
     {
       path: "/dashboard",
       name: "dashboard",
