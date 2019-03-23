@@ -13,7 +13,7 @@ data class User(
     @PrimaryKey
     val key: String,
     val name: String?,
-    val email: String,
+    val email: String?,
     val photoUrl: String? = null,
     val token: String? = FirebaseInstanceId.getInstance().token,
     val timestamp: Long = System.currentTimeMillis()

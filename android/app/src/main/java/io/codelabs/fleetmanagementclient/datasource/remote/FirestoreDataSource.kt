@@ -1,10 +1,12 @@
 package io.codelabs.fleetmanagementclient.datasource.remote
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.fleetmanagementclient.model.User
+import io.codelabs.fleetmanagementclient.view.MainActivity
 import kotlinx.coroutines.launch
 
 object DatabaseReference {
@@ -96,6 +98,7 @@ fun RootActivity.storeUser(user: User, callback: FleetCallback<Void>) {
             if (it.isSuccessful) {
                 ioScope.launch {
                     dao.createUser(user)
+                    database.key = user.key
 
                     uiScope.launch {
                         callback.onSuccess(null)
@@ -110,4 +113,18 @@ fun RootActivity.storeUser(user: User, callback: FleetCallback<Void>) {
             callback.onError(it.localizedMessage)
             callback.onComplete()
         }
+}
+
+fun RootActivity.signOut() {
+    auth.signOut()
+    database.key = null
+    ioScope.launch {
+        val user = dao.getCurrentUser(database.key!!).value
+        if (user != null) dao.removeUser(user)
+
+        uiScope.launch {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finishAfterTransition()
+        }
+    }
 }

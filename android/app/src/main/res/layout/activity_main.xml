@@ -3,7 +3,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="user" type="io.codelabs.fleetmanagementclient.model.User"/>
-        
     </data>
     <io.codelabs.widget.ForegroundLinearLayout
             android:layout_width="match_parent" android:layout_height="match_parent"
@@ -28,7 +27,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign in to get started"
+                android:text="@string/sign_in_to_get_started"
                 android:paddingBottom="@dimen/padding_normal"
                 android:fontFamily="@font/merriweather_sans"
                 android:textColor="@color/text_secondary_dark"
@@ -44,9 +43,20 @@
                                                            app:icon="@drawable/googleg_standard_color_18"
                                                            android:layout_height="wrap_content"
                                                            app:iconPadding="@dimen/padding_normal"
-                                                           android:text="Login with Google"
-                                                           android:fontFamily="@font/merriweather_sans"
-                                                           android:id="@+id/google_sign_in"/>
+                                                           app:cornerRadius="@dimen/padding_normal"
+                                                           android:text="@string/login_with_google"
+                                                           android:onClick="googleLogin"
+                                                           android:visibility="@{user == null ? android.view.View.VISIBLE : android.view.View.GONE}"
+                                                           android:fontFamily="@font/merriweather_sans"/>
+
+        <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                           android:layout_height="wrap_content"
+                                                           app:cornerRadius="@dimen/padding_normal"
+                                                           app:iconPadding="@dimen/padding_normal"
+                                                           android:text="Go to Home page"
+                                                           android:onClick="startApp"
+                                                           android:visibility="@{user != null ? android.view.View.VISIBLE : android.view.View.GONE}"
+                                                           android:fontFamily="@font/merriweather_sans"/>
 
     </io.codelabs.widget.ForegroundLinearLayout>
 </layout>

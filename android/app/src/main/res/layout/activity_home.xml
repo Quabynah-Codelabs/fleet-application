@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="user" type="io.codelabs.fleetmanagementclient.model.User"/>
+    </data>
+    <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:orientation="vertical"
+                                               android:paddingBottom="@dimen/padding_normal">
+
+
+    </io.codelabs.widget.ForegroundLinearLayout>
+</layout>
