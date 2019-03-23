@@ -26,6 +26,7 @@ class UserDatabase constructor(ctx: Context) {
         get() = prefs.getString(USER_KEY, null)
         set(value) {
             field = value
+
             isLoggedIn = !key.isNullOrEmpty()
             prefs.edit {
                 putString(USER_KEY, value)

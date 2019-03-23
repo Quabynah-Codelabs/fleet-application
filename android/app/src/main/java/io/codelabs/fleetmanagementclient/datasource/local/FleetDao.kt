@@ -7,7 +7,7 @@ import io.codelabs.fleetmanagementclient.model.User
 
 @Dao
 interface FleetDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createUser(user: User)
 
     @Query("SELECT * FROM users WHERE `key` = :key")
@@ -20,7 +20,7 @@ interface FleetDao {
     fun removeUser(user: User)
 
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createOrder(vararg orders: Order)
 
     @Delete

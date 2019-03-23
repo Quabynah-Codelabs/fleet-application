@@ -81,6 +81,9 @@ class MainActivity : RootActivity() {
 
                                     override fun onSuccess(response: Void?) {
                                         binding.user = user
+                                        debugLog("Logged in user: ${binding.user}")
+                                        database.key = binding.user?.key
+
                                         showConfirmationToast(user.photoUrl, user.name ?: user.email!!)
                                     }
                                 })
