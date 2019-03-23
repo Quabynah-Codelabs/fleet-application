@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "242841878369",
+    "firebase_url": "https://fleet-mobile-app.firebaseio.com",
+    "project_id": "fleet-mobile-app",
+    "storage_bucket": "fleet-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242841878369:android:5e50dd2c3cc1b67d",
+        "android_client_info": {
+          "package_name": "io.codelabs.fleetmanagementclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242841878369-fcp5b1qkh688bib45h7766q0m8keov9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.codelabs.fleetmanagementclient",
+            "certificate_hash": "0098cdd131752fb12af8c85450d0fdc973e19769"
+          }
+        },
+        {
+          "client_id": "242841878369-7lg1ekilg2lpva41gc328q8sh4p0nhu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ9a4aBFrI857Z1Lxnz86UKSJjo2zoG6Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242841878369-7lg1ekilg2lpva41gc328q8sh4p0nhu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

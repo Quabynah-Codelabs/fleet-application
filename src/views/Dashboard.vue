@@ -24,8 +24,7 @@
                         <h3 class="mb-0">Order Details</h3>
                     </div>
                     <div class="col-4">
-                        <small class="mb-0">Logged in as {{ email }}</small>
-                        <base-button @click="signOut" type="default" class="my-4">Logout</base-button>
+                        <small class="mb-0">Logged in as <strong>{{ email }}</strong></small>
                     </div>
                 </div>
                 </div>
@@ -115,14 +114,6 @@ export default {
         }
     },
     methods: {
-        signOut: (ev) => {
-            if (firebaseapp.auth.currentUser != null) {
-                firebaseapp.auth.signOut().then(() => {
-                    window.localStorage.setItem('fleet-uid', null)
-                    window.location = '/'
-                })
-            }
-        },
         submitOrder: (ev) => {
             ev.preventDefault()
             var region = document.getElementById('input-region').value
