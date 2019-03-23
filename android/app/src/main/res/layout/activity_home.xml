@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="user" type="io.codelabs.fleetmanagementclient.model.User"/>
     </data>
-    <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
-                                               android:layout_height="match_parent"
-                                               android:orientation="vertical"
-                                               android:paddingBottom="@dimen/padding_normal">
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:id="@+id/container">
+
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:scrollbarStyle="outsideOverlay"
+                                                   android:scrollbars="vertical"
+                                                   android:id="@+id/grid"/>
 
 
-    </io.codelabs.widget.ForegroundLinearLayout>
+        <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                           android:layout_height="wrap_content"
+                                                           app:cornerRadius="@dimen/padding_normal"
+                                                           android:layout_gravity="bottom|end"
+                                                           android:layout_margin="@dimen/fab_margin"
+                                                           app:icon="@drawable/ic_work"
+                                                           android:text="Receive postal"
+                                                           android:textAllCaps="false"
+                                                           android:onClick="showOrderDialog"
+                                                           app:iconPadding="@dimen/spacing_normal"
+                                                           android:fontFamily="@font/merriweather_sans"/>
+
+
+    </FrameLayout>
 </layout>

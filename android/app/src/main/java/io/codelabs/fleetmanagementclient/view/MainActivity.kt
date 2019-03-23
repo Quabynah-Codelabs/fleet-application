@@ -39,8 +39,8 @@ class MainActivity : RootActivity() {
         }
 
         val gso = GoogleSignInOptions.Builder()
-            .requestEmail()
             .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
             .build()
 
         val client = GoogleSignIn.getClient(this@MainActivity, gso)
@@ -83,7 +83,6 @@ class MainActivity : RootActivity() {
                                         binding.user = user
                                         debugLog("Logged in user: ${binding.user}")
                                         database.key = binding.user?.key
-
                                         showConfirmationToast(user.photoUrl, user.name ?: user.email!!)
                                     }
                                 })
