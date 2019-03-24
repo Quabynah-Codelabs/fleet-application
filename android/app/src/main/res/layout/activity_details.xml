@@ -3,10 +3,10 @@
     <data>
         <variable name="order" type="io.codelabs.fleetmanagementclient.model.Order"/>
     </data>
-    <io.codelabs.widget.ForegroundLinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:fitsSystemWindows="true"
             android:id="@+id/container">
 
         <com.google.android.material.appbar.AppBarLayout android:layout_width="match_parent"
@@ -18,9 +18,19 @@
                                                android:layout_height="wrap_content"
                                                android:id="@+id/toolbar"
                                                app:navigationIcon="@drawable/ic_back_light"
-                                               app:title="@string/app_name"/>
+                                               app:title="@string/details"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-    </io.codelabs.widget.ForegroundLinearLayout>
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:id="@+id/content"
+                                                   app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

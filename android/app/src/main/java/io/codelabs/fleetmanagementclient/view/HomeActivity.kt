@@ -43,7 +43,7 @@ class HomeActivity : RootActivity() {
             override fun onSuccess(response: MutableList<Order>?) {
                 if (response != null) {
                     binding.loading.visibility = View.GONE
-                    
+
                     grid.setup {
                         withLayoutManager(LinearLayoutManager(this@HomeActivity))
                         withDataSource(dataSourceOf(response))
@@ -86,7 +86,7 @@ class HomeActivity : RootActivity() {
                 dialog.dismiss()
                 debugLog(sequence)
             }
-
+            cancelOnTouchOutside(false)
             title(text = "Receive Postal Order")
             positiveButton(text = "Verify") { materialDialog ->
                 materialDialog.dismiss()

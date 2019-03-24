@@ -13,11 +13,17 @@ data class Order(
     val key: String,
     val city: String,
     val region: String,
-    val item: String,
+    val item: String = Type.LETTER,
     val sender: String,
     val timestamp: Long = System.currentTimeMillis()
 ) : Parcelable {
 
     @Ignore
     constructor() : this("", "", "", "", "")
+
+    object Type {
+        const val LETTER = "letter"
+        const val PARCEL = "parcel"
+        const val EMS = "ems"
+    }
 }
