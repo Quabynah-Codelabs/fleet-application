@@ -6,9 +6,8 @@ firebase.initializeApp(config)
 
 // Export components
 export default {
-  app: firebase.app(),
-  auth: firebase.auth(firebase.app),
-  db: firebase.firestore(firebase.app),
-  storage: firebase.storage(firebase.app),
-  messaging: firebase.messaging(firebase.app)
+  auth: firebase.auth(),
+  db: firebase.firestore(),
+  storage: firebase.storage(),
+  messaging: firebase.messaging()
 }
