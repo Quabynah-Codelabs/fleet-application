@@ -36,17 +36,20 @@
                                             class="mb-3"
                                             placeholder="Name"
                                             v-model="username"
+                                            id="username"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             v-model="email"
+                                            id="email"
                                             placeholder="Email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
                                 <base-input alternative
                                             type="password"
                                             v-model="password"
+                                            id="password"
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
@@ -78,6 +81,7 @@
 </template>
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
+import validator from 'validator'
 
 export default {
     name: 'register',
@@ -92,7 +96,17 @@ export default {
     methods: {
         createAccount: (ev) => {
             ev.preventDefault()
+            
+            var username = document.getElementById('username').value
+            var email = document.getElementById('email').value
+            var password = document.getElementById('password').value
+
+            if (!validator.isEmail(email)) {
+                alert("Please enter a valid email address...")
+                return
+            }
             document.getElementById('overlay').style.display = "block"
+
         }
     },
     mounted() {

@@ -89,6 +89,7 @@
 
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
+
 export default {
     name: 'dashboard',
     props: {

@@ -58,7 +58,7 @@
                            
                         </div>
                         <div class="col-6 text-right">
-                            <a href="/register" class="text-light">
+                            <a href="/create" class="text-light">
                                 <small>Create new account</small>
                             </a>
                         </div>

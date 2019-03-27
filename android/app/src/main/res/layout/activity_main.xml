@@ -9,7 +9,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:background="@color/white"
-            android:padding="@dimen/spacing_large"
+            android:padding="@dimen/padding_large"
             tools:context=".view.MainActivity">
 
         <io.codelabs.widget.ForegroundImageView android:layout_width="match_parent"
