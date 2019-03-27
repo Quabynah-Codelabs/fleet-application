@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import firebaseapp from './components/firebase/firebaseinit'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./starterRouter";
+import Argon from "./plugins/argon-kit";
+import './registerServiceWorker'
 
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
+Vue.use(Argon);
 new Vue({
   router,
-  firebaseapp,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");

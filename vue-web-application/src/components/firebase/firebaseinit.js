@@ -1,13 +1,11 @@
 import firebase from 'firebase'
 import config from './config'
 
-// Initialize firebase instance
+// Initialize firebase
 firebase.initializeApp(config)
 
-// Export components
 export default {
-  auth: firebase.auth(),
-  db: firebase.firestore(),
-  storage: firebase.storage(),
-  messaging: firebase.messaging()
+    auth: firebase.app(),
+    firestore: firebase.firestore(),
+    storage: firebase.storage()
 }
