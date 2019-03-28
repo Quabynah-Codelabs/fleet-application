@@ -185,6 +185,11 @@ export default {
     mounted() {
         document.getElementById('overlay').style.display = "none"
 
+        // Get current user's login UID
+        if (window.localStorage.getItem('fleet-uid') != null) {
+            alert(`You are signed in already as ${firebaseapp.auth.currentUser.email}`)
+        }
+
         // Get all users and fill in the spaces
         firebaseapp.firestore.collection('fleet-users').get().then((response) => {
             response.forEach(doc => {

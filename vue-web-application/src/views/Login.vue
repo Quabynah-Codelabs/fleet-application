@@ -106,7 +106,7 @@ export default {
             firebaseapp.auth.signInWithEmailAndPassword(emailAddress,password)
             .then((userInfo) => {
                 document.getElementById('overlay').style.display = "none"
-                alert(`Logged in as ${userInfo.user.email}!`)
+                // alert(`Logged in as ${userInfo.user.email}!`)
                 window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
                 window.location = '/home'
             }).catch((reason) => {
