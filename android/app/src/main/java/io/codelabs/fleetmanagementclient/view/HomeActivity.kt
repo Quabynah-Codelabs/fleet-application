@@ -65,10 +65,10 @@ class HomeActivity : RootActivity() {
                                 this@HomeActivity.startActivity(
                                     Intent(
                                         this@HomeActivity,
-                                        OrderDetailsActivity::class.java
+                                        ItemDetailsActivity::class.java
                                     ).apply {
-                                        putExtra(OrderDetailsActivity.EXTRA_ORDER_ID, item.key)
-                                        putExtra(OrderDetailsActivity.EXTRA_ORDER, item)
+                                        putExtra(ItemDetailsActivity.EXTRA_ORDER_ID, item.key)
+                                        putExtra(ItemDetailsActivity.EXTRA_ORDER, item)
                                     })
                             }
                         }
@@ -97,8 +97,8 @@ class HomeActivity : RootActivity() {
             positiveButton(text = "Verify") { materialDialog ->
                 materialDialog.dismiss()
                 val orderId = getInputField().text.toString()
-                startActivity(Intent(this@HomeActivity, OrderDetailsActivity::class.java).apply {
-                    putExtra(OrderDetailsActivity.EXTRA_ORDER_ID, orderId)
+                startActivity(Intent(this@HomeActivity, ItemDetailsActivity::class.java).apply {
+                    putExtra(ItemDetailsActivity.EXTRA_ORDER_ID, orderId)
                 })
             }
         }

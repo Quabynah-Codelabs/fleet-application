@@ -13,7 +13,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.datasource.local.UserDatabase
-import io.codelabs.fleetmanagementclient.view.OrderDetailsActivity
+import io.codelabs.fleetmanagementclient.view.ItemDetailsActivity
 import io.codelabs.sdk.util.debugLog
 import java.util.*
 
@@ -35,9 +35,9 @@ class FleetMessagingService : FirebaseMessagingService() {
                 pushNotification(
                     "Request code received",
                     message ?: "",
-                    Intent(applicationContext, OrderDetailsActivity::class.java).apply {
-                        putExtra(OrderDetailsActivity.EXTRA_ORDER_ID, itemKey)
-                        putExtra(OrderDetailsActivity.EXTRA_ORDER_TYPE, type)
+                    Intent(applicationContext, ItemDetailsActivity::class.java).apply {
+                        putExtra(ItemDetailsActivity.EXTRA_ORDER_ID, itemKey)
+                        putExtra(ItemDetailsActivity.EXTRA_ORDER_TYPE, type)
                     }
                 )
             }

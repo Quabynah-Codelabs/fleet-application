@@ -16,7 +16,7 @@ import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
 
-class OrderDetailsActivity : RootActivity() {
+class ItemDetailsActivity : RootActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +75,7 @@ class OrderDetailsActivity : RootActivity() {
             }
 
             override fun onSuccess(response: Void?) {
-                debugLog("Order cleared")
+                debugLog("Item cleared")
                 toast("Thanks for working with us!")
             }
         })

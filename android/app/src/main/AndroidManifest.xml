@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.HomeActivity"/>
-        <activity android:name=".view.OrderDetailsActivity"/>
+        <activity android:name=".view.ItemDetailsActivity"/>
     </application>
 
 </manifest>

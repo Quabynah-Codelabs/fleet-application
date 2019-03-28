@@ -89,7 +89,6 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-sender">Recipient</label>
                                         <select id="input-recipient" v-model="recipient" class="form-control form-control-alternative" placeholder="Full Name" type="text">
-                                            <option>Dennis Bilson</option>
                                             <option v-for="(user, index) in users" :key="index">{{ user.name }}</option>
                                         </select>
                                     </div>
@@ -125,10 +124,10 @@ export default {
     name: 'home',
     data() {
         return {
-            email: firebaseapp.auth.currentUser ? firebaseapp.auth.currentUser.email : 'quabynahdennis@gmail.com',
+            email: '',
             region: '',
             city: '',
-            sender: firebaseapp.auth.currentUser ? firebaseapp.auth.currentUser.displayName : 'Dennis Kwabena Bilson',
+            sender: '',
             recipient: '',
             itemType: '',
             duration: 2,
@@ -185,16 +184,32 @@ export default {
     mounted() {
         document.getElementById('overlay').style.display = "none"
 
+        if (window.localStorage.getItem('fleet-uid') === null) {
+            alert("You need to be logged in first")
+            window.location = '/'
+            return
+        }
+
         // Get current user's login UID
         if (window.localStorage.getItem('fleet-uid') != null) {
-            alert(`You are signed in already as ${firebaseapp.auth.currentUser.email}`)
+            firebaseapp.firestore.collection('fleet-admin')
+            .doc(window.localStorage.getItem('fleet-uid')).get().then((response) => {
+                if (response.exists) {
+                    // Get data, if any
+                    var data = response.data()
+                    this.email = data.email
+                    this.sender = data.name
+                }
+            }).catch((reason) => {
+                alert(reason.message)
+            })
         }
 
         // Get all users and fill in the spaces
         firebaseapp.firestore.collection('fleet-users').get().then((response) => {
             response.forEach(doc => {
                 console.log(doc.data().email)
-                self.data.users.push(doc.data())
+                this.users.push(doc.data())
             })
             console.log(`Users: ${users}`)
         }).catch((reason) => {
