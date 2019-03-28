@@ -1,5 +1,7 @@
 package io.codelabs.fleetmanagementclient.core
 
+import android.content.ClipboardManager
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import io.codelabs.fleetmanagementclient.datasource.local.FleetDao
@@ -14,4 +16,10 @@ abstract class RootActivity : BaseActivity() {
     val firestore: FirebaseFirestore by inject { parametersOf(application as FleetApplication) }
     val database: UserDatabase by inject { parametersOf(application as FleetApplication) }
     val dao: FleetDao by inject { parametersOf(application as FleetApplication) }
+    lateinit var clipboardManager: ClipboardManager
+
+    override fun onStart() {
+        super.onStart()
+        clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
 }

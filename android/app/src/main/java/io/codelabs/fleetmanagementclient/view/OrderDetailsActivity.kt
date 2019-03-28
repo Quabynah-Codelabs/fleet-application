@@ -1,5 +1,6 @@
 package io.codelabs.fleetmanagementclient.view
 
+import android.content.ClipData
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -54,6 +55,12 @@ class OrderDetailsActivity : RootActivity() {
 
     private fun bindUI() {
         debugLog(binding.order)
+    }
+
+    fun copyCode(v: View?) {
+        val clipData = ClipData.newPlainText("Copy item code...", binding.order?.key)
+        clipboardManager.primaryClip = clipData
+        toast("Code copied")
     }
 
     fun receiveOrder(v: View?) {

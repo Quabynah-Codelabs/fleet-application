@@ -82,8 +82,13 @@ class HomeActivity : RootActivity() {
     }
 
     fun showOrderDialog(v: View?) {
+        debugLog("Copied text: ${clipboardManager.primaryClip?.getItemAt(0)?.text}")
         MaterialDialog(this@HomeActivity).show {
-            input(hint = "Order ID", inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS) { dialog, sequence ->
+            input(
+                hint = "Order ID",
+                prefill = clipboardManager.primaryClip?.getItemAt(0)?.text.toString(),
+                inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            ) { dialog, sequence ->
                 dialog.dismiss()
                 debugLog(sequence)
             }

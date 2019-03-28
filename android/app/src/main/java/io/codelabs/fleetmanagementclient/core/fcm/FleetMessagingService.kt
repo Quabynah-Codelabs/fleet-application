@@ -28,6 +28,8 @@ class FleetMessagingService : FirebaseMessagingService() {
             val type = data["type"]
             val message = data["message"]
 
+            createNotificationChannel(data["type"] ?: getString(R.string.app_name))
+
             val database = UserDatabase.getInstance(applicationContext)
             if (database.isLoggedIn) {
                 pushNotification(

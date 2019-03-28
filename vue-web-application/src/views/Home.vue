@@ -89,6 +89,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-sender">Recipient</label>
                                         <select id="input-recipient" v-model="recipient" class="form-control form-control-alternative" placeholder="Full Name" type="text">
+                                            <option>Dennis Bilson</option>
                                             <option v-for="(user, index) in users" :key="index">{{ user.name }}</option>
                                         </select>
                                     </div>
