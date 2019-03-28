@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.2.0'
     implementation 'com.google.firebase:firebase-firestore:18.1.0'
+    implementation 'com.google.firebase:firebase-messaging:17.5.0'
 
     // Dialogs
     implementation 'com.afollestad.material-dialogs:core:2.4.0'
@@ -69,7 +70,6 @@ dependencies {
     implementation "androidx.room:room-coroutines:$room"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle"
 
-//    implementation 'com.afollestad:assent:2.2.3'
     implementation 'com.afollestad:recyclical:0.5.1'
 }
 apply plugin: 'com.google.gms.google-services'

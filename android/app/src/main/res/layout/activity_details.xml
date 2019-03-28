@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <data>
         <variable name="order" type="io.codelabs.fleetmanagementclient.model.Order"/>
     </data>
@@ -22,14 +23,26 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:id="@+id/content"
-                                                   app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:id="@+id/content"
+                     android:layout_marginTop="?attr/actionBarSize">
+
+            <include android:id="@+id/loading"
+                     layout="@layout/loading"
+                     android:visibility="@{order == null ? android.view.View.VISIBLE : android.view.View.GONE}"/>
 
 
+            <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                       android:layout_height="match_parent"
+                                                       android:visibility="@{order == null ? android.view.View.GONE : android.view.View.VISIBLE}"
+                                                       android:orientation="vertical">
 
-        </io.codelabs.widget.ForegroundLinearLayout>
+                
+
+            </io.codelabs.widget.ForegroundLinearLayout>
+
+        </FrameLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

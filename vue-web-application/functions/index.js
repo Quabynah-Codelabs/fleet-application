@@ -14,7 +14,8 @@ exports.sendNotification = functions.firestore.document('fleet-orders/{key}').on
                 return admin.messaging().sendToDevice(doc.data().token, {
                     data: {
                         itemKey: key,
-                        type: 'Order Item'
+                        type: 'Order Item',
+                        message: `Your item code is\n ${doc.id}.\nYou need it in order to verify your request when it arrives. Thank you`
                     }
                 }).then(() => {
                     return console.log('Notification sent to all users');
