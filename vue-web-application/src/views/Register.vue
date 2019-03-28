@@ -110,7 +110,7 @@ export default {
 
                 firebaseapp.auth.createUserWithEmailAndPassword(email,password)
                 .then((userInfo) => {
-                   firebaseapp.firestore.collection('fleet-users').doc().set({
+                   firebaseapp.firestore.collection('fleet-admin').doc().set({
                        key: `${firebaseapp.auth.currentUser.uid}`,
                        name: username,
                        email: email,

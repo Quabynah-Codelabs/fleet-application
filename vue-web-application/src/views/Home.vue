@@ -35,7 +35,7 @@
                             <h6 class="heading-small text-muted mb-4">Location &amp; Address</h6>
                             <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-region">Region</label>
                                     <!-- <input type="text" id="input-region" v-model="region" class="form-control form-control-alternative" placeholder="Ashanti Region"> -->
@@ -43,16 +43,34 @@
                                         <option>Greater Accra</option>
                                         <option>Central Region</option>
                                         <option>Eastern Region</option>
+                                        <option>Brong-Ahafo Region</option>
                                         <option>Western Region</option>
                                         <option>Volta Region</option>
+                                        <option>Upper-East Region</option>
+                                        <option>Upper-West Region</option>
+                                        <option>Northern Region</option>
+                                        <option>Ashanti Region</option>
                                     </select>
                                 </div>
                                 </div>
-                                <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-city">City</label>
-                                    <input type="text" id="input-city" v-model="city" class="form-control form-control-alternative" placeholder="Bantama">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">City</label>
+                                        <input type="text" id="input-city" v-model="city" class="form-control form-control-alternative" placeholder="Destination Name">
+                                    </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-duration">Duration (in days)</label>
+                                        <!-- <input type="number" id="input-duration" v-model="duration" class="form-control form-control-alternative" placeholder="" disabled> -->
+                                        <select name="duration" id="input-duration" class="form-control" v-model="duration">
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>7</option>
+                                            <option>14</option>
+                                            <option>21</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -80,8 +98,9 @@
                                     <label class="form-control-label" for="input-item">Item Type</label>
                                     <!-- <input type="text" id="input-item" v-model="itemType" class="form-control form-control-alternative" placeholder="Letter"> -->
                                     <select name="region" id="input-item" class="form-control" v-model="itemType">
-                                        <option>Letter</option>
+                                        <option selected="selected">Letter</option>
                                         <option>Parcel</option>
+                                        <option>EMS</option>
                                     </select>
                                 </div>
                                 </div>
@@ -103,18 +122,16 @@ import validator from 'validator'
 
 export default {
     name: 'home',
-    props : {
-        email: 'quabynahdennis@gmail.com',
-        region: '',
-        city: '',
-        sender: 'Dennis Bilson',
-        recipient: 'sdfsfsdn',
-        itemType: '',
-        users: []
-    },
     data() {
         return {
-            
+            email: firebaseapp.auth.currentUser ? firebaseapp.auth.currentUser.email : 'quabynahdennis@gmail.com',
+            region: '',
+            city: '',
+            sender: firebaseapp.auth.currentUser ? firebaseapp.auth.currentUser.displayName : 'Dennis Kwabena Bilson',
+            recipient: '',
+            itemType: '',
+            duration: 2,
+            users: []
         }
     },
     methods: {
@@ -152,7 +169,6 @@ export default {
                 spinner.style.display = "none"
                 alert("Request sent successfully with code: " + code)
             
-
                 // Reset fields
                 document.getElementById('input-region').value = ""
                 document.getElementById('input-city').value = ""
@@ -167,6 +183,7 @@ export default {
     mounted() {
         document.getElementById('overlay').style.display = "none"
 
+        // Get all users and fill in the spaces
         firebaseapp.firestore.collection('fleet-users').get().then((response) => {
             response.forEach(doc => {
                 console.log(doc.data().email)

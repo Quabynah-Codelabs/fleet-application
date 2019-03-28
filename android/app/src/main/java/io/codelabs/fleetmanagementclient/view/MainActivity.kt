@@ -27,6 +27,7 @@ class MainActivity : RootActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if (database.isLoggedIn) dao.getCurrentUser(database.key!!).observe(this@MainActivity, Observer {
             binding.user = it
+            binding.homeButton.text = String.format(getString(R.string.signed_in_as), it.name ?: it.email)
             debugLog("Current user: $it")
         })
     }
@@ -61,7 +62,7 @@ class MainActivity : RootActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
-                toast("User is signed in successfully. Fetching data")
+                toast("User is signed in successfully. Fetching data...")
                 auth.signInWithCredential(GoogleAuthProvider.getCredential(account?.idToken, null))
                     .addOnCompleteListener(this) {
                         if (it.isSuccessful) {
@@ -82,6 +83,7 @@ class MainActivity : RootActivity() {
                                     override fun onSuccess(response: Void?) {
                                         binding.user = user
                                         debugLog("Logged in user: ${binding.user}")
+                                        binding.homeButton.text = String.format(getString(R.string.signed_in_as), user.name ?: user.email)
                                         database.key = binding.user?.key
                                         showConfirmationToast(user.photoUrl, user.name ?: user.email!!)
                                     }

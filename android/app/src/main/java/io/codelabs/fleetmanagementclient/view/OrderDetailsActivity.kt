@@ -1,6 +1,7 @@
 package io.codelabs.fleetmanagementclient.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -8,9 +9,11 @@ import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.databinding.ActivityDetailsBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
+import io.codelabs.fleetmanagementclient.datasource.remote.clearOrder
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrderById
 import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.sdk.util.debugLog
+import io.codelabs.sdk.util.toast
 
 class OrderDetailsActivity : RootActivity() {
     private lateinit var binding: ActivityDetailsBinding
@@ -51,6 +54,25 @@ class OrderDetailsActivity : RootActivity() {
 
     private fun bindUI() {
         debugLog(binding.order)
+    }
+
+    fun receiveOrder(v: View?) {
+        // Clear the user's order
+        clearOrder(binding.order!!.key, object : FleetCallback<Void> {
+            override fun onStart() {
+                toast("Clearing your item...")
+            }
+
+            override fun onError(e: String?) {
+                toast(e)
+            }
+
+            override fun onSuccess(response: Void?) {
+                debugLog("Order cleared")
+                toast("Thanks for working with us!")
+            }
+        })
+        finishAfterTransition()
     }
 
     companion object {

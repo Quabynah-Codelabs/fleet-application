@@ -7,9 +7,9 @@
 
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">
-                    <a href="../index.html">
+                    <!-- <a href="../index.html">
                         <img src="img/brand/blue.png">
-                    </a>
+                    </a> -->
                 </div>
                 <div class="col-6 collapse-close">
                     <close-button @click="closeMenu"></close-button>

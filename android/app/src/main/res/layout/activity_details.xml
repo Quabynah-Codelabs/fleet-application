@@ -13,6 +13,7 @@
         <com.google.android.material.appbar.AppBarLayout android:layout_width="match_parent"
                                                          android:layout_height="?attr/actionBarSize"
                                                          android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                                                         android:backgroundTint="?attr/colorSecondary"
                                                          android:id="@+id/app_bar">
 
             <androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
@@ -38,7 +39,56 @@
                                                        android:visibility="@{order == null ? android.view.View.GONE : android.view.View.VISIBLE}"
                                                        android:orientation="vertical">
 
-                
+                <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         app:icon="@drawable/ic_build"
+                                                                         app:title="@string/code"
+                                                                         app:widget="@layout/copy"
+                                                                         app:summary="@{order.key}"/>
+
+                <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         app:icon="@drawable/ic_share_live_location"
+                                                                         app:title="@string/city"
+                                                                         app:summary="@{order.city}"/>
+
+
+                <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         app:icon="@drawable/ic_share_location"
+                                                                         app:title="@string/region"
+                                                                         app:summary="@{order.region}"/>
+
+               <!-- <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
+                                                         android:layout_height="wrap_content"
+                                                         android:gravity="start"
+                                                         android:paddingTop="@dimen/padding_normal"
+                                                         android:paddingStart="@dimen/padding_normal"
+                                                         android:paddingEnd="@dimen/padding_normal"
+                                                         android:textColor="?attr/colorSecondary"
+                                                         android:text="@string/sender"
+                                                         android:layout_marginTop="@dimen/spacing_large"
+                                                         android:textAllCaps="true"/>
+
+                <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
+                                                                         android:layout_height="wrap_content"
+                                                                         app:icon="@drawable/ic_build"
+                                                                         app:title="@string/code"
+                                                                         app:widget="@layout/copy"
+                                                                         app:summary="@{order.key}"/>-->
+
+                <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                                   android:layout_height="wrap_content"
+                                                                   app:cornerRadius="@dimen/padding_normal"
+                                                                   android:layout_gravity="center_horizontal"
+                                                                   android:layout_marginEnd="@dimen/fab_margin"
+                                                                   android:layout_marginTop="@dimen/spacing_xxlarge"
+                                                                   app:icon="@drawable/ic_payment"
+                                                                   android:text="@string/make_payment"
+                                                                   android:textAllCaps="false"
+                                                                   android:onClick="receiveOrder"
+                                                                   app:iconPadding="@dimen/spacing_normal"
+                                                                   android:fontFamily="@font/merriweather_sans"/>
 
             </io.codelabs.widget.ForegroundLinearLayout>
 

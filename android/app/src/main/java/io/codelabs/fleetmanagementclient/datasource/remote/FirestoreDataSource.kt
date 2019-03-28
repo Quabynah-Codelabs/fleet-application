@@ -2,6 +2,7 @@ package io.codelabs.fleetmanagementclient.datasource.remote
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
+import com.google.firebase.iid.FirebaseInstanceId
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.model.Order
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 object DatabaseReference {
     const val ORDERS_REF = "fleet-orders"
     const val USERS_REF = "fleet-users"
+    const val ADMIN_REF = "fleet-admin"
 }
 
 /**
@@ -62,6 +64,23 @@ fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
     }
 }
 
+fun RootActivity.clearOrder(key: String, callback: FleetCallback<Void>) {
+    callback.onStart()
+    firestore.document(String.format("%s/%s", DatabaseReference.ORDERS_REF, key))
+        .delete()
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                callback.onSuccess(null)
+            } else {
+                callback.onError(it.exception?.localizedMessage)
+            }
+            callback.onComplete()
+        }.addOnFailureListener {
+            callback.onError(it.localizedMessage)
+            callback.onComplete()
+        }
+}
+
 fun RootActivity.getCurrentUser(callback: FleetCallback<User>) {
     callback.onStart()
     firestore.collection(DatabaseReference.ORDERS_REF).document(auth.uid ?: database.key!!)
@@ -74,7 +93,7 @@ fun RootActivity.getCurrentUser(callback: FleetCallback<User>) {
 
             val user = snapshot?.toObject(User::class.java)
             if (user == null) {
-                callback.onError("Order with key: ${database.key} cannot be found")
+                callback.onError("User with id: ${database.key} cannot be found")
                 callback.onComplete()
                 return@addSnapshotListener
             } else {
@@ -87,6 +106,51 @@ fun RootActivity.getCurrentUser(callback: FleetCallback<User>) {
                         callback.onComplete()
                     }
                 }
+            }
+        }
+}
+
+fun RootActivity.getAdminById(key: String, callback: FleetCallback<User>) {
+    callback.onStart()
+    firestore.collection(DatabaseReference.ADMIN_REF).document(key)
+        .addSnapshotListener(this) { snapshot, exception ->
+            if (exception != null) {
+                callback.onError(exception.localizedMessage)
+                callback.onComplete()
+                return@addSnapshotListener
+            }
+
+            val user = snapshot?.toObject(User::class.java)
+            if (user == null) {
+                callback.onError("Admin not found")
+                callback.onComplete()
+                return@addSnapshotListener
+            } else {
+                callback.onSuccess(user)
+                callback.onComplete()
+            }
+        }
+}
+
+fun RootActivity.updateUser(callback: FleetCallback<Void>?) {
+    callback?.onStart()
+    val instanceId = FirebaseInstanceId.getInstance()
+    firestore.document(String.format(DatabaseReference.USERS_REF, auth.uid ?: database.key))
+        .update(
+            mapOf<String, Any?>(
+                "token" to instanceId.token,
+                "createdAt" to instanceId.creationTime,
+                "instanceId" to instanceId.id
+            )
+        ).addOnFailureListener {
+            callback?.onError(it.localizedMessage)
+            callback?.onComplete()
+        }.addOnCompleteListener {
+            if (it.isSuccessful) {
+
+            } else {
+                callback?.onError(it.exception?.localizedMessage)
+                callback?.onComplete()
             }
         }
 }

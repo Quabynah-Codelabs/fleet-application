@@ -19,6 +19,7 @@ import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.databinding.ActivityHomeBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrders
+import io.codelabs.fleetmanagementclient.datasource.remote.updateUser
 import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.fleetmanagementclient.view.recyclerview.OrderViewHolder
 import io.codelabs.sdk.util.debugLog
@@ -96,5 +97,10 @@ class HomeActivity : RootActivity() {
                 })
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (database.isLoggedIn) updateUser(null)
     }
 }

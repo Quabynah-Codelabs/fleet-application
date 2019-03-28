@@ -51,6 +51,7 @@
                                                            app:cornerRadius="@dimen/padding_normal"
                                                            android:text="@string/login_with_google"
                                                            android:onClick="googleLogin"
+                                                           android:textAllCaps="false"
                                                            android:visibility="@{user == null ? android.view.View.VISIBLE : android.view.View.GONE}"
                                                            android:fontFamily="@font/merriweather_sans"/>
 
@@ -58,7 +59,9 @@
                                                            android:layout_height="wrap_content"
                                                            app:cornerRadius="@dimen/padding_normal"
                                                            app:iconPadding="@dimen/padding_normal"
-                                                           android:text="Go to Home page"
+                                                           android:textAllCaps="false"
+                                                           android:id="@+id/home_button"
+                                                           android:text="@string/signed_in_as"
                                                            android:onClick="startApp"
                                                            android:visibility="@{user != null ? android.view.View.VISIBLE : android.view.View.GONE}"
                                                            android:fontFamily="@font/merriweather_sans"/>
