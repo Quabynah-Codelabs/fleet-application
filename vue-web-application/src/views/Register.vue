@@ -104,8 +104,34 @@ export default {
             if (!validator.isEmail(email)) {
                 alert("Please enter a valid email address...")
                 return
+            } else if (username != '' && password != '') {
+                
+                document.getElementById('overlay').style.display = "block"
+
+                firebaseapp.auth.createUserWithEmailAndPassword(email,password)
+                .then((userInfo) => {
+                   firebaseapp.firestore.collection('fleet-users').doc().set({
+                       key: `${firebaseapp.auth.currentUser.uid}`,
+                       name: username,
+                       email: email,
+                       photoUrl: `${firebaseapp.auth.currentUser.photoUrl}`,
+                       token: null,
+                       timestamp: `${new Date().getTime()}`,
+                       role: 'admin'
+                   }).then(() => {
+                        document.getElementById('overlay').style.display = "none"
+                        alert(`Logged in as ${userInfo.user.email}!`)
+                        window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
+                        window.location = '/home'
+                   })
+                }).catch((reason) => {
+                    document.getElementById('overlay').style.display = "none"
+                    alert(reason.message)
+                })
+            } else {
+                alert("Please enter a valid username and password")
             }
-            document.getElementById('overlay').style.display = "block"
+            
 
         }
     },

@@ -36,12 +36,14 @@
                                             class="mb-3"
                                             placeholder="Email"
                                             v-model="form.email"
+                                            id="email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
                                 <base-input alternative
                                             type="password"
                                             v-model="form.password"
                                             placeholder="Password"
+                                            id="password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
                                 <base-checkbox :checked="form.rememberMe">
@@ -71,6 +73,7 @@
 </template>
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
+import validator from 'validator'
 
 export default {
     name: 'login',
@@ -86,14 +89,26 @@ export default {
     methods: {
         login: (ev) => {
             ev.preventDefault()
-            document.getElementById('overlay').style.display = "block"
 
-            firebaseapp.auth.signInWithEmailAndPassword('demo@gmail.com','quabynah4')
+            var emailAddress = document.getElementById('email').value
+            var password = document.getElementById('password').value
+
+            if (!validator.isEmail(emailAddress)) {
+                alert("Please enter a valid email address...")
+                return
+            } else if (validator.isEmpty(password)) {
+                alert("Please enter a valid password...")
+                return
+            }
+
+
+            document.getElementById('overlay').style.display = "block"
+            firebaseapp.auth.signInWithEmailAndPassword(emailAddress,password)
             .then((userInfo) => {
                 document.getElementById('overlay').style.display = "none"
                 alert(`Logged in as ${userInfo.user.email}!`)
-                window.localStorage.setItem('fleet-uid',userInfo.user.uid)
-                window.location = '/dashboard'
+                window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
+                window.location = '/home'
             }).catch((reason) => {
                 document.getElementById('overlay').style.display = "none"
                 alert(reason.message)

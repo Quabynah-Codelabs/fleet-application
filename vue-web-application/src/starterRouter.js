@@ -5,6 +5,7 @@ import Footer from "./layout/starter/StarterFooter";
 import Starter from "./views/Starter.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
+import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
@@ -35,6 +36,15 @@ export default new Router({
       components: {
         header: Header,
         default: Register,
+        footer: Footer
+      }
+    },
+    {
+      path: "/home",
+      name: "home",
+      components: {
+        header: Header,
+        default: Home,
         footer: Footer
       }
     }
