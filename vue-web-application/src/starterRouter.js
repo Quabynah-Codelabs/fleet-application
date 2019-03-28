@@ -6,6 +6,7 @@ import Starter from "./views/Starter.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Home from "./views/Home.vue";
+import Dashboard from "./views/Dashboard.vue";
 
 Vue.use(Router);
 
@@ -45,6 +46,15 @@ export default new Router({
       components: {
         header: Header,
         default: Home,
+        footer: Footer
+      }
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      components: {
+        header: Header,
+        default: Dashboard,
         footer: Footer
       }
     }

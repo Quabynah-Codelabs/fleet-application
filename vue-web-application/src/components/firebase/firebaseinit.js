@@ -5,7 +5,7 @@ import config from './config'
 firebase.initializeApp(config)
 
 export default {
-    auth: firebase.app(),
+    auth: firebase.auth(),
     firestore: firebase.firestore(),
     storage: firebase.storage()
 }

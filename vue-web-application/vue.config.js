@@ -11,10 +11,10 @@ module.exports = {
   },
   pwa: {
     name: 'Domestic Test Transmission',
-    themeColor: '#172b4d',
-    msTileColor: '#172b4d',
+    themeColor: '#212121',
+    msTileColor: '#212121',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: '#172b4d'
+    appleMobileWebAppStatusBarStyle: '#212121'
   },
   css: {
     // Enable CSS source maps.

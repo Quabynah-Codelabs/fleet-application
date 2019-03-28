@@ -53,11 +53,6 @@
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
-                                <base-checkbox :checked="isPrivacyChecked">
-                                    <span>I agree with the
-                                        <a href="#">Privacy Policy</a>
-                                    </span>
-                                </base-checkbox>
                                 <div class="text-center">
                                     <base-button type="default" @click="createAccount" class="my-4">Create account</base-button>
                                 </div>
@@ -89,8 +84,7 @@ export default {
         return {
             email: '',
             password: '',
-            username: '',
-            isPrivacyChecked: false
+            username: ''
         }
     },
     methods: {
@@ -110,7 +104,7 @@ export default {
 
                 firebaseapp.auth.createUserWithEmailAndPassword(email,password)
                 .then((userInfo) => {
-                   firebaseapp.firestore.collection('fleet-admin').doc().set({
+                   firebaseapp.firestore.collection('fleet-admin').doc(firebaseapp.auth.currentUser.uid).set({
                        key: `${firebaseapp.auth.currentUser.uid}`,
                        name: username,
                        email: email,
