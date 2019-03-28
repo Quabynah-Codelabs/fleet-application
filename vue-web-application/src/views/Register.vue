@@ -115,7 +115,7 @@ export default {
                    }).then(() => {
                         document.getElementById('overlay').style.display = "none"
                         window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
-                        window.location = '/home'
+                        window.location = '/dashboard'
                    })
                 }).catch((reason) => {
                     document.getElementById('overlay').style.display = "none"

@@ -108,7 +108,7 @@ export default {
                 document.getElementById('overlay').style.display = "none"
                 // alert(`Logged in as ${userInfo.user.email}!`)
                 window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
-                window.location = '/home'
+                window.location = '/dashboard'
             }).catch((reason) => {
                 document.getElementById('overlay').style.display = "none"
                 alert(reason.message)
