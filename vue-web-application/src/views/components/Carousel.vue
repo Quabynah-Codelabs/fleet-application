@@ -15,7 +15,7 @@
                     <p class="lead text-white mt-4">{{ appDesc }}</p>
                     <a href="/login"
                        class="btn btn-white mt-4">Get started</a>
-                       <a href="/register"
+                       <a href="/create"
                        class="btn btn-info mt-4">Create new Account</a>
                 </div>
                 <div class="col-lg-6 mb-lg-auto">

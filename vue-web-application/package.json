@@ -1,6 +1,6 @@
 {
-  "name": "vue-argon-design-system",
-  "version": "0.1.0",
+  "name": "domestic-test-transmission-system",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

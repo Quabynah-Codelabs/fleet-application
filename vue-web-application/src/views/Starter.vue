@@ -1,10 +1,17 @@
 <template>
     <div>
-        Hello World
+        <carousel></carousel>
     </div>
 </template>
 <script>
-export default {};
+import Carousel from "./components/Carousel";
+
+export default {
+    name: "starter",
+    components: {
+        Carousel
+    }
+};
 </script>
 <style>
 </style>

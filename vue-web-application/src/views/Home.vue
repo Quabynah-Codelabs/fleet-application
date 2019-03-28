@@ -23,7 +23,7 @@
                         <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Order Details</h3>
+                                <h3 class="mb-0">Item Details</h3>
                             </div>
                             <div class="col-4">
                                 <small class="mb-0">Logged in as <strong>{{ email }}</strong></small>
@@ -173,8 +173,9 @@ export default {
                 // Reset fields
                 document.getElementById('input-region').value = ""
                 document.getElementById('input-city').value = ""
-                document.getElementById('input-sender').value = ""
+                document.getElementById('input-duration').value = ""
                 document.getElementById('input-item').value = ""
+                document.getElementById('input-recipient').value = ""
             }).catch((reason) => {
                 spinner.style.display = "none"
                 alert(reason.message)
