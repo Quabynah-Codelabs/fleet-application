@@ -1,12 +1,17 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Header from "./layout/starter/StarterHeader";
+import AppHeader from "./layout/AppHeader";
+import AppFooter from "./layout/AppFooter";
 import Footer from "./layout/starter/StarterFooter";
 import Starter from "./views/Starter.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Home from "./views/Home.vue";
 import Dashboard from "./views/Dashboard.vue";
+import ItemDetails from "./views/ItemDetails.vue";
+import Components from "./views/Components.vue";
+import NotFound from "./views/NotFoundPage.vue"
 
 Vue.use(Router);
 
@@ -41,22 +46,44 @@ export default new Router({
       }
     },
     {
-      path: "/home",
+      path: "/upload",
       name: "home",
       components: {
-        header: Header,
+        header: AppHeader,
         default: Home,
-        footer: Footer
+        footer: AppFooter
       }
     },
     {
       path: "/dashboard",
       name: "dashboard",
       components: {
-        header: Header,
+        header: AppHeader,
         default: Dashboard,
-        footer: Footer
+        footer: AppFooter
       }
+    },
+    {
+      path: "/details",
+      name: "details",
+      components: {
+        header: AppHeader,
+        default: ItemDetails,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/demo",
+      name: "components",
+      components: {
+        header: AppHeader,
+        default: Components,
+        footer: AppFooter
+      }
+    },
+    { 
+      path: "*", 
+      component: NotFound
     }
   ]
 });

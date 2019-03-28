@@ -213,7 +213,7 @@ export default {
             })
             console.log(`Users: ${users}`)
         }).catch((reason) => {
-            alert(reason.message)
+            // alert(reason.message)
         })
     }
 };

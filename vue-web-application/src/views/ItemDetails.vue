@@ -1,0 +1,75 @@
+<template>
+    <section class="section section-shaped section-lg my-0">
+        <div class="shape shape-style-1 bg-gradient-default">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container">
+             <!-- Spinner -->
+                <div id="overlay">
+                    <div class="spinner"></div>
+                </div>
+            <!-- Spinner End -->
+
+            
+        </div>
+    </section>
+</template>
+
+<script>
+import firebaseapp from '../components/firebase/firebaseinit'
+
+export default {
+    name: 'details',
+    data() {
+        return {
+
+        }
+    },
+    mounted() {
+        document.getElementById('overlay').style.display = "none"
+    }
+}
+</script>
+
+<style scoped>
+.spinner {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #f3f3f3;
+    border-top: 3px solid #1A385B;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(245, 237, 237, 0.8);
+    z-index: 9999;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+</style>

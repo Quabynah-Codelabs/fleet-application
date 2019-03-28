@@ -2,6 +2,7 @@ package io.codelabs.fleetmanagementclient.datasource.remote
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
+import com.google.firebase.firestore.Query
 import com.google.firebase.iid.FirebaseInstanceId
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
@@ -21,23 +22,25 @@ object DatabaseReference {
  */
 fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
     callback.onStart()
-    firestore.collection(DatabaseReference.ORDERS_REF).addSnapshotListener(this) { snapshot, exception ->
-        if (exception != null) {
-            callback.onError(exception.localizedMessage)
-            callback.onComplete()
-            return@addSnapshotListener
-        }
+    firestore.collection(DatabaseReference.ORDERS_REF)
+        .orderBy("timestamp", Query.Direction.DESCENDING)
+        .addSnapshotListener(this) { snapshot, exception ->
+            if (exception != null) {
+                callback.onError(exception.localizedMessage)
+                callback.onComplete()
+                return@addSnapshotListener
+            }
 
-        val orders = snapshot?.toObjects(Order::class.java)
-        if (orders == null) {
-            callback.onError("Orders cannot be found")
-            callback.onComplete()
-            return@addSnapshotListener
-        } else {
-            callback.onSuccess(orders)
-            callback.onComplete()
+            val orders = snapshot?.toObjects(Order::class.java)
+            if (orders == null) {
+                callback.onError("Orders cannot be found")
+                callback.onComplete()
+                return@addSnapshotListener
+            } else {
+                callback.onSuccess(orders)
+                callback.onComplete()
+            }
         }
-    }
 }
 
 /**

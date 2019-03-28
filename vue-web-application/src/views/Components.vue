@@ -1,6 +1,8 @@
 <template>
     <div>
-        <carousel></carousel>
+        <hero></hero>
+        <examples></examples>
+        <download-section></download-section>
     </div>
 </template>
 <script>
