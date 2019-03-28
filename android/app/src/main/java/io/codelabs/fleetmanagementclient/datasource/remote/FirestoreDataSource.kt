@@ -135,7 +135,7 @@ fun RootActivity.getAdminById(key: String, callback: FleetCallback<User>) {
 fun RootActivity.updateUser(callback: FleetCallback<Void>?) {
     callback?.onStart()
     val instanceId = FirebaseInstanceId.getInstance()
-    firestore.document(String.format(DatabaseReference.USERS_REF, auth.uid ?: database.key))
+    firestore.collection(DatabaseReference.USERS_REF).document(auth.uid ?: database.key!!)
         .update(
             mapOf<String, Any?>(
                 "token" to instanceId.token,

@@ -101,6 +101,14 @@ class HomeActivity : RootActivity() {
 
     override fun onStop() {
         super.onStop()
-        if (database.isLoggedIn) updateUser(null)
+        if (database.isLoggedIn) updateUser(object : FleetCallback<Void> {
+            override fun onError(e: String?) {
+                debugLog(e)
+            }
+
+            override fun onSuccess(response: Void?) {
+                debugLog("User updated successfully...")
+            }
+        })
     }
 }

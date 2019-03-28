@@ -41,9 +41,8 @@
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
                                                                          android:layout_height="wrap_content"
-                                                                         app:icon="@drawable/ic_build"
+                                                                         app:icon="@drawable/ic_info"
                                                                          app:title="@string/code"
-                                                                         app:widget="@layout/copy"
                                                                          app:summary="@{order.key}"/>
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
