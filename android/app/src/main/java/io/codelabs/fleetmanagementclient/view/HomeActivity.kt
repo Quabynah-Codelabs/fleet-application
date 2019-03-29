@@ -12,7 +12,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.recyclical.datasource.dataSourceOf
-import com.afollestad.recyclical.getDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.google.android.material.snackbar.Snackbar
@@ -32,63 +31,26 @@ import kotlinx.android.synthetic.main.activity_home.*
 /**
  * Home screen
  */
-class HomeActivity : RootActivity() {
+class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
+
+
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
-        getOrders(object : FleetCallback<MutableList<Order>> {
-            override fun onError(e: String?) {
-                binding.loading.visibility = View.GONE
-                Snackbar.make(binding.container, e.toString(), Snackbar.LENGTH_LONG).show()
+        binding.itemEmptyContainer.setOnClickListener {
+            try {
+                binding.loading.visibility = View.VISIBLE
+                binding.itemEmptyContainer.visibility = View.GONE
+                getOrders(this@HomeActivity)
+            } catch (e: Exception) {
+                debugLog(e.localizedMessage)
             }
+        }
 
-            override fun onSuccess(response: MutableList<Order>?) {
-                if (response != null) {
-                    binding.loading.visibility = View.GONE
-                    if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
-
-                    // Setup recycler view
-                    grid.addItemDecoration(GridItemDividerDecoration(this@HomeActivity,R.dimen.divider_height,R.color.divider))
-                    grid.itemAnimator = SlideInItemAnimator() as RecyclerView.ItemAnimator
-                    grid.setHasFixedSize(true)
-                    grid.setup {
-                        withLayoutManager(LinearLayoutManager(this@HomeActivity))
-                        withDataSource(dataSourceOf(response))
-                        withEmptyView(View.inflate(this@HomeActivity,R.layout.item_empty,null))
-                        withItem<Order>(R.layout.item_order) {
-                            onBind(::OrderViewHolder) { _, item ->
-                                key.text = item.key
-                                type.text = item.item
-                                timestamp.text = DateUtils.getRelativeTimeSpanString(
-                                    item.timestamp,
-                                    System.currentTimeMillis(),
-                                    DateUtils.SECOND_IN_MILLIS
-                                )
-                            }
-                        }
-
-                        withClickListener { _, item ->
-                            if (item is Order) {
-                                this@HomeActivity.startActivity(
-                                    Intent(
-                                        this@HomeActivity,
-                                        ItemDetailsActivity::class.java
-                                    ).apply {
-                                        putExtra(ItemDetailsActivity.EXTRA_ORDER_ID, item.key)
-                                        putExtra(ItemDetailsActivity.EXTRA_ORDER, item)
-                                    })
-                            }
-                        }
-                    }
-                } else {
-                    binding.loading.visibility = View.GONE
-                    Snackbar.make(binding.container, "Items data could not be found", Snackbar.LENGTH_LONG).show()
-                }
-            }
-        })
+        getOrders(this)
     }
 
     fun showOrderDialog(v: View?) {
@@ -125,5 +87,60 @@ class HomeActivity : RootActivity() {
                 debugLog("User updated successfully...")
             }
         })
+    }
+
+    override fun onError(e: String?) {
+        binding.loading.visibility = View.GONE
+        Snackbar.make(binding.container, e.toString(), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onSuccess(response: MutableList<Order>?) {
+        if (response != null) {
+            binding.loading.visibility = View.GONE
+            if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
+
+            // Setup recycler view
+            grid.addItemDecoration(
+                GridItemDividerDecoration(
+                    this@HomeActivity,
+                    R.dimen.divider_height,
+                    R.color.divider
+                )
+            )
+            grid.itemAnimator = SlideInItemAnimator() as RecyclerView.ItemAnimator
+            grid.setHasFixedSize(true)
+            grid.setup {
+                withLayoutManager(LinearLayoutManager(this@HomeActivity))
+                withDataSource(dataSourceOf(response))
+                withEmptyView(View.inflate(this@HomeActivity, R.layout.item_empty, null))
+                withItem<Order>(R.layout.item_order) {
+                    onBind(::OrderViewHolder) { _, item ->
+                        key.text = item.key
+                        type.text = item.item
+                        timestamp.text = DateUtils.getRelativeTimeSpanString(
+                            item.timestamp,
+                            System.currentTimeMillis(),
+                            DateUtils.SECOND_IN_MILLIS
+                        )
+                    }
+                }
+
+                withClickListener { _, item ->
+                    if (item is Order) {
+                        this@HomeActivity.startActivity(
+                            Intent(
+                                this@HomeActivity,
+                                ItemDetailsActivity::class.java
+                            ).apply {
+                                putExtra(ItemDetailsActivity.EXTRA_ORDER_ID, item.key)
+                                putExtra(ItemDetailsActivity.EXTRA_ORDER, item)
+                            })
+                    }
+                }
+            }
+        } else {
+            binding.loading.visibility = View.GONE
+            Snackbar.make(binding.container, "Items data could not be found", Snackbar.LENGTH_LONG).show()
+        }
     }
 }

@@ -5,7 +5,7 @@ package io.codelabs.fleetmanagementclient.datasource
  */
 interface FleetCallback<D> {
 
-    fun onStart() {}
+    fun onStarted() {}
 
     fun onError(e: String?)
 

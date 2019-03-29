@@ -33,7 +33,7 @@ class ItemDetailsActivity : RootActivity() {
 
             getOrderById(orderId, object : FleetCallback<Order> {
 
-                override fun onStart() {
+                override fun onStarted() {
                     snackbar.show()
                 }
 
@@ -66,7 +66,7 @@ class ItemDetailsActivity : RootActivity() {
     fun receiveOrder(v: View?) {
         // Clear the user's order
         clearOrder(binding.order!!.key, object : FleetCallback<Void> {
-            override fun onStart() {
+            override fun onStarted() {
                 toast("Clearing your item...")
             }
 

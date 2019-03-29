@@ -21,7 +21,7 @@ object DatabaseReference {
  * Get all [Order]s from the database
  */
 fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF)
         .orderBy("timestamp", Query.Direction.DESCENDING)
         .addSnapshotListener { snapshot, exception ->
@@ -47,7 +47,7 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
  * Get [Order] by [key]
  */
 fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF).document(key).addSnapshotListener(this) { snapshot, exception ->
         if (exception != null) {
             callback.onError(exception.localizedMessage)
@@ -68,7 +68,7 @@ fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
 }
 
 fun RootActivity.clearOrder(key: String, callback: FleetCallback<Void>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.document(String.format("%s/%s", DatabaseReference.ORDERS_REF, key))
         .delete()
         .addOnCompleteListener {
@@ -85,7 +85,7 @@ fun RootActivity.clearOrder(key: String, callback: FleetCallback<Void>) {
 }
 
 fun RootActivity.getCurrentUser(callback: FleetCallback<User>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF).document(auth.uid ?: database.key!!)
         .addSnapshotListener(this) { snapshot, exception ->
             if (exception != null) {
@@ -114,7 +114,7 @@ fun RootActivity.getCurrentUser(callback: FleetCallback<User>) {
 }
 
 fun RootActivity.getAdminById(key: String, callback: FleetCallback<User>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.collection(DatabaseReference.ADMIN_REF).document(key)
         .addSnapshotListener(this) { snapshot, exception ->
             if (exception != null) {
@@ -136,7 +136,7 @@ fun RootActivity.getAdminById(key: String, callback: FleetCallback<User>) {
 }
 
 fun RootActivity.updateUser(callback: FleetCallback<Void>?) {
-    callback?.onStart()
+    callback?.onStarted()
     val instanceId = FirebaseInstanceId.getInstance()
     firestore.collection(DatabaseReference.USERS_REF).document(auth.uid ?: database.key!!)
         .update(
@@ -159,7 +159,7 @@ fun RootActivity.updateUser(callback: FleetCallback<Void>?) {
 }
 
 fun RootActivity.storeUser(user: User, callback: FleetCallback<Void>) {
-    callback.onStart()
+    callback.onStarted()
     firestore.collection(DatabaseReference.USERS_REF).document(auth.currentUser?.uid ?: database.key!!).set(user)
         .addOnCompleteListener {
             if (it.isSuccessful) {
