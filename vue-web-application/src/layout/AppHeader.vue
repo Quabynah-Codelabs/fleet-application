@@ -36,13 +36,22 @@
                         <span class="nav-link-inner--text">Dashboard</span>
                     </a>
                 </li>
-                 <li class="nav-item d-none d-lg-block ml-lg-4">
+                <li class="nav-item d-none d-lg-block ml-lg-4">
                     <a href="/upload" rel="noopener"
                        class="btn btn-danger btn-icon">
                 <span class="btn-inner--icon">
                   <i class="fa fa-cloud-download mr-2"></i>
                 </span>
-                        <span class="nav-link-inner--text">Upload Item</span>
+                        <span class="nav-link-inner--text">Upload New Item</span>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-lg-block ml-lg-4">
+                    <a href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=0015349e-5b04-4662-b568-e00088b7c421" rel="noopener"
+                       class="btn btn-default btn-icon">
+                <span class="btn-inner--icon">
+                  <i class="fa fa-android mr-2"></i>
+                </span>
+                        <span class="nav-link-inner--text">Get the app</span>
                     </a>
                 </li>
             </ul>

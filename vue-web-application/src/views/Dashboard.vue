@@ -18,7 +18,7 @@
             <!-- Spinner End -->
 
             <div class="row row-grid">
-                <div class="col-lg-6 mb-lg-auto">
+                <div class="col-lg-12 mb-lg-auto pb-lg">
                     <div>
                         <card class="border-0" type="secondary" shadow
                               body-classes="px-lg-5 py-lg-5"
@@ -29,27 +29,24 @@
                                 </div>
                             </template>
                             <template>
-                                
+                                <b-table striped responsive head-variant="dark" hover :fields="userFields" :items="users"></b-table>
                             </template>
                         </card>
                     </div>
                 </div>
 
-                <div class="col-lg-6 mb-lg-auto">
+                <div class="col-lg-12 mb-lg-auto">
                     <div>
                         <card class="border-0" type="secondary" shadow
                               body-classes="px-lg-5 py-lg-5"
                               header-classes="bg-white">
                             <template slot="header">
                                 <div class="text-muted text-center mb-3">
-                                    <h4>Items sent</h4>
+                                    <h4>Items Repository</h4>
                                 </div>
                             </template>
                             <template>
-                                <!-- <base-table :data="table.data"
-                                            :columns="table.columns"
-                                            thead-classes="text-primary">
-                                </base-table> -->
+                               <b-table striped responsive hover head-variant="dark" :fields="itemFields" :items="items"></b-table>
                             </template>
                         </card>
                     </div>
@@ -63,29 +60,80 @@
 
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
-import BaseTable from '../components/BaseTable.vue'
+import BTable from "bootstrap-vue/es/components/table/table";
 
 export default {
     name: 'dashboard',
     components: {
-        BaseTable
+        BTable
     },
     data(){
         return {
             email: firebaseapp.auth.currentUser.email,
-            table: {
-                data: {
-
+            itemFields: [
+                {
+                key: 'city',
+                sortable: true
+                }, 
+                {
+                    key: 'item',
+                    sortable: true
                 },
-                columns: 3
-            }
+                {
+                    key: 'recipient',
+                    sortable: true
+                },
+                {
+                    key: 'region',
+                    sortable: true
+                },
+                {
+                    key: 'sender',
+                    sortable: true
+                },
+                {
+                    key: 'key',
+                    sortable: true
+                }  
+            ],
+            userFields: [
+                 {
+                    key: 'name',
+                    sortable: true
+                },
+                {
+                    key: 'email',
+                    sortable: false
+                },
+                {
+                    key: 'key',
+                    sortable: false
+                }
+            ],
+            items: [],
+            users: []
         }
     },
     methods: {
         
     },
     mounted() {
-        document.getElementById('overlay').style.display = "none"
+        firebaseapp.firestore.collection('fleet-orders')
+        .orderBy('timestamp','desc')
+        .get().then((docs) => {
+            document.getElementById('overlay').style.display = "none"
+            return docs.forEach(doc => {
+                this.items.push(doc.data())
+            })
+        })
+
+        firebaseapp.firestore.collection('fleet-users')
+        .get().then((docs) => {
+            document.getElementById('overlay').style.display = "none"
+            return docs.forEach(doc => {
+                this.users.push(doc.data())
+            })
+        })
     }
 }
 </script>

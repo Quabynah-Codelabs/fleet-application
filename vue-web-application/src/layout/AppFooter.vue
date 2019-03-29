@@ -14,6 +14,9 @@
                         <li class="nav-item">
                             <a href="https://codelabs.netlify.com" class="nav-link" target="_blank">About Us</a>
                         </li>
+                         <li class="nav-item">
+                            <a href="https://github.com/Quabynah-Codelabs/fleet-application/" class="nav-link" target="_blank">Source Code</a>
+                        </li>
                     </ul>
                 </div>
             </div>
