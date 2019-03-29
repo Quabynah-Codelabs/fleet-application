@@ -46,10 +46,10 @@
                                 </div>
                             </template>
                             <template>
-                                <base-table :data="table.data"
+                                <!-- <base-table :data="table.data"
                                             :columns="table.columns"
                                             thead-classes="text-primary">
-                                </base-table>
+                                </base-table> -->
                             </template>
                         </card>
                     </div>
@@ -75,7 +75,7 @@ export default {
             email: firebaseapp.auth.currentUser.email,
             table: {
                 data: {
-                    
+
                 },
                 columns: 3
             }

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="user" type="io.codelabs.fleetmanagementclient.model.User"/>
+        <variable name="items" type="java.util.List"/>
     </data>
     <FrameLayout android:layout_width="match_parent"
                  android:layout_height="match_parent"
@@ -39,6 +40,31 @@
                                                            android:onClick="showOrderDialog"
                                                            app:iconPadding="@dimen/spacing_normal"
                                                            android:fontFamily="@font/merriweather_sans"/>
+
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:orientation="vertical"
+                                                   android:gravity="center"
+                                                   android:visibility="gone"
+                                                   android:layout_marginTop="?attr/actionBarSize"
+                                                   android:id="@+id/item_empty_container"
+                                                   android:padding="@dimen/padding_large">
+
+            <io.codelabs.widget.ForegroundImageView android:layout_width="match_parent"
+                                                    android:src="@drawable/ic_work"
+                                                    app:tint="@color/text_tertiary_dark"
+                                                    android:layout_height="@dimen/large_avatar_height"/>
+
+            <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                     android:gravity="center"
+                                                     android:padding="@dimen/padding_normal"
+                                                     android:textSize="18sp"
+                                                     app:fontFamily="@font/merriweather_sans"
+                                                     android:textColor="@color/text_secondary_dark"
+                                                     android:text="You have no items available..."
+                                                     android:layout_height="wrap_content"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
 
 
     </FrameLayout>

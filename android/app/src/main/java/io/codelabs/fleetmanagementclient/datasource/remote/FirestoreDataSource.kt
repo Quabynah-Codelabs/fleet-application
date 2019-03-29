@@ -24,7 +24,7 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
     callback.onStart()
     firestore.collection(DatabaseReference.ORDERS_REF)
         .orderBy("timestamp", Query.Direction.DESCENDING)
-        .addSnapshotListener(this) { snapshot, exception ->
+        .addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 callback.onError(exception.localizedMessage)
                 callback.onComplete()

@@ -7,10 +7,12 @@ import android.text.format.DateUtils
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.recyclical.datasource.dataSourceOf
+import com.afollestad.recyclical.getDataSource
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +24,8 @@ import io.codelabs.fleetmanagementclient.datasource.remote.getOrders
 import io.codelabs.fleetmanagementclient.datasource.remote.updateUser
 import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.fleetmanagementclient.view.recyclerview.OrderViewHolder
+import io.codelabs.recyclerview.GridItemDividerDecoration
+import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -44,10 +48,16 @@ class HomeActivity : RootActivity() {
             override fun onSuccess(response: MutableList<Order>?) {
                 if (response != null) {
                     binding.loading.visibility = View.GONE
+                    if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
 
+                    // Setup recycler view
+                    grid.addItemDecoration(GridItemDividerDecoration(this@HomeActivity,R.dimen.divider_height,R.color.divider))
+                    grid.itemAnimator = SlideInItemAnimator() as RecyclerView.ItemAnimator
+                    grid.setHasFixedSize(true)
                     grid.setup {
                         withLayoutManager(LinearLayoutManager(this@HomeActivity))
                         withDataSource(dataSourceOf(response))
+                        withEmptyView(View.inflate(this@HomeActivity,R.layout.item_empty,null))
                         withItem<Order>(R.layout.item_order) {
                             onBind(::OrderViewHolder) { _, item ->
                                 key.text = item.key
