@@ -83,7 +83,8 @@ class MainActivity : RootActivity() {
                                     override fun onSuccess(response: Void?) {
                                         binding.user = user
                                         debugLog("Logged in user: ${binding.user}")
-                                        binding.homeButton.text = String.format(getString(R.string.signed_in_as), user.name ?: user.email)
+                                        binding.homeButton.text =
+                                            String.format(getString(R.string.signed_in_as), user.name ?: user.email)
                                         database.key = binding.user?.key
                                         showConfirmationToast(user.photoUrl, user.name ?: user.email!!)
                                     }

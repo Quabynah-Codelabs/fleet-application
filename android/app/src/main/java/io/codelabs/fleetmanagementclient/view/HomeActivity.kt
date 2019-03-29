@@ -98,6 +98,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
         if (response != null) {
             binding.loading.visibility = View.GONE
             if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
+            else  binding.itemEmptyContainer.visibility = View.GONE
 
             // Setup recycler view
             grid.addItemDecoration(

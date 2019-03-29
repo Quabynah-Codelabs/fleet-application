@@ -8,22 +8,40 @@ exports.sendNotification = functions.firestore.document('fleet-orders/{key}').on
     // Get the key of the item
     const key = ctx.params.key
 
-    return admin.firestore().collection('fleet-users').doc(snapshot.data().recipient).get()
+    return admin.firestore().collection('fleet-users')/*.doc(snapshot.data().recipient)*/.get()
         .then((querySnapshot) => {
-            return admin.messaging().sendToDevice(querySnapshot.data().token, {
-                data: {
-                    itemKey: key,
-                    recipient: `${snapshot.data().recipient}`,
-                    type: 'Order Item',
-                    message: `Your item code is\n ${querySnapshot.id}.\nYou need it in order to verify your request when it arrives. Thank you`
-                }
-            }).then(() => {
-                return console.log('Notification sent to all users');
-            }).catch((reason) => {
-                if (reason) {
-                    return console.log(reason.message)
-                }
-            })
+            console.log(querySnapshot);
+            querySnapshot.forEach(doc => {
+                return admin.messaging().sendToDevice(doc.data().token, {
+                    data: {
+                        itemKey: key,
+                        recipient: `${snapshot.data().recipient}`,
+                        type: 'Order Item',
+                        message: `Your item code is\n ${doc.id}.\nYou need it in order to verify your request when it arrives. Thank you`
+                    }
+                }).then(() => {
+                    return console.log('Notification sent to all users');
+                }).catch((reason) => {
+                    if (reason) {
+                        return console.log(reason.message)
+                    }
+                })
+            });
+
+            // return admin.messaging().sendToDevice(querySnapshot.data().token, {
+            //     data: {
+            //         itemKey: key,
+            //         recipient: `${snapshot.data().recipient}`,
+            //         type: 'Order Item',
+            //         message: `Your item code is\n ${querySnapshot.id}.\nYou need it in order to verify your request when it arrives. Thank you`
+            //     }
+            // }).then(() => {
+            //     return console.log('Notification sent to all users');
+            // }).catch((reason) => {
+            //     if (reason) {
+            //         return console.log(reason.message)
+            //     }
+            // })
         }).catch((reason) => {
             if (reason) {
                 return console.log(reason.message)

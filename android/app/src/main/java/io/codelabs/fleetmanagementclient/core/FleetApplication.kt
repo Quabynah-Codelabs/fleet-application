@@ -1,6 +1,7 @@
 package io.codelabs.fleetmanagementclient.core
 
 import android.app.Application
+import com.google.firebase.messaging.FirebaseMessaging
 import io.codelabs.fleetmanagementclient.core.koin.firebaseModule
 import io.codelabs.fleetmanagementclient.core.koin.localDatabase
 import io.codelabs.fleetmanagementclient.core.koin.roomDatabase
@@ -16,6 +17,8 @@ class FleetApplication : Application() {
             androidContext(this@FleetApplication)
             modules(firebaseModule, localDatabase, roomDatabase)
         }
+
+        FirebaseMessaging.getInstance().isAutoInitEnabled = true
 
     }
 }
