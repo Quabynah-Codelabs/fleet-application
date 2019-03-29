@@ -29,7 +29,7 @@
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 <li class="nav-item d-none d-lg-block ml-lg-4">
                     <a href="/dashboard" rel="noopener"
-                       class="btn btn-neutral btn-icon">
+                       class="btn btn-primary btn-icon">
                 <span class="btn-inner--icon">
                   <i class="fa fa-dashboard mr-2"></i>
                 </span>
@@ -38,7 +38,7 @@
                 </li>
                  <li class="nav-item d-none d-lg-block ml-lg-4">
                     <a href="/upload" rel="noopener"
-                       class="btn btn-neutral btn-icon">
+                       class="btn btn-danger btn-icon">
                 <span class="btn-inner--icon">
                   <i class="fa fa-cloud-download mr-2"></i>
                 </span>

@@ -22,44 +22,14 @@
                     <div>
                         <card class="border-0" type="secondary" shadow
                               body-classes="px-lg-5 py-lg-5"
-                              header-classes="pb-5 bg-white">
+                              header-classes="bg-white">
                             <template slot="header">
                                 <div class="text-muted text-center mb-3">
-                                    <small>Sign in with</small>
-                                </div>
-                                <div class="btn-wrapper text-center">
-                                    <base-button type="neutral">
-                                        <img slot="icon" src="img/icons/common/github.svg">
-                                        Github
-                                    </base-button>
-
-                                    <base-button type="neutral">
-                                        <img slot="icon" src="img/icons/common/google.svg">
-                                        Google
-                                    </base-button>
+                                    <h4>All registered users</h4>
                                 </div>
                             </template>
                             <template>
-                                <div class="text-center text-muted mb-4">
-                                    <small>Or sign in with credentials</small>
-                                </div>
-                                <form role="form">
-                                    <base-input alternative
-                                                placeholder="Email"
-                                                addon-left-icon="ni ni-email-83">
-                                    </base-input>
-                                    <base-input alternative
-                                                type="password"
-                                                placeholder="Password"
-                                                addon-left-icon="ni ni-lock-circle-open">
-                                    </base-input>
-                                    <base-checkbox>
-                                        Remember me
-                                    </base-checkbox>
-                                    <div class="text-center">
-                                        <base-button type="primary" class="my-4">Sign In</base-button>
-                                    </div>
-                                </form>
+                                
                             </template>
                         </card>
                     </div>
@@ -69,44 +39,17 @@
                     <div>
                         <card class="border-0" type="secondary" shadow
                               body-classes="px-lg-5 py-lg-5"
-                              header-classes="pb-5 bg-white">
+                              header-classes="bg-white">
                             <template slot="header">
                                 <div class="text-muted text-center mb-3">
-                                    <small>Sign in with</small>
-                                </div>
-                                <div class="btn-wrapper text-center">
-                                    <base-button type="neutral">
-                                        <img slot="icon" src="img/icons/common/github.svg">
-                                        Github
-                                    </base-button>
-
-                                    <base-button type="neutral">
-                                        <img slot="icon" src="img/icons/common/google.svg">
-                                        Google
-                                    </base-button>
+                                    <h4>Items sent</h4>
                                 </div>
                             </template>
                             <template>
-                                <div class="text-center text-muted mb-4">
-                                    <small>Or sign in with credentials</small>
-                                </div>
-                                <form role="form">
-                                    <base-input alternative
-                                                placeholder="Email"
-                                                addon-left-icon="ni ni-email-83">
-                                    </base-input>
-                                    <base-input alternative
-                                                type="password"
-                                                placeholder="Password"
-                                                addon-left-icon="ni ni-lock-circle-open">
-                                    </base-input>
-                                    <base-checkbox>
-                                        Remember me
-                                    </base-checkbox>
-                                    <div class="text-center">
-                                        <base-button type="primary" class="my-4">Sign In</base-button>
-                                    </div>
-                                </form>
+                                <base-table :data="table.data"
+                                            :columns="table.columns"
+                                            thead-classes="text-primary">
+                                </base-table>
                             </template>
                         </card>
                     </div>
@@ -124,9 +67,18 @@ import BaseTable from '../components/BaseTable.vue'
 
 export default {
     name: 'dashboard',
+    components: {
+        BaseTable
+    },
     data(){
         return {
-            email: firebaseapp.auth.currentUser.email
+            email: firebaseapp.auth.currentUser.email,
+            table: {
+                data: {
+                    
+                },
+                columns: 3
+            }
         }
     },
     methods: {
