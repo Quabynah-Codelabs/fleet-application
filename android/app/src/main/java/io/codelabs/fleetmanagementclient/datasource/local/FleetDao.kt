@@ -32,4 +32,16 @@ interface FleetDao {
     @Query("SELECT * FROM orders ORDER BY timestamp DESC")
     fun getAllOrders(): LiveData<MutableList<Order>>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun createReport(vararg orders: Order)
+
+    @Delete
+    fun removeOrder(vararg orders: Order)
+
+    @Query("SELECT * FROM orders WHERE `key` = :key")
+    fun getOrderById(key: String): LiveData<Order>
+
+    @Query("SELECT * FROM orders ORDER BY timestamp DESC")
+    fun getAllOrders(): LiveData<MutableList<Order>>
+
 }

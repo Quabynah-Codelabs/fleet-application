@@ -44,8 +44,8 @@ export default {
   },
   data: () => {
       return {
-          appTitle: 'Fleet Management System',
-          appDesc: "This is a demonstration of the implementation of a Fleet management System. The project is intended for testing purposes only and may be highly unstable."
+          appTitle: 'Domestic Test Mails System',
+          appDesc: "This system measures the reliability of our mail items deliveries within the country. This is purely a sampling technique which is benchmarked against agreed upon  standards with UPU."
       }
   }
 };

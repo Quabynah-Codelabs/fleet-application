@@ -12,6 +12,7 @@ import Dashboard from "./views/Dashboard.vue";
 import ItemDetails from "./views/ItemDetails.vue";
 import Components from "./views/Components.vue";
 import NotFound from "./views/NotFoundPage.vue"
+import RememberPassword from "./views/RememberPassword.vue"
 
 Vue.use(Router);
 
@@ -79,6 +80,15 @@ export default new Router({
         header: AppHeader,
         default: Components,
         footer: AppFooter
+      }
+    },
+    {
+      path: "/recover",
+      name: "password-reset",
+      components: {
+        header: Header,
+        default: RememberPassword,
+        footer: Footer
       }
     },
     { 

@@ -46,7 +46,7 @@
                                 </div>
                             </template>
                             <template>
-                               <b-table striped responsive hover head-variant="dark" :fields="itemFields" :items="items"></b-table>
+                               <b-table striped responsive hover head-variant="dark" :fields="itemFields" :items="items" @row-clicked="viewDetails"></b-table>
                             </template>
                         </card>
                     </div>
@@ -77,7 +77,7 @@ export default {
                 }, 
                 {
                     key: 'item',
-                    sortable: true
+                    sortable: false
                 },
                 {
                     key: 'recipient',
@@ -115,22 +115,26 @@ export default {
         }
     },
     methods: {
-        
+        viewDetails: (record, index) => {
+            window.localStorage.setItem('row-item-code',record.key)
+            window.open('/details','_blank')
+        }
     },
     mounted() {
-        firebaseapp.firestore.collection('fleet-orders')
-        .orderBy('timestamp','desc')
-        .get().then((docs) => {
+
+        firebaseapp.firestore.collection('fleet-orders').orderBy('timestamp','desc').get()
+        .then((docs) => {
             document.getElementById('overlay').style.display = "none"
             return docs.forEach(doc => {
                 this.items.push(doc.data())
             })
         })
 
-        firebaseapp.firestore.collection('fleet-users')
-        .get().then((docs) => {
+        firebaseapp.firestore.collection('fleet-users').get()
+        .then((docs) => {
             document.getElementById('overlay').style.display = "none"
             return docs.forEach(doc => {
+                console.log(doc.data())
                 this.users.push(doc.data())
             })
         })

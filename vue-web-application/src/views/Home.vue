@@ -23,7 +23,7 @@
                         <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Item Details</h3>
+                                <h3 class="mb-0">Mail Item</h3>
                             </div>
                             <div class="col-4">
                                 <small class="mb-0">Logged in as <strong>{{ email }}</strong></small>
@@ -76,7 +76,7 @@
                             </div>
                             <hr class="my-4" />
                             <!-- Address -->
-                            <h6 class="heading-small text-muted mb-4">Order information</h6>
+                            <h6 class="heading-small text-muted mb-4">Mail Item information</h6>
                             <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-md-4">
@@ -94,20 +94,30 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-item">Item Type</label>
-                                    <!-- <input type="text" id="input-item" v-model="itemType" class="form-control form-control-alternative" placeholder="Letter"> -->
-                                    <select name="region" id="input-item" class="form-control" v-model="itemType">
-                                        <option selected="selected">Letter</option>
-                                        <option>Parcel</option>
-                                        <option>EMS</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-item">Item Type</label>
+                                        <!-- <input type="text" id="input-item" v-model="itemType" class="form-control form-control-alternative" placeholder="Letter"> -->
+                                        <select name="region" id="input-item" class="form-control" v-model="itemType">
+                                            <option selected="selected">Letter</option>
+                                            <option>Parcel</option>
+                                            <option>EMS</option>
+                                        </select>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label class="form-control-label" for="input-comment"></label>
+                                             <div class="form-group">
+                                        <label class="form-control-label" for="input-comment">Comment (if any)</label>
+                                        <textarea type="text" rows="6" id="input-comment" v-model="comment" class="form-control form-control-alternative" placeholder="Enter a comment (optional)..."></textarea>
+                                        
+                                    </div>
                                 </div>
                             </div>
                             </div>
                             <div class="text-center">
-                                <base-button @click="submitOrder" type="default" class="my-4">Submit Order</base-button>
+                                <base-button @click="submitOrder" type="default" class="my-4">Submit Item</base-button>
                             </div>
                         </form>
                         </div>
@@ -119,9 +129,13 @@
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
 import validator from 'validator'
+import BFormTextArea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
 
 export default {
     name: 'home',
+    components: {
+        BFormTextArea
+    },
     data() {
         return {
             email: '',
@@ -130,6 +144,7 @@ export default {
             sender: '',
             recipient: '',
             itemType: '',
+            comment: '',
             duration: 2,
             users: []
         }
@@ -142,6 +157,8 @@ export default {
             var sender = document.getElementById('input-sender').value
             var itemType = document.getElementById('input-item').value
             var recipient = document.getElementById('input-recipient').value
+            var duration = document.getElementById('input-duration').value
+            var comment = document.getElementById('input-comment').value
 
             if (validator.isEmpty(region) || validator.isEmpty(city) || validator.isEmpty(sender) || validator.isEmpty(itemType) || validator.isEmpty(recipient)) {
                 alert("Please fill in all these details before you proceed")
@@ -163,6 +180,8 @@ export default {
                 sender: sender,
                 timestamp: time,
                 recipient: recipient,
+                duration: duration,
+                comment: comment,
                 item: itemType
             }).then(() => {
                 // Notify user of transactioon progress
@@ -175,6 +194,7 @@ export default {
                 document.getElementById('input-duration').value = ""
                 document.getElementById('input-item').value = ""
                 document.getElementById('input-recipient').value = ""
+                document.getElementById('input-comment').value = ""
             }).catch((reason) => {
                 spinner.style.display = "none"
                 alert(reason.message)
@@ -211,7 +231,7 @@ export default {
                 console.log(doc.data().email)
                 this.users.push(doc.data())
             })
-            console.log(`Users: ${users}`)
+            console.log(`Users found: ${users}`)
         }).catch((reason) => {
             // alert(reason.message)
         })

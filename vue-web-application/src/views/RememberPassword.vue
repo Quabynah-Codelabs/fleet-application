@@ -24,12 +24,12 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <h3>Sign in to get started</h3>
+                                <h3>Recover password</h3>
                             </div>
                         </template>
                         <template>
                             <div class="text-center text-muted mb-4">
-                                <small>Enter your email and password below</small>
+                                <small>Please enter your email address to continue</small>
                             </div>
                             <form role="form" @submit="login">
                                 <base-input alternative
@@ -39,31 +39,16 @@
                                             id="email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                <base-input alternative
-                                            type="password"
-                                            v-model="form.password"
-                                            placeholder="Password"
-                                            id="password"
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
-                                <base-checkbox :checked="form.rememberMe">
-                                    Remember me
-                                </base-checkbox>
                                 <div class="text-center">
-                                    <base-button @click="login" type="default" class="my-4">Sign In</base-button>
+                                    <base-button @click="recoverPassword" type="default" class="my-4">Send Email</base-button>
                                 </div>
                             </form>
                         </template>
                     </card>
                     <div class="row mt-3">
                         <div class="col-6">
-                           <a href="/recover" class="text-light">
-                                <small>Forgot Password?</small>
-                            </a>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a href="/create" class="text-light">
-                                <small>Create new account</small>
+                           <a href="/login" class="text-light">
+                                <small>Back to login</small>
                             </a>
                         </div>
                     </div>
@@ -78,7 +63,7 @@ import firebaseapp from '../components/firebase/firebaseinit'
 import validator from 'validator'
 
 export default {
-    name: 'login',
+    name: 'password-reset',
     data() {
         return {
             form : {
@@ -89,28 +74,21 @@ export default {
         }
     },
     methods: {
-        login: (ev) => {
+        recoverPassword: (ev) => {
             ev.preventDefault()
 
             var emailAddress = document.getElementById('email').value
-            var password = document.getElementById('password').value
 
             if (!validator.isEmail(emailAddress)) {
                 alert("Please enter a valid email address...")
                 return
-            } else if (validator.isEmpty(password)) {
-                alert("Please enter a valid password...")
-                return
             }
 
-
             document.getElementById('overlay').style.display = "block"
-            firebaseapp.auth.signInWithEmailAndPassword(emailAddress,password)
+            firebaseapp.auth.sendPasswordResetEmail(emailAddress)
             .then((userInfo) => {
                 document.getElementById('overlay').style.display = "none"
-                // alert(`Logged in as ${userInfo.user.email}!`)
-                window.localStorage.setItem('fleet-uid',firebaseapp.auth.currentUser.uid)
-                window.location = '/dashboard'
+                alert(`Password link sent to ${emailAddress}`)
             }).catch((reason) => {
                 document.getElementById('overlay').style.display = "none"
                 alert(reason.message)
