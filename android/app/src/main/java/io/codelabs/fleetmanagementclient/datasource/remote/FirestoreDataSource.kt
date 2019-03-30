@@ -7,6 +7,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.fleetmanagementclient.model.User
 import io.codelabs.fleetmanagementclient.view.MainActivity
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 object DatabaseReference {
     const val ORDERS_REF = "fleet-orders"
     const val USERS_REF = "fleet-users"
+    const val REPORT_DOC = "$USERS_REF/%s/reports"
     const val ADMIN_REF = "fleet-admin"
 }
 
@@ -178,6 +180,47 @@ fun RootActivity.storeUser(user: User, callback: FleetCallback<Void>) {
             }
         }.addOnFailureListener {
             callback.onError(it.localizedMessage)
+            callback.onComplete()
+        }
+}
+
+fun RootActivity.createReport(report: Report, callback: FleetCallback<Void>?) {
+    callback?.onStarted()
+    firestore.collection(String.format(DatabaseReference.REPORT_DOC, auth.currentUser?.uid ?: database.key!!)).document()
+        .set(report).addOnCompleteListener {
+            if (it.isSuccessful) {
+                ioScope.launch {
+                    dao.createReport(report)
+
+                    uiScope.launch {
+                        callback?.onSuccess(null)
+                        callback?.onComplete()
+                    }
+                }
+            } else {
+                callback?.onError(it.exception?.localizedMessage)
+                callback?.onComplete()
+            }
+        }.addOnFailureListener {
+            callback?.onError(it.localizedMessage)
+            callback?.onComplete()
+        }
+}
+
+fun RootActivity.getReports(callback: FleetCallback<MutableList<Report>>) {
+    callback.onStarted()
+    firestore.collection(String.format(DatabaseReference.REPORT_DOC, auth.uid ?: database.key!!))
+        .addSnapshotListener(this) { snapshot, exception ->
+            if (exception != null) {
+                callback.onError(exception.localizedMessage)
+                callback.onComplete()
+                return@addSnapshotListener
+            }
+
+            val reports = snapshot?.toObjects(Report::class.java)
+            if (reports == null) {
+                callback.onError("Unable to load reports...")
+            } else callback.onSuccess(reports)
             callback.onComplete()
         }
 }

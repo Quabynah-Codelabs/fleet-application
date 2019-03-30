@@ -18,5 +18,8 @@ data class Report(
 ) : Parcelable {
 
     @Ignore
-    constructor() : this(0, "", "","")
+    constructor() : this(0, "", "", "")
+
+    @Ignore
+    constructor(message: String, user: String, item: String) : this(0, message, user, item)
 }

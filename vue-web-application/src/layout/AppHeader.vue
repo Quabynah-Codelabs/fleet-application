@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                    <a href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=0015349e-5b04-4662-b568-e00088b7c421" rel="noopener"
+                    <a href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=98affc4c-ffb7-472b-96e3-4308cb7c7244" rel="noopener"
                        class="btn btn-default btn-icon">
                 <span class="btn-inner--icon">
                   <i class="fa fa-android mr-2"></i>

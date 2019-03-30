@@ -2,6 +2,7 @@ package io.codelabs.fleetmanagementclient.view
 
 import android.content.ClipData
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -11,10 +12,13 @@ import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.databinding.ActivityDetailsBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.clearOrder
+import io.codelabs.fleetmanagementclient.datasource.remote.createReport
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrderById
 import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
+import org.jsoup.helper.DataUtil
 
 class ItemDetailsActivity : RootActivity() {
     private lateinit var binding: ActivityDetailsBinding
@@ -75,8 +79,13 @@ class ItemDetailsActivity : RootActivity() {
             }
 
             override fun onSuccess(response: Void?) {
-                debugLog("Item cleared")
-                toast("Thanks for working with us!")
+                val message =
+                    "Item of type: ${binding.order?.item}. Item was received ${DateUtils.getRelativeTimeSpanString(
+                        binding.order?.timestamp!!,
+                        System.currentTimeMillis(),
+                        DateUtils.SECOND_IN_MILLIS
+                    )}. The code for this item is: ${binding.order?.key}."
+                createReport(Report(message, binding.order?.sender!!, binding.order?.key!!), null)
             }
         })
         finishAfterTransition()

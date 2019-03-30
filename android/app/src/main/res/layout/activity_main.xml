@@ -52,6 +52,7 @@
                                                            android:text="@string/login_with_google"
                                                            android:onClick="googleLogin"
                                                            android:textAllCaps="false"
+                                                           android:id="@+id/google_login_btn"
                                                            android:visibility="@{user == null ? android.view.View.VISIBLE : android.view.View.GONE}"
                                                            android:fontFamily="@font/merriweather_sans"/>
 

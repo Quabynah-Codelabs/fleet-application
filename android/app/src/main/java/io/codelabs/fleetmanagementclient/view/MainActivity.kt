@@ -32,7 +32,6 @@ class MainActivity : RootActivity() {
         })
     }
 
-
     fun googleLogin(v: View?) {
         if (database.isLoggedIn) {
             startApp(v)
@@ -59,6 +58,7 @@ class MainActivity : RootActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SIGN_IN && resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            binding.googleLoginBtn.isEnabled = false
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
@@ -78,6 +78,7 @@ class MainActivity : RootActivity() {
                                 user, object : FleetCallback<Void> {
                                     override fun onError(e: String?) {
                                         toast(e)
+                                        binding.googleLoginBtn.isEnabled = false
                                     }
 
                                     override fun onSuccess(response: Void?) {
@@ -95,9 +96,11 @@ class MainActivity : RootActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 toast("Google sign in failed. ${e.localizedMessage}")
+                binding.googleLoginBtn.isEnabled = false
             }
         } else {
             toast("unable to sign in user. Please check for errors")
+            binding.googleLoginBtn.isEnabled = false
         }
     }
 

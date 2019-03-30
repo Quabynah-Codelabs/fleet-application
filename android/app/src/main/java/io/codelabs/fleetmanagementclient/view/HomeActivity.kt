@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.text.format.DateUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,11 +24,14 @@ import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrders
 import io.codelabs.fleetmanagementclient.datasource.remote.updateUser
 import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.User
 import io.codelabs.fleetmanagementclient.view.recyclerview.OrderViewHolder
 import io.codelabs.recyclerview.GridItemDividerDecoration
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
+import io.codelabs.sdk.util.toast
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.launch
 
 /**
  * Home screen
@@ -39,6 +44,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        setSupportActionBar(binding.toolbar)
 
         binding.itemEmptyContainer.setOnClickListener {
             try {
@@ -51,6 +57,33 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
         }
 
         getOrders(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_logout -> {
+                auth.signOut()
+                ioScope.launch {
+                    val user: User? = dao.getCurrentUser(database.key!!).value
+                    if (user != null) dao.removeUser(user)
+
+                    uiScope.launch {
+                        toast("Logged out successfully")
+                        startActivity(Intent(this@HomeActivity, MainActivity::class.java))
+                        finishAfterTransition()
+                    }
+
+                }
+            }
+
+            R.id.menu_reports -> startActivity(Intent(this@HomeActivity,ReportsActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun showOrderDialog(v: View?) {
@@ -98,7 +131,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
         if (response != null) {
             binding.loading.visibility = View.GONE
             if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
-            else  binding.itemEmptyContainer.visibility = View.GONE
+            else binding.itemEmptyContainer.visibility = View.GONE
 
             // Setup recycler view
             grid.addItemDecoration(

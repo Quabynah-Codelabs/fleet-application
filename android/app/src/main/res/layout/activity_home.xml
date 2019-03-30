@@ -8,15 +8,23 @@
                  android:layout_height="match_parent"
                  android:id="@+id/container">
 
-        <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
-                                                 android:layout_height="?attr/actionBarSize"
-                                                 android:gravity="center"
-                                                 android:textSize="18sp"
-                                                 android:background="?attr/colorSecondary"
-                                                 app:fontFamily="@font/merriweather_sans"
-                                                 android:text="@string/app_name"
-                                                 android:textColor="@color/text_primary_light"
-                                                 android:padding="@dimen/padding_normal"/>
+        <androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
+                                           android:background="?attr/colorSecondary"
+                                           android:id="@+id/toolbar"
+                                           android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                                           app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+                                           android:layout_height="?attr/actionBarSize">
+
+            <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"
+                                                     android:gravity="center"
+                                                     android:textSize="18sp"
+                                                     app:fontFamily="@font/merriweather_sans"
+                                                     android:text="@string/app_name"
+                                                     android:textColor="@color/text_primary_light"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
 
         <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
