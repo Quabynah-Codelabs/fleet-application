@@ -39,10 +39,10 @@ interface FleetDao {
     @Delete
     fun removeOrder(vararg orders: Report)
 
-    @Query("SELECT * FROM orders WHERE `key` = :key")
-    fun getReportById(key: Int): LiveData<Report>
+    @Query("SELECT * FROM reports WHERE `id` = :id")
+    fun getReportById(id: Int): LiveData<Report>
 
-    @Query("SELECT * FROM orders ORDER BY timestamp DESC")
+    @Query("SELECT * FROM reports ORDER BY timestamp DESC")
     fun getAllReports(): LiveData<MutableList<Report>>
 
 }
