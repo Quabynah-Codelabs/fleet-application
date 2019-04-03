@@ -182,7 +182,8 @@ export default {
                 recipient: recipient,
                 duration: duration,
                 comment: comment,
-                item: itemType
+                item: itemType,
+                received: false
             }).then(() => {
                 // Notify user of transactioon progress
                 spinner.style.display = "none"

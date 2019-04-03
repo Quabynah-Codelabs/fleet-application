@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.GoogleAuthProvider
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.RootActivity
@@ -27,8 +28,19 @@ class MainActivity : RootActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if (database.isLoggedIn) dao.getCurrentUser(database.key!!).observe(this@MainActivity, Observer {
             binding.user = it
-            binding.homeButton.text = String.format(getString(R.string.signed_in_as), it.name ?: it.email)
-            debugLog("Current user: $it")
+            if (it != null) {
+                binding.homeButton.text = String.format(getString(R.string.signed_in_as), it.name ?: it.email)
+                debugLog("Current user: $it")
+            } else {
+                val snackbar =
+                    Snackbar.make(binding.container, "You need to be signed in first", Snackbar.LENGTH_INDEFINITE)
+                snackbar.setAction("Dismiss"){
+                    database.key = null
+                    database.isLoggedIn = false
+                    snackbar.dismiss()
+                }
+                snackbar.show()
+            }
         })
     }
 

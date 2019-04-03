@@ -15,6 +15,7 @@ data class Order(
     val region: String,
     val item: String = Type.LETTER,
     val sender: String,
+    val received: Boolean = false,
     val timestamp: Long = System.currentTimeMillis()
 ) : Parcelable {
 

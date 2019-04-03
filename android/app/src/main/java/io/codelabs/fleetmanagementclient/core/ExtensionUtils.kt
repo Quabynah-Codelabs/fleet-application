@@ -8,9 +8,18 @@ import android.content.Intent
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
+import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
+import com.itextpdf.text.Document
+import com.itextpdf.text.Element
+import com.itextpdf.text.Font
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.fcm.FleetMessagingService
+import io.codelabs.fleetmanagementclient.model.Report
+import io.codelabs.sdk.util.toast
+import java.io.FileOutputStream
 
 fun Context.pushNotification(title: String, content: String, intent: Intent) {
     // Create a notification instance
@@ -63,5 +72,56 @@ fun Context.createNotificationChannel(channelName: String) {
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+}
+
+fun Context.createPdf(report: Report) {
+    try {
+        val document = Document()
+        PdfWriter.getInstance(document, FileOutputStream("${report.timestamp.toString().trim()}.pdf"))
+        document.open()
+        document.apply {
+            addTitle(getString(R.string.app_name))
+            addAuthor("Administrator [admin@ghanapost.com]")
+        }
+        Paragraph("Item details are as follows: ${report.item}").apply {
+            alignment = Element.ALIGN_CENTER
+            font = Font(Font.FontFamily.TIMES_ROMAN, 18f, Font.BOLD)
+        }.also {
+            document.add(it)
+        }
+        Paragraph("Sender: ${report.user}").apply {
+            alignment = Element.ALIGN_LEFT
+        }.also {
+            document.add(it)
+        }
+        Paragraph(
+            "Send date: ${DateUtils.getRelativeTimeSpanString(
+                report.timestamp,
+                System.currentTimeMillis(),
+                DateUtils.SECOND_IN_MILLIS
+            )}"
+        ).apply {
+            alignment = Element.ALIGN_LEFT
+        }.also {
+            document.add(it)
+        }
+        Paragraph(
+            "Region: ${report.region}"
+        ).apply {
+            alignment = Element.ALIGN_LEFT
+        }.also {
+            document.add(it)
+        }
+        Paragraph(
+            "Destination: ${report.destination}"
+        ).apply {
+            alignment = Element.ALIGN_LEFT
+        }.also {
+            document.add(it)
+        }
+        document.close()
+    } catch (ex: Exception) {
+        toast(ex.localizedMessage)
     }
 }

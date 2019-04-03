@@ -12,10 +12,12 @@ import com.afollestad.recyclical.withItem
 import com.google.android.material.snackbar.Snackbar
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.RootActivity
+import io.codelabs.fleetmanagementclient.core.createPdf
 import io.codelabs.fleetmanagementclient.databinding.ActivityReportsBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.getReports
 import io.codelabs.fleetmanagementclient.model.Report
+import io.codelabs.sdk.util.toast
 import io.codelabs.util.bindView
 import io.codelabs.widget.BaselineGridTextView
 
@@ -58,7 +60,15 @@ class ReportsActivity : RootActivity() {
 
                     withClickListener { _, item ->
                         if (item is Report) {
-
+                            val snackbar = Snackbar.make(binding.container, "Save report as PDF?", Snackbar.LENGTH_LONG)
+                            snackbar.apply {
+                                setAction("Create Pdf") {
+                                    snackbar.dismiss()
+                                    toast("Creating PDF file for this report....")
+                                    createPdf(item)
+                                }
+                            }
+                            snackbar.show()
                         }
                     }
                 }

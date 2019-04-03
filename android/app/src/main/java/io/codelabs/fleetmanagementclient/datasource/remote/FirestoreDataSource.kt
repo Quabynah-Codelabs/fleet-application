@@ -26,6 +26,7 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
     callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF)
         .orderBy("timestamp", Query.Direction.DESCENDING)
+        .whereEqualTo("received",false)
         .addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 callback.onError(exception.localizedMessage)
@@ -72,7 +73,9 @@ fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
 fun RootActivity.clearOrder(key: String, callback: FleetCallback<Void>) {
     callback.onStarted()
     firestore.document(String.format("%s/%s", DatabaseReference.ORDERS_REF, key))
-        .delete()
+        .update(mapOf<String,Any?>(
+            "received" to true
+        ))
         .addOnCompleteListener {
             if (it.isSuccessful) {
                 callback.onSuccess(null)

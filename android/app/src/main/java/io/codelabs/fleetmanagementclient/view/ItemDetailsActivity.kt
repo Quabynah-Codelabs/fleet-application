@@ -18,7 +18,6 @@ import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
-import org.jsoup.helper.DataUtil
 
 class ItemDetailsActivity : RootActivity() {
     private lateinit var binding: ActivityDetailsBinding
@@ -85,7 +84,16 @@ class ItemDetailsActivity : RootActivity() {
                         System.currentTimeMillis(),
                         DateUtils.SECOND_IN_MILLIS
                     )}. The code for this item is: ${binding.order?.key}."
-                createReport(Report(message, binding.order?.sender!!, binding.order?.key!!), null)
+                createReport(
+                    Report(
+                        message,
+                        binding.order?.sender!!,
+                        binding.order?.key!!,
+                        binding.order?.region!!,
+                        binding.order?.city!!,
+                        binding.order?.timestamp ?: System.currentTimeMillis()
+                    ), null
+                )
             }
         })
         finishAfterTransition()
