@@ -1,8 +1,13 @@
 package io.codelabs.fleetmanagementclient.view
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +28,17 @@ import io.codelabs.widget.BaselineGridTextView
 
 class ReportsActivity : RootActivity() {
     private lateinit var binding: ActivityReportsBinding
+    private var hasPermissions: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reports)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+
+        hasPermissions = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
 
         getReports(object : FleetCallback<MutableList<Report>> {
             override fun onError(e: String?) {
@@ -35,6 +46,7 @@ class ReportsActivity : RootActivity() {
                 Snackbar.make(binding.container, e.toString(), Snackbar.LENGTH_LONG).show()
             }
 
+            @SuppressLint("NewApi")
             override fun onSuccess(response: MutableList<Report>?) {
                 binding.loading.visibility = View.GONE
                 if (response == null || response.isEmpty()) {
@@ -64,21 +76,41 @@ class ReportsActivity : RootActivity() {
                             snackbar.apply {
                                 setAction("Create Pdf") {
                                     snackbar.dismiss()
-                                    toast("Creating PDF file for this report....")
-                                    createPdf(item)
+                                    if (hasPermissions || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) createPdf(item)
+                                    else requestPermissions(
+                                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                        RC_PERM
+                                    )
                                 }
                             }
                             snackbar.show()
                         }
                     }
+
                 }
             }
         })
+    }
+
+    @SuppressLint("NewApi")
+    override fun onEnterAnimationComplete() {
+        if (!hasPermissions) requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), RC_PERM)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == RC_PERM && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            toast("Storage permission granted. Now you can tap on each report to create a printable version of it",true)
+            hasPermissions = true
+        }
     }
 
     inner class ReportViewHolder(val v: View) : RecyclerView.ViewHolder(v) {
         val message: BaselineGridTextView by bindView(R.id.item_message)
         val sender: BaselineGridTextView by bindView(R.id.item_sender)
         val timestamp: BaselineGridTextView by bindView(R.id.item_timestamp)
+    }
+
+    companion object {
+        private const val RC_PERM = 9
     }
 }

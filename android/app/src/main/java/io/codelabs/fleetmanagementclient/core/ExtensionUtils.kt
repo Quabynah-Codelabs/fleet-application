@@ -5,21 +5,22 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
-import com.itextpdf.text.Document
-import com.itextpdf.text.Element
-import com.itextpdf.text.Font
-import com.itextpdf.text.Paragraph
+import com.itextpdf.text.*
+import com.itextpdf.text.pdf.PdfImportedPage
+import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.PdfWriter
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.fcm.FleetMessagingService
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
+import java.io.File
 import java.io.FileOutputStream
 
 fun Context.pushNotification(title: String, content: String, intent: Intent) {
@@ -78,9 +79,12 @@ fun Context.createNotificationChannel(channelName: String) {
 
 fun Context.createPdf(report: Report) {
     try {
-        val document = Document()
+        // Create document
+        val document = Document(PageSize.PENGUIN_SMALL_PAPERBACK, 10f, 10f, 100f, 0f)
         PdfWriter.getInstance(document, FileOutputStream("${report.timestamp.toString().trim()}.pdf"))
         document.open()
+
+        // Format document
         document.apply {
             addTitle(getString(R.string.app_name))
             addAuthor("Administrator [admin@ghanapost.com]")
@@ -122,8 +126,16 @@ fun Context.createPdf(report: Report) {
             document.add(it)
         }
         document.close()
+
+        // Display output
+        val file = File("/${report.timestamp.toString().trim()}.pdf")
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(Uri.fromFile(file), "application/pdf")
+        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+        startActivity(intent)
+
     } catch (ex: Exception) {
-        debugLog(ex.cause)
+        debugLog(ex.localizedMessage)
         toast(ex.localizedMessage)
     }
 }
