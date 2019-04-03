@@ -26,7 +26,7 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
     callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF)
         .orderBy("timestamp", Query.Direction.DESCENDING)
-        .whereEqualTo("received",false)
+        .whereEqualTo("received", false)
         .addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 callback.onError(exception.localizedMessage)
@@ -73,9 +73,11 @@ fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
 fun RootActivity.clearOrder(key: String, callback: FleetCallback<Void>) {
     callback.onStarted()
     firestore.document(String.format("%s/%s", DatabaseReference.ORDERS_REF, key))
-        .update(mapOf<String,Any?>(
-            "received" to true
-        ))
+        .update(
+            mapOf<String, Any?>(
+                "received" to true
+            )
+        )
         .addOnCompleteListener {
             if (it.isSuccessful) {
                 callback.onSuccess(null)
@@ -189,7 +191,8 @@ fun RootActivity.storeUser(user: User, callback: FleetCallback<Void>) {
 
 fun RootActivity.createReport(report: Report, callback: FleetCallback<Void>?) {
     callback?.onStarted()
-    firestore.collection(String.format(DatabaseReference.REPORT_DOC, auth.currentUser?.uid ?: database.key!!)).document()
+    firestore.collection(String.format(DatabaseReference.REPORT_DOC, auth.currentUser?.uid ?: database.key!!))
+        .document()
         .set(report).addOnCompleteListener {
             if (it.isSuccessful) {
                 ioScope.launch {
@@ -213,6 +216,7 @@ fun RootActivity.createReport(report: Report, callback: FleetCallback<Void>?) {
 fun RootActivity.getReports(callback: FleetCallback<MutableList<Report>>) {
     callback.onStarted()
     firestore.collection(String.format(DatabaseReference.REPORT_DOC, auth.uid ?: database.key!!))
+        .orderBy("timestamp", Query.Direction.DESCENDING)
         .addSnapshotListener(this) { snapshot, exception ->
             if (exception != null) {
                 callback.onError(exception.localizedMessage)
