@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfWriter
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.fcm.FleetMessagingService
 import io.codelabs.fleetmanagementclient.model.Report
+import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
 import java.io.FileOutputStream
 
@@ -122,6 +123,7 @@ fun Context.createPdf(report: Report) {
         }
         document.close()
     } catch (ex: Exception) {
+        debugLog(ex.cause)
         toast(ex.localizedMessage)
     }
 }
