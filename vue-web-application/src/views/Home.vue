@@ -213,6 +213,7 @@ export default {
                 sending_office: scity,
                 sending_region: sregion,
                 item: itemType,
+                date: date,
                 received: false
             }).then(() => {
                 // Notify user of transactioon progress

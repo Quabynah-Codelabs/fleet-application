@@ -98,9 +98,7 @@
                                         <th scope="col">State (received)</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="t_body_items">
-                                        <tr><th>${data.city}</th><td>${data.item}</td><td>${data.recipient}</td><td>${data.region}</td><td>${data.sender}</td><td>${data.key}</td><td>${data.received}</td></tr>
-                                    </tbody>
+                                    <tbody id="t_body_items"></tbody>
                                 </table> -->
                             </template>
                         </card>
@@ -113,6 +111,11 @@
   </section>
 </template>
 
+<script>
+import firebaseapp from '../components/firebase/firebaseinit'
+
+
+</script>
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
 import BTable from "bootstrap-vue/es/components/table/table";
@@ -129,7 +132,8 @@ export default {
             itemFields: [
                 {
                 key: 'city',
-                sortable: true
+                sortable: true,
+                isRowHeader: true
                 }, 
                 {
                     key: 'item',
@@ -154,10 +158,7 @@ export default {
                 {
                     key: 'received',
                     sortable: true
-                },
-                {
-                    key: 'timestamp'
-                }  
+                } 
             ],
             userFields: [
                  {
@@ -196,8 +197,16 @@ export default {
             return docs.forEach(doc => {
                 console.log(doc.data())
                 this.items.push(doc.data())
-                // var data = docs.data();
-                // table.append(`<tr><th>${data.city}</th><td>${data.item}</td><td>${data.recipient}</td><td>${data.region}</td><td>${data.sender}</td><td>${data.key}</td><td>${data.received}</td></tr>`);
+                var data = doc.data()
+                table.append(`<tr scope="row">
+                                <th>${data.city}</th>
+                                <td>${data.item}</td>
+                                <td>${data.recipient}</td>
+                                <td>${data.region}</td>
+                                <td>${data.sender}</td>
+                                <td>${data.key}</td>
+                                <td>${data.received}</td>
+                            </tr>`);
             });
         })
 

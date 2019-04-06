@@ -41,6 +41,20 @@
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
+                                            placeholder="Sending Office"
+                                            v-model="soffice"
+                                            id="username"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Sending Region"
+                                            v-model="sregion"
+                                            id="username"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                <base-input alternative
+                                            class="mb-3"
                                             v-model="email"
                                             id="email"
                                             placeholder="Email"
@@ -84,7 +98,9 @@ export default {
         return {
             email: '',
             password: '',
-            username: ''
+            username: '',
+            sregion: '',
+            soffice: ''
         }
     },
     methods: {
@@ -94,11 +110,13 @@ export default {
             var username = document.getElementById('username').value
             var email = document.getElementById('email').value
             var password = document.getElementById('password').value
+            var soffice = document.getElementById('soffice').value
+            var sregion = document.getElementById('sregion').value
 
             if (!validator.isEmail(email)) {
                 alert("Please enter a valid email address...")
                 return
-            } else if (username != '' && password != '') {
+            } else if (username != '' && password != '' && sregion != '' && soffice != '') {
                 
                 document.getElementById('overlay').style.display = "block"
 
@@ -108,6 +126,8 @@ export default {
                        key: `${firebaseapp.auth.currentUser.uid}`,
                        name: username,
                        email: email,
+                       sending_office: soffice,
+                       sending_region: sregion,
                        photoUrl: `${firebaseapp.auth.currentUser.photoUrl}`,
                        token: null,
                        timestamp: `${new Date().getTime()}`,
@@ -122,7 +142,7 @@ export default {
                     alert(reason.message)
                 })
             } else {
-                alert("Please enter a valid username and password")
+                alert("Please enter a valid username and password. Also chaeck to see if you have added the right sending region and office.")
             }
             
 

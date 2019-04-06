@@ -8,7 +8,7 @@ import io.codelabs.fleetmanagementclient.model.Order
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.fleetmanagementclient.model.User
 
-@Database(entities = [User::class, Order::class, Report::class], version = 4, exportSchema = true)
+@Database(entities = [User::class, Order::class, Report::class], version = 5, exportSchema = true)
 abstract class FleetDatabase : RoomDatabase() {
 
     abstract fun dao(): FleetDao
