@@ -35,28 +35,52 @@
                             <h6 class="heading-small text-muted mb-4">Location &amp; Address</h6>
                             <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="input-region">Region</label>
-                                    <!-- <input type="text" id="input-region" v-model="region" class="form-control form-control-alternative" placeholder="Ashanti Region"> -->
-                                    <select name="region" id="input-region" v-model="region" class="form-control">
-                                        <option>Greater Accra</option>
-                                        <option>Central Region</option>
-                                        <option>Eastern Region</option>
-                                        <option>Brong-Ahafo Region</option>
-                                        <option>Western Region</option>
-                                        <option>Volta Region</option>
-                                        <option>Upper-East Region</option>
-                                        <option>Upper-West Region</option>
-                                        <option>Northern Region</option>
-                                        <option>Ashanti Region</option>
-                                    </select>
+                                 <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-region">Sending Region</label>
+                                        <!-- <input type="text" id="input-region" v-model="region" class="form-control form-control-alternative" placeholder="Ashanti Region"> -->
+                                        <select name="region" id="input-s-region" v-model="s_region" class="form-control">
+                                            <option>Greater Accra</option>
+                                            <option>Central Region</option>
+                                            <option>Eastern Region</option>
+                                            <option>Brong-Ahafo Region</option>
+                                            <option>Western Region</option>
+                                            <option>Volta Region</option>
+                                            <option>Upper-East Region</option>
+                                            <option>Upper-West Region</option>
+                                            <option>Northern Region</option>
+                                            <option>Ashanti Region</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-s-city">Sending Office</label>
+                                        <input type="text" id="input-s-city" v-model="city" class="form-control form-control-alternative" placeholder="Destination Name">
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-city">City</label>
-                                        <input type="text" id="input-city" v-model="city" class="form-control form-control-alternative" placeholder="Destination Name">
+                                        <label class="form-control-label" for="input-region">Receiving Region</label>
+                                        <!-- <input type="text" id="input-region" v-model="region" class="form-control form-control-alternative" placeholder="Ashanti Region"> -->
+                                        <select name="region" id="input-r-region" v-model="r_region" class="form-control">
+                                            <option>Greater Accra</option>
+                                            <option>Central Region</option>
+                                            <option>Eastern Region</option>
+                                            <option>Brong-Ahafo Region</option>
+                                            <option>Western Region</option>
+                                            <option>Volta Region</option>
+                                            <option>Upper-East Region</option>
+                                            <option>Upper-West Region</option>
+                                            <option>Northern Region</option>
+                                            <option>Ashanti Region</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Receiving Office</label>
+                                        <input type="text" id="input-r-city" v-model="r_city" class="form-control form-control-alternative" placeholder="Destination Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -66,9 +90,8 @@
                                         <select name="duration" id="input-duration" class="form-control" v-model="duration">
                                             <option>2</option>
                                             <option>3</option>
-                                            <option>7</option>
-                                            <option>14</option>
-                                            <option>21</option>
+                                            <option>4</option>
+                                            <option>5</option>
                                         </select>
                                     </div>
                                 </div>
@@ -145,6 +168,8 @@ export default {
             recipient: '',
             itemType: '',
             comment: '',
+            sending_office: '',
+            sending_region: '',
             duration: 2,
             users: []
         }
@@ -152,15 +177,17 @@ export default {
     methods: {
         submitOrder: (ev) => {
             ev.preventDefault()
-            var region = document.getElementById('input-region').value
-            var city = document.getElementById('input-city').value
+            var sregion = document.getElementById('input-s-region').value
+            var scity = document.getElementById('input-s-city').value
+            var rregion = document.getElementById('input-r-region').value
+            var rcity = document.getElementById('input-r-city').value
             var sender = document.getElementById('input-sender').value
             var itemType = document.getElementById('input-item').value
             var recipient = document.getElementById('input-recipient').value
             var duration = document.getElementById('input-duration').value
             var comment = document.getElementById('input-comment').value
 
-            if (validator.isEmpty(region) || validator.isEmpty(city) || validator.isEmpty(sender) || validator.isEmpty(itemType) || validator.isEmpty(recipient)) {
+            if (validator.isEmpty(rregion) || validator.isEmpty(rcity) || validator.isEmpty(sregion) || validator.isEmpty(scity) || validator.isEmpty(sender) || validator.isEmpty(itemType) || validator.isEmpty(recipient)) {
                 alert("Please fill in all these details before you proceed")
                 return
             }
@@ -168,20 +195,23 @@ export default {
             var date = new Date()
             var time = date.getTime()
             console.log(`Date: ${date.toLocaleDateString()} & time: ${time}`)
-            var code = region.substr(0,1).toUpperCase() + region.substr(region.indexOf(' ') + 1).substr(0,1).toUpperCase() + '-' + city.substr(0,3).toUpperCase() + '-' + date.toLocaleDateString().substr(0,1) + date.toLocaleDateString().substr(2,2) + date.toLocaleDateString().substr(5,8) + time.toString().substr(7,12) + '-' +  sender.substr(0,3).toUpperCase() + '-' + itemType.substr(0,3).toUpperCase()
+            var code = sregion.substr(0,1).toUpperCase() + sregion.substr(sregion.indexOf(' ') + 1).substr(0,1).toUpperCase() + '-' + scity.substr(0,3).toUpperCase() + '-' + rregion.substr(0,1).toUpperCase() + rregion.substr(rregion.indexOf(' ') + 1).substr(0,1).toUpperCase() + '-' + rcity.substr(0,3).toUpperCase() + '-' + date.toLocaleDateString().substr(5,8) + time.toString().substr(7,12) + '-' +  sender.substr(0,3).toUpperCase() + '-' + itemType.substr(0,3).toUpperCase()
             console.log(code);
             var spinner = document.getElementById('overlay')
             spinner.style.display = "block"
             
             firebaseapp.firestore.collection('fleet-orders').doc(code).set({
                 key: code,
-                region: region,
-                city: city,
+                region: rregion,
+                city: rcity,
                 sender: sender,
                 timestamp: time,
                 recipient: recipient,
                 duration: duration,
                 comment: comment,
+                item: itemType,
+                sending_office: scity,
+                sending_region: sregion,
                 item: itemType,
                 received: false
             }).then(() => {
@@ -220,6 +250,8 @@ export default {
                     var data = response.data()
                     this.email = data.email
                     this.sender = data.name
+                    this.sending_region = data.sending_region
+                    this.sending_office = data.sending_office
                 }
             }).catch((reason) => {
                 alert(reason.message)

@@ -19,22 +19,41 @@
 
             <div class="row row-grid">
                 <!-- Charts -->
-                <div class="col-lg-12 mb-lg-auto pb-lg">
+                <!-- <div class="col-lg-6 mb-lg-auto pb-lg">
                     <div>
                         <card class="border-0" type="secondary" shadow
                               body-classes="px-lg-5 py-lg-5"
                               header-classes="bg-white">
                             <template slot="header">
                                 <div class="text-muted text-center mb-3">
-                                    <h4>Overall Performance</h4>
+                                    <h4>Outgoing Items</h4>
                                 </div>
                             </template>
+                                <canvas id="outgoing_items_chart" width="400" height="400"></canvas>
                             <template>
                                 
                             </template>
                         </card>
                     </div>
                 </div>
+
+                <div class="col-lg-6 mb-lg-auto pb-lg">
+                    <div>
+                        <card class="border-0" type="secondary" shadow
+                              body-classes="px-lg-5 py-lg-5"
+                              header-classes="bg-white">
+                            <template slot="header">
+                                <div class="text-muted text-center mb-3">
+                                    <h4>Incoming Items</h4>
+                                </div>
+                            </template>
+                                <canvas id="incoming_items_chart" width="400" height="400"></canvas>
+                            <template>
+                                
+                            </template>
+                        </card>
+                    </div>
+                </div> -->
 
                 <!-- Users -->
                 <div class="col-lg-12 mb-lg-auto pb-lg">
@@ -97,6 +116,7 @@
 <script>
 import firebaseapp from '../components/firebase/firebaseinit'
 import BTable from "bootstrap-vue/es/components/table/table";
+import Chart from 'chart.js';
 
 export default {
     name: 'dashboard',
@@ -134,6 +154,9 @@ export default {
                 {
                     key: 'received',
                     sortable: true
+                },
+                {
+                    key: 'timestamp'
                 }  
             ],
             userFields: [
@@ -151,7 +174,8 @@ export default {
                 }
             ],
             items: [],
-            users: []
+            users: [],
+            regions: ['Greater Accra','Central','Eastern','Western','Brong-Ahafo','Volta','Upper-East','Upper-West','Ashanti', 'Northern']
         }
     },
     methods: {
@@ -186,6 +210,45 @@ export default {
                 this.users.push(doc.data())
             })
         })
+
+        // Get performance scale
+        var ctx = document.getElementById('outgoing_items_chart')
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: this.regions,
+                datasets: [{
+                    label: '# of Outgoing items',
+                    data: [12, 19, 3, 5, 2, 3, 3,6,3,5],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 2)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 
     }
 }

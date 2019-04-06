@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
+    "chart.js": "^2.8.0",
     "firebase": "^5.9.1",
     "flatpickr": "^4.5.1",
     "nouislider": "^11.1.0",
