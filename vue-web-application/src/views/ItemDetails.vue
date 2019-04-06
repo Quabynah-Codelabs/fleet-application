@@ -70,7 +70,9 @@ export default {
         removeItem() {
             document.getElementById('overlay').style.display = "block"
             firebaseapp.firestore.doc(`fleet-orders/${window.localStorage.getItem('row-item-code')}`)
-            .delete()
+            .update({
+                received: true
+            })
             .then(() => {
                 document.getElementById('overlay').style.display = "none"
                 window.location = '/dashboard'

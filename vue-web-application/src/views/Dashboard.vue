@@ -94,6 +94,10 @@ export default {
                 {
                     key: 'key',
                     sortable: true
+                },
+                {
+                    key: 'received',
+                    sortable: true
                 }  
             ],
             userFields: [
@@ -121,8 +125,10 @@ export default {
         }
     },
     mounted() {
-
-        firebaseapp.firestore.collection('fleet-orders').orderBy('timestamp','desc').get()
+        // Get all items
+        firebaseapp.firestore.collection('fleet-orders').orderBy('timestamp','desc')
+        // .where('received','==',false)
+        .get()
         .then((docs) => {
             document.getElementById('overlay').style.display = "none"
             return docs.forEach(doc => {
@@ -130,6 +136,7 @@ export default {
             })
         })
 
+        // Get all users
         firebaseapp.firestore.collection('fleet-users').get()
         .then((docs) => {
             document.getElementById('overlay').style.display = "none"
