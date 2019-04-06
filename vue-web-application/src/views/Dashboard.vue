@@ -18,6 +18,25 @@
             <!-- Spinner End -->
 
             <div class="row row-grid">
+                <!-- Charts -->
+                <div class="col-lg-12 mb-lg-auto pb-lg">
+                    <div>
+                        <card class="border-0" type="secondary" shadow
+                              body-classes="px-lg-5 py-lg-5"
+                              header-classes="bg-white">
+                            <template slot="header">
+                                <div class="text-muted text-center mb-3">
+                                    <h4>Overall Performance</h4>
+                                </div>
+                            </template>
+                            <template>
+                                
+                            </template>
+                        </card>
+                    </div>
+                </div>
+
+                <!-- Users -->
                 <div class="col-lg-12 mb-lg-auto pb-lg">
                     <div>
                         <card class="border-0" type="secondary" shadow
@@ -35,6 +54,7 @@
                     </div>
                 </div>
 
+                <!-- Items -->
                 <div class="col-lg-12 mb-lg-auto">
                     <div>
                         <card class="border-0" type="secondary" shadow
@@ -47,6 +67,22 @@
                             </template>
                             <template>
                                <b-table striped responsive hover head-variant="dark" :fields="itemFields" :items="items" @row-clicked="viewDetails"></b-table>
+                                <!-- <table class="table table-striped table-responsive">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                        <th scope="col">City</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Recipient</th>
+                                        <th scope="col">Region</th>
+                                        <th scope="col">Sender</th>
+                                        <th scope="col">Key</th>
+                                        <th scope="col">State (received)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="t_body_items">
+                                        <tr><th>${data.city}</th><td>${data.item}</td><td>${data.recipient}</td><td>${data.region}</td><td>${data.sender}</td><td>${data.key}</td><td>${data.received}</td></tr>
+                                    </tbody>
+                                </table> -->
                             </template>
                         </card>
                     </div>
@@ -131,9 +167,14 @@ export default {
         .get()
         .then((docs) => {
             document.getElementById('overlay').style.display = "none"
+            var table = document.getElementById('t_body_items');
+
             return docs.forEach(doc => {
+                console.log(doc.data())
                 this.items.push(doc.data())
-            })
+                // var data = docs.data();
+                // table.append(`<tr><th>${data.city}</th><td>${data.item}</td><td>${data.recipient}</td><td>${data.region}</td><td>${data.sender}</td><td>${data.key}</td><td>${data.received}</td></tr>`);
+            });
         })
 
         // Get all users
@@ -145,6 +186,7 @@ export default {
                 this.users.push(doc.data())
             })
         })
+
     }
 }
 </script>
