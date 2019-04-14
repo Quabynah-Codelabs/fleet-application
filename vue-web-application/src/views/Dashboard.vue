@@ -163,7 +163,7 @@ export default {
             userFields: [
                  {
                     key: 'name',
-                    sortable: true
+                    sortable: false
                 },
                 {
                     key: 'email',
