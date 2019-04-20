@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
+  <link rel="stylesheet" href="./assets/css/index.css">
+</head>
+
+<body>
+  <div id="message">
+    <h2>Welcome</h2>
+    <h1>Firebase Hosting Setup Complete</h1>
+    <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something
+      extraordinary!</p>
+    <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  </div>
+  <p id="load">Firebase SDK Loading&hellip;</p>
+
+  <!-- <div class="app">{{ message }}</div> -->
+
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyA1YVUgV_G-2Mi9G-09o0hL76YLk7qMdU4",
+      authDomain: "fleet-mobile-app.firebaseapp.com",
+      databaseURL: "https://fleet-mobile-app.firebaseio.com",
+      projectId: "fleet-mobile-app",
+      storageBucket: "fleet-mobile-app.appspot.com",
+      messagingSenderId: "242841878369"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
