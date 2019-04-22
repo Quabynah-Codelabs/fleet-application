@@ -56,14 +56,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./home.html">
-                            <p>Upload Item</p>
+                        <a class="nav-link" href="./dashboard.html">
+                            <p>Return to Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="#logout"
-                            onclick="signOut()">
+                        <a class="nav-link" href="#logout" onclick="signOut()">
                             <p>Sign out</p>
                         </a>
                     </li>
@@ -81,7 +79,72 @@
             </div>
             <div class="container">
                 <div class="content-center brand">
-                    <!-- Load data here -->
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="section section-contact-us text-center mt-5">
+                        <div class="container">
+                            <h2 class="title text-dark">Mail Item</h2>
+                            <p class="description text-dark">Enter the details of the item below (Please fill in all
+                                required fields).</p>
+                            <div class="row">
+                                <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Sending Region..."
+                                            id="input-s-region">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Sending Office..."
+                                            id="input-s-city">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Receiving Office..."
+                                            id="input-r-region">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Receiving Region..."
+                                            id="input-r-city">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Duration (in days)"
+                                            id="input-duration">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Sender" disabled
+                                            id="input-sender">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Recipient..."
+                                            id="input-recipient">
+                                    </div>
+                                    <div class="input-group input-lg">
+                                        <input type="text" class="form-control" placeholder="Item Type..."
+                                            id="input-item">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-8 col-md-12 ml-auto mr-auto">
+                                    <div class="textarea-container">
+                                        <textarea class="form-control" name="name" rows="4" cols="80" id="input-comment"
+                                            placeholder="Comment (Optional)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
+                                    <div class="send-button">
+                                        <a href="#upload" class="btn btn-primary btn-round btn-block btn-lg"
+                                            onclick="submitItem()">Submit
+                                            Item</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

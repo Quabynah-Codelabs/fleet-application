@@ -115,6 +115,78 @@ const resetPassword = () => {
 
 };
 
+// Sign out user
+const signOut = () => {
+    if (confirm("Do you wish to sign out?")) {
+        auth.signOut().then(() => {
+            window.location.href = "index.html"
+        }).catch((err) => {
+            alert(err.message)
+        })
+    } else {
+
+    }
+};
+
+// Upload item to the database
+const submitItem = () => {
+    // get all fields
+    var sregion = document.getElementById('input-s-region').value
+    var scity = document.getElementById('input-s-city').value
+    var rregion = document.getElementById('input-r-region').value
+    var rcity = document.getElementById('input-r-city').value
+    var sender = document.getElementById('input-sender').value
+    var itemType = document.getElementById('input-item').value
+    var recipient = document.getElementById('input-recipient').value
+    var duration = document.getElementById('input-duration').value
+    var comment = document.getElementById('input-comment').value
+
+    // Validate all fields
+    if (validator.isEmpty(rregion) || validator.isEmpty(rcity) || validator.isEmpty(sregion) || validator.isEmpty(scity) || validator.isEmpty(sender) || validator.isEmpty(itemType) || validator.isEmpty(recipient)) {
+        alert("Please fill in all these details before you proceed")
+        return
+    }
+
+    var date = new Date()
+    var time = date.getTime()
+    console.log(`Date: ${date.toLocaleDateString()} & time: ${time}`)
+    var code = sregion.substr(0, 1).toUpperCase() + sregion.substr(sregion.indexOf(' ') + 1).substr(0, 1).toUpperCase() + '-' + scity.substr(0, 3).toUpperCase() + '-' + rregion.substr(0, 1).toUpperCase() + rregion.substr(rregion.indexOf(' ') + 1).substr(0, 1).toUpperCase() + '-' + rcity.substr(0, 3).toUpperCase() + '-' + date.toLocaleDateString().substr(5, 8) + time.toString().substr(7, 12) + '-' + sender.substr(0, 3).toUpperCase() + '-' + itemType.substr(0, 3).toUpperCase()
+    console.log(code);
+    toggleLoading(true)
+
+    db.collection('fleet-orders').doc(code).set({
+        key: code,
+        region: rregion,
+        city: rcity,
+        sender: sender,
+        timestamp: time,
+        recipient: recipient,
+        duration: duration,
+        comment: comment,
+        item: itemType,
+        sending_office: scity,
+        sending_region: sregion,
+        item: itemType,
+        date: date,
+        received: false
+    }).then(() => {
+        // Notify user of transactioon progress
+        toggleLoading(false)
+        alert("Request sent successfully with code: " + code)
+
+        // Reset fields
+        document.getElementById('input-region').value = ""
+        document.getElementById('input-city').value = ""
+        document.getElementById('input-duration').value = ""
+        document.getElementById('input-item').value = ""
+        document.getElementById('input-recipient').value = ""
+        document.getElementById('input-comment').value = ""
+    }).catch((reason) => {
+        toggleLoading(false)
+        alert(reason.message)
+    })
+};
+
 // Show loading screen
 const toggleLoading = (state) => {
     document.getElementById('overlay').style.display = state ? "block" : "none"
