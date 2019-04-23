@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "fleet-mobile-app"
+    "default": "fleet-mobile-app",
+    "Ghana Post": "fleet-mobile-app"
   }
 }
