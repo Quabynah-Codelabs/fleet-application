@@ -2545,6 +2545,11 @@ fieldset[disabled] .btn-link.active {
   box-shadow: none;
 }
 
+.form-control option {
+  line-height: normal;
+  font-size: 1em;
+}
+
 .has-success .form-control {
   border-color: #E3E3E3;
 }

@@ -91,16 +91,40 @@
                             <div class="row">
                                 <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
                                     <div class="input-group input-lg">
-                                        <input type="text" class="form-control" placeholder="Sending Region..."
-                                            id="input-s-region">
+                                        <!-- <input type="text" class="form-control" placeholder="Sending Region..."
+                                            id="input-s-region"> -->
+                                        <select id="input-s-region" class="form-control">
+                                            <option>Greater Accra</option>
+                                            <option>Central Region</option>
+                                            <option>Eastern Region</option>
+                                            <option>Brong-Ahafo Region</option>
+                                            <option>Western Region</option>
+                                            <option>Volta Region</option>
+                                            <option>Upper-East Region</option>
+                                            <option>Upper-West Region</option>
+                                            <option>Northern Region</option>
+                                            <option>Ashanti Region</option>
+                                        </select>
                                     </div>
                                     <div class="input-group input-lg">
                                         <input type="text" class="form-control" placeholder="Sending Office..."
                                             id="input-s-city">
                                     </div>
                                     <div class="input-group input-lg">
-                                        <input type="text" class="form-control" placeholder="Receiving Office..."
-                                            id="input-r-region">
+                                        <!-- <input type="text" class="form-control" placeholder="Receiving Office..."
+                                            id="input-r-region"> -->
+                                        <select id="input-r-region" class="form-control">
+                                            <option>Greater Accra</option>
+                                            <option>Central Region</option>
+                                            <option>Eastern Region</option>
+                                            <option>Brong-Ahafo Region</option>
+                                            <option>Western Region</option>
+                                            <option>Volta Region</option>
+                                            <option>Upper-East Region</option>
+                                            <option>Upper-West Region</option>
+                                            <option>Northern Region</option>
+                                            <option>Ashanti Region</option>
+                                        </select>
                                     </div>
                                     <div class="input-group input-lg">
                                         <input type="text" class="form-control" placeholder="Receiving Region..."
@@ -109,20 +133,32 @@
                                 </div>
                                 <div class="col-lg-6 text-center col-md-8 ml-auto mr-auto">
                                     <div class="input-group input-lg">
-                                        <input type="text" class="form-control" placeholder="Duration (in days)"
-                                            id="input-duration">
+                                        <!-- <input type="text" class="form-control" placeholder="Duration (in days)"
+                                            id="input-duration"> -->
+                                        <select name="duration" id="input-duration" class="form-control">
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
                                     </div>
                                     <div class="input-group input-lg">
                                         <input type="text" class="form-control" placeholder="Sender" disabled
                                             id="input-sender">
                                     </div>
                                     <div class="input-group input-lg">
-                                        <input type="text" class="form-control" placeholder="Recipient..."
-                                            id="input-recipient">
+                                        <!-- <input type="text" class="form-control" placeholder="Recipient..."
+                                            id="input-recipient"> -->
+                                        <select name="recipient" id="input-recipient" class="form-control"></select>
                                     </div>
                                     <div class="input-group input-lg">
-                                        <input type="text" class="form-control" placeholder="Item Type..."
-                                            id="input-item">
+                                        <!-- <input type="text" class="form-control" placeholder="Item Type..."
+                                            id="input-item"> -->
+                                        <select name="item-type" class="form-control" id="input-item">
+                                            <option value="EMS" selected="selected">EMS</option>
+                                            <option value="Parcel">Parcel</option>
+                                            <option value="Letter">Letter</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -205,6 +241,7 @@
     <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
     <script src="./assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="../node_modules/validator/validator.min.js"></script>
     <script src="./assets/js/global.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>

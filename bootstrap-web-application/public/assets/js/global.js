@@ -1,10 +1,67 @@
 // Firebase
 let auth = firebase.auth()
 let db = firebase.firestore()
+let users = []
+let email = ''
+let sender = ''
+let sending_region = ''
+let sending_office = ''
 
 $(document).ready(() => {
     toggleLoading(false)
+    loadData().then((response) => {
+        if (response && response.length != 0) {
+            console.log(response);
+            response.forEach(user => {
+                $('#input-recipient').append(`
+                <option>${user.name}</option>
+            `)
+            });
+        } else {
+            alert('There are no registered users on this platform. Please add some users first before proceeding to sending them some items...')
+        }
+    }).catch((err) => {
+        alert(err.message);
+    })
+
+    var uid = window.localStorage.getItem('fleet-uid') ? auth.currentUser.uid : window.localStorage.getItem('fleet-uid')
+
+    if (uid) {
+        db.collection('fleet-admin')
+            .doc(uid).get().then((response) => {
+                if (response.exists) {
+                    // Get data, if any
+                    var data = response.data()
+                    email = data.email
+                    sender = data.name
+                    sending_region = data.sending_region
+                    sending_office = data.sending_office
+
+                    // Populate fields with results
+                    $('#input-s-region').val(sending_region)
+                    $('#input-s-city').val(sending_office)
+                    $('#input-sender').val(sender)
+                }
+            }).catch((reason) => {
+                alert(reason.message)
+            })
+    }
 });
+
+// Load all users from the database
+const loadData = async () => {
+    // Fetch user's data from the database
+    await db.collection('fleet-users').get().then((response) => {
+        response.forEach(doc => {
+            console.log(doc.data().email)
+            users.push(doc.data())
+        })
+        console.log(`Users found: ${users}`)
+    }).catch((reason) => {
+        alert(reason.message)
+    })
+    return users;
+};
 
 // Login with email and password
 const login = () => {
