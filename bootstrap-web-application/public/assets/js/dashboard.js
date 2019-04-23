@@ -41,6 +41,9 @@ var app = new Vue({
                         <td id="${data.key}" class="rows text-dark">
                             <b>${data.key}</b>
                         </td>
+                        <td>
+                            <a href="#report" class="btn btn-primary">Print Report</a>
+                        </td>
                     </tr>
                 `);
                 });

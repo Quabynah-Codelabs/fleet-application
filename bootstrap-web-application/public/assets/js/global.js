@@ -9,13 +9,17 @@ let sending_office = ''
 
 $(document).ready(() => {
     toggleLoading(false)
+
+    let uid = window.localStorage.getItem('user-key')
+    
+
     loadData().then((response) => {
         if (response && response.length != 0) {
             console.log(response);
             response.forEach(user => {
                 $('#input-recipient').append(`
-                <option>${user.name}</option>
-            `)
+                    <option>${user.name}</option>
+                `)
             });
         } else {
             alert('There are no registered users on this platform. Please add some users first before proceeding to sending them some items...')
@@ -24,7 +28,6 @@ $(document).ready(() => {
         alert(err.message);
     })
 
-    var uid = window.localStorage.getItem('fleet-uid') ? auth.currentUser.uid : window.localStorage.getItem('fleet-uid')
 
     if (uid) {
         db.collection('fleet-admin')
@@ -74,11 +77,36 @@ const login = () => {
             toggleLoading(true)
             // Sign in with email and password
             auth.signInWithEmailAndPassword(emailField.val(), passwordField.val())
-                .then(() => {
+                .then((userInfo) => {
                     // Remove loading toggle
-                    toggleLoading(false)
+                    // toggleLoading(false)
                     // Navigate to the dashboard
-                    window.location.href = "dashboard.html"
+                    // window.location.href = "dashboard.html"
+
+                    window.localStorage.setItem('user-key', userInfo.user.uid)
+
+                    // Push user's data to the database
+                    db.collection('fleet-admin').doc(auth.currentUser.uid)
+                        .set({
+                            key: `${auth.currentUser.uid}`,
+                            name: "Admin",
+                            email: auth.currentUser.email,
+                            sending_office: "Dansoman",
+                            sending_region: "Greater Accra",
+                            photoUrl: `${auth.currentUser.photoUrl}`,
+                            token: null,
+                            timestamp: `${new Date().getTime()}`,
+                            role: 'admin'
+                        }).then(() => {
+                            // Remove loading toggle
+                            toggleLoading(false)
+                            // Navigate to the dashboard
+                            window.location.href = "dashboard.html"
+                        }).catch((err) => {
+                            // Remove loading toggle
+                            toggleLoading(false)
+                            alert(err.message)
+                        })
                 }).catch((err) => {
                     // Remove loading toggle
                     toggleLoading(false)
@@ -110,8 +138,10 @@ const register = () => {
             } else {
                 // Create user with email address and password
                 auth.createUserWithEmailAndPassword(emailField.val(), passwordField.val())
-                    .then(() => {
+                    .then((userInfo) => {
                         console.log("User created... Almost done!");
+
+                        window.localStorage.setItem('user-key', userInfo.user.uid)
 
                         // Push user's data to the database
                         db.collection('fleet-admin').doc(auth.currentUser.uid)
@@ -200,7 +230,7 @@ const submitItem = () => {
     var comment = document.getElementById('input-comment').value
 
     // Validate all fields
-    if (validator.isEmpty(rregion) || validator.isEmpty(rcity) || validator.isEmpty(sregion) || validator.isEmpty(scity) || validator.isEmpty(sender) || validator.isEmpty(itemType) || validator.isEmpty(recipient)) {
+    if (validator.isEmpty(rregion) && validator.isEmpty(rcity) && validator.isEmpty(sregion) && validator.isEmpty(scity) && validator.isEmpty(sender) && validator.isEmpty(itemType) && validator.isEmpty(recipient)) {
         alert("Please fill in all these details before you proceed")
         return
     }
@@ -233,8 +263,8 @@ const submitItem = () => {
         alert("Request sent successfully with code: " + code)
 
         // Reset fields
-        document.getElementById('input-region').value = ""
-        document.getElementById('input-city').value = ""
+        document.getElementById('input-s-region').value = ""
+        document.getElementById('input-s-city').value = ""
         document.getElementById('input-duration').value = ""
         document.getElementById('input-item').value = ""
         document.getElementById('input-recipient').value = ""
