@@ -71,6 +71,7 @@ const login = () => {
     var isValid = !validator.isEmpty(emailField.val()) && !validator.isEmpty(passwordField.val())
     if (isValid) {
         if (validator.isEmail(emailField.val())) {
+            toggleLoading(true)
             // Sign in with email and password
             auth.signInWithEmailAndPassword(emailField.val(), passwordField.val())
                 .then(() => {
