@@ -36,19 +36,21 @@
         "bootstrap": "^4.1.3",
         "bootstrap-datepicker": "^1.8.0",
         "chart.js": "^2.7.2",
+        "firebase": "^5.10.0",
         "holderjs": "^2.9.4",
         "jquery": "^3.3.1",
         "jquery-scroll-lock": "^3.1.3",
         "jquery.scrollbar": "^0.2.11",
-        "nouislider": "^11.1.0"
+        "nouislider": "^11.1.0",
+        "validator": "^10.11.0"
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/creativetimofficial/argon-dashboard/issues"
+        "url": "https://github.com/Quabynah-Codelabs/fleet-application/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/creativetimofficial/argon-dashboard.git"
+        "url": "git+https://github.com/Quabynah-Codelabs/fleet-application.git"
     },
-    "homepage": "https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
+    "homepage": "https://github.com/Quabynah-Codelabs/fleet-application/LICENSE.md"
 }
