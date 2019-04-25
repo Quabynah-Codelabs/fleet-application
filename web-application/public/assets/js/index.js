@@ -45,10 +45,7 @@ $(document).ready(() => {
             });
         });
 
-        // <td>
-        //     <a href="#report" class="btn btn-primary">Print Report</a>
-        // </td>
-
+    // Add click action to each data row
     $(document).on('click', "tr[data-href]", function () {
         // notify(this.dataset.href, false)
         toggleLoading(true)
@@ -61,19 +58,11 @@ $(document).ready(() => {
                 showItemDetails(snapshot.data())
             })
     })
-
-    $(document).on('click', "a[data-href]", function () {
-        // notify(this.dataset.href, false)
-        // printJS({printable: JSON.parse(this.dataset.href), properties: ['name', 'email', 'phone'], type: 'json'})
-        console.log(this.dataset.href.toString());
-        
-    })
-
-
 })
 
+// Show details for each item
 let model = null
-const showItemDetails  = (dataModel) => {
+const showItemDetails = (dataModel) => {
     model = dataModel
     $('#item-key').text(`${dataModel.key}`)
     $('#item-city').text(`Receiving City: ${dataModel.city}`)
@@ -84,12 +73,22 @@ const showItemDetails  = (dataModel) => {
     $('#modal-item-details').modal('show')
 }
 
+// Print Single item
 const printItem = () => {
     var someJSONdata = []
     someJSONdata.push(model)
-    printJS({printable: someJSONdata, properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'], type: 'json'})
+    printJS({
+        printable: someJSONdata,
+        properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'],
+        type: 'json'
+    })
 }
 
+// Print all items
 const printReport = () => {
-    printJS({printable: dataset, properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'], type: 'json'})
+    printJS({
+        printable: dataset,
+        properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'],
+        type: 'json'
+    })
 }
