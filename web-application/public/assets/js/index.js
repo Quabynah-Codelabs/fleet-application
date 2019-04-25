@@ -1,5 +1,7 @@
-$(document).ready(() => {
+// Empty data set of all the outgoing mail items in the database
+let dataset = []
 
+$(document).ready(() => {
     // Load all items
     db.collection('fleet-orders').orderBy('timestamp', 'desc')
         // .where('received','==',false)
@@ -9,7 +11,7 @@ $(document).ready(() => {
             var table = $('#items-table');
 
             return docs.forEach(doc => {
-                // console.log(doc.data())
+                dataset.push(doc.data())
 
                 // get data
                 var data = doc.data()
@@ -36,14 +38,58 @@ $(document).ready(() => {
                             <b>${data.key}</b>
                         </td>
                         <td>
-                            <a href="#report" class="btn btn-primary">Print Report</a>
+                            <a href="#report" class="btn btn-primary">View details</a>
                         </td>
                     </tr>
                 `);
             });
         });
 
-        $(document).on('click', "tr[data-href]", function () {
-            notify($(this).text(), false)
-        })
+        // <td>
+        //     <a href="#report" class="btn btn-primary">Print Report</a>
+        // </td>
+
+    $(document).on('click', "tr[data-href]", function () {
+        // notify(this.dataset.href, false)
+        toggleLoading(true)
+        db.collection('fleet-orders')
+            .doc(this.dataset.href).get()
+            .then((snapshot) => {
+                toggleLoading(false)
+
+                // Show details
+                showItemDetails(snapshot.data())
+            })
+    })
+
+    $(document).on('click', "a[data-href]", function () {
+        // notify(this.dataset.href, false)
+        // printJS({printable: JSON.parse(this.dataset.href), properties: ['name', 'email', 'phone'], type: 'json'})
+        console.log(this.dataset.href.toString());
+        
+    })
+
+
 })
+
+let model = null
+const showItemDetails  = (dataModel) => {
+    model = dataModel
+    $('#item-key').text(`${dataModel.key}`)
+    $('#item-city').text(`Receiving City: ${dataModel.city}`)
+    $('#item-sender').text(`Sender: ${dataModel.sender}`)
+    $('#item-duration').text(`Duration (in days): ${dataModel.duration}`)
+    $('#item-comment').text(`${dataModel.comment}`)
+
+    $('#modal-item-details').modal('show')
+}
+
+const printItem = () => {
+    var someJSONdata = []
+    someJSONdata.push(model)
+    printJS({printable: someJSONdata, properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'], type: 'json'})
+}
+
+const printReport = () => {
+    printJS({printable: dataset, properties: ['key', 'sender', 'item', 'duration', 'city', 'recipient', 'sending_office', 'sending_region', 'region'], type: 'json'})
+}
