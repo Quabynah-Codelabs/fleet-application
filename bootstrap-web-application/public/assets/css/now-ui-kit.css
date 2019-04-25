@@ -1691,7 +1691,7 @@ fieldset[disabled] .navbar .navbar-nav>a.btn.active {
 }
 
 .btn-primary {
-  background-color: #f96332;
+  background-color: #74074f;
   color: #FFFFFF;
 }
 
@@ -1706,7 +1706,7 @@ fieldset[disabled] .navbar .navbar-nav>a.btn.active {
 .show>.btn-primary.dropdown-toggle,
 .show>.btn-primary.dropdown-toggle:focus,
 .show>.btn-primary.dropdown-toggle:hover {
-  background-color: #fa7a50;
+  background-color: #74074f;
   color: #FFFFFF;
   box-shadow: none;
 }
@@ -2543,11 +2543,6 @@ fieldset[disabled] .btn-link.active {
   transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   -webkit-box-shadow: none;
   box-shadow: none;
-}
-
-.form-control option {
-  line-height: normal;
-  font-size: 1em;
 }
 
 .has-success .form-control {
@@ -6152,6 +6147,10 @@ img {
 
 [data-background-color="black"] {
   background-color: #2c2c2c;
+}
+
+[data-background-color="purple"] {
+  background-color: #74074f;
 }
 
 [data-background-color]:not([data-background-color="gray"]) {

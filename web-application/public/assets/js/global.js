@@ -10,9 +10,10 @@ let sending_office = ''
 $(document).ready(() => {
     toggleLoading(false)
 
+    // Get admin's login id
     let uid = window.localStorage.getItem('user-key')
-    
 
+    // Load all users
     loadData().then((response) => {
         if (response && response.length != 0) {
             console.log(response);
@@ -25,11 +26,16 @@ $(document).ready(() => {
             alert('There are no registered users on this platform. Please add some users first before proceeding to sending them some items...')
         }
     }).catch((err) => {
-        alert(err.message);
+        notify(err.message, true);
     })
 
-
+    // Get admin's information from the database
     if (uid) {
+
+        // Set logout text
+        $('#logout-text').text('Sign out')
+
+        // Get admin info
         db.collection('fleet-admin')
             .doc(uid).get().then((response) => {
                 if (response.exists) {
@@ -44,12 +50,29 @@ $(document).ready(() => {
                     $('#input-s-region').val(sending_region)
                     $('#input-s-city').val(sending_office)
                     $('#input-sender').val(sender)
+                    $('#input-email').val(email)
+
+                    $('#current-user-email').text(email)
+
+                    notify(data.email, false)
                 }
             }).catch((reason) => {
-                alert(reason.message)
+                notify(reason.message, true)
             })
+    } else {
+        $('#logout-text').text('Login')
     }
 });
+
+const navUpload = () => {
+    let uid = window.localStorage.getItem('user-key')
+
+    if (uid) {
+        window.location.href = "upload.html"
+    } else {
+        $('#modal-form').modal('show')
+    }
+}
 
 // Load all users from the database
 const loadData = async () => {
@@ -61,7 +84,7 @@ const loadData = async () => {
         })
         console.log(`Users found: ${users}`)
     }).catch((reason) => {
-        alert(reason.message)
+        notify(reason.message, true)
     })
     return users;
 };
@@ -100,17 +123,19 @@ const login = () => {
                         }).then(() => {
                             // Remove loading toggle
                             toggleLoading(false)
-                            // Navigate to the dashboard
-                            window.location.href = "dashboard.html"
+                            // Dismiss Modal
+                            $('#modal-form').modal('hide')
                         }).catch((err) => {
                             // Remove loading toggle
                             toggleLoading(false)
-                            alert(err.message)
+                            $('#modal-form').modal('hide')
+                            notify(err.message, true)
                         })
                 }).catch((err) => {
                     // Remove loading toggle
                     toggleLoading(false)
-                    alert(err.message)
+                    $('#modal-form').modal('hide')
+                    notify(err.message, true)
                 });
 
         } else {
@@ -120,6 +145,10 @@ const login = () => {
         alert("Please enter your email and password...")
     }
 };
+
+const showRegister = () => {
+    $('#modal-register').modal('show')
+}
 
 // Create user with email & password
 const register = () => {
@@ -158,18 +187,20 @@ const register = () => {
                             }).then(() => {
                                 // Remove loading toggle
                                 toggleLoading(false)
-                                // Navigate to the dashboard
-                                window.location.href = "dashboard.html"
+                                // Dismiss modal
+                                $('#modal-register').modal('hide')
                             }).catch((err) => {
                                 // Remove loading toggle
                                 toggleLoading(false)
-                                alert(err.message)
+                                $('#modal-register').modal('hide')
+                                notify(err.message, true)
                             })
 
                     }).catch((err) => {
                         // Remove loading toggle
                         toggleLoading(false)
-                        alert(err.message)
+                        $('#modal-register').modal('hide')
+                        notify(err.message, true)
                     });
             }
         } else {
@@ -195,29 +226,52 @@ const resetPassword = () => {
     toggleLoading(true)
     auth.sendPasswordResetEmail(emailField.val()).then(() => {
         toggleLoading(false)
-        alert("Please check your email account for the reset link...")
+        notify("Please check your email account for the reset link...", false)
     }).catch((err) => {
         toggleLoading(false)
-        alert(err.message)
+        notify(err.message, true)
     });
 
 };
 
 // Sign out user
 const signOut = () => {
-    if (confirm("Do you wish to sign out?")) {
-        auth.signOut().then(() => {
-            window.location.href = "index.html"
-        }).catch((err) => {
-            alert(err.message)
-        })
+    if (window.localStorage.getItem('user-key') != null) {
+        if (confirm("Do you wish to sign out?")) {
+            auth.signOut().then(() => {
+                window.localStorage.setItem('user-key', null)
+                $('#logout-text').text('Login')
+            }).catch((err) => {
+                notify(err.message, true)
+            })
+        }
     } else {
-
+        $('#modal-form').modal('show')
     }
 };
 
+const resetFields = () => {
+    document.getElementById('input-s-region').value = ""
+    document.getElementById('input-s-city').value = ""
+    document.getElementById('input-duration').value = ""
+    document.getElementById('input-item').value = ""
+    document.getElementById('input-recipient').value = ""
+    document.getElementById('input-comment').value = ""
+};
+
+const notify = (message, isError) => {
+    $('#alert-message').text(message)
+    $('#alert-title').text(isError ? 'Heads up. An error occurred' : 'Notification')
+    $('#alert-modal').modal('show')
+}
+
 // Upload item to the database
 const submitItem = () => {
+    if (auth.currentUser === null) {
+        $('#modal-form').modal('show')
+        return
+    }
+
     // get all fields
     var sregion = document.getElementById('input-s-region').value
     var scity = document.getElementById('input-s-city').value
@@ -260,18 +314,11 @@ const submitItem = () => {
     }).then(() => {
         // Notify user of transactioon progress
         toggleLoading(false)
-        alert("Request sent successfully with code: " + code)
-
-        // Reset fields
-        document.getElementById('input-s-region').value = ""
-        document.getElementById('input-s-city').value = ""
-        document.getElementById('input-duration').value = ""
-        document.getElementById('input-item').value = ""
-        document.getElementById('input-recipient').value = ""
-        document.getElementById('input-comment').value = ""
+        notify("Request sent successfully with code: " + code, false)
+        resetFields()
     }).catch((reason) => {
         toggleLoading(false)
-        alert(reason.message)
+        notify(reason.message, true)
     })
 };
 
