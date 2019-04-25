@@ -1,4 +1,6 @@
 $(document).ready(() => {
+
+    // Load all items
     db.collection('fleet-orders').orderBy('timestamp', 'desc')
         // .where('received','==',false)
         .get()
@@ -14,7 +16,7 @@ $(document).ready(() => {
 
                 // Append data to the table
                 table.append(`
-                        <tr>
+                        <tr data-href="${data.key}">
                         <td id="${data.key}" class="rows text-dark">
                             ${data.city}
                         </td>
@@ -40,4 +42,8 @@ $(document).ready(() => {
                 `);
             });
         });
+
+        $(document).on('click', "tr[data-href]", function () {
+            notify($(this).text(), false)
+        })
 })
