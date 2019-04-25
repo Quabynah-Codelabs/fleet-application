@@ -33,6 +33,7 @@ interface FleetDao {
     @Query("SELECT * FROM orders ORDER BY timestamp DESC")
     fun getAllOrders(): LiveData<MutableList<Order>>
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createReport(vararg reports: Report)
 

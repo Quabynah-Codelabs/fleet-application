@@ -34,7 +34,7 @@ class MainActivity : RootActivity() {
             } else {
                 val snackbar =
                     Snackbar.make(binding.container, "You need to be signed in first", Snackbar.LENGTH_INDEFINITE)
-                snackbar.setAction("Dismiss"){
+                snackbar.setAction("Dismiss") {
                     database.key = null
                     database.isLoggedIn = false
                     snackbar.dismiss()
@@ -107,12 +107,12 @@ class MainActivity : RootActivity() {
 
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                toast("Google sign in failed. ${e.localizedMessage}")
-                binding.googleLoginBtn.isEnabled = false
+                toast("Google sign in failed. ${e.localizedMessage}", true)
+                binding.googleLoginBtn.isEnabled = true
             }
         } else {
-            toast("unable to sign in user. Please check for errors")
-            binding.googleLoginBtn.isEnabled = false
+            toast("Unable to sign in user. Please check for errors", true)
+            binding.googleLoginBtn.isEnabled = true
         }
     }
 

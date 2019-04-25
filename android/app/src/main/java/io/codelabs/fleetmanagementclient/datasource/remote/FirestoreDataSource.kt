@@ -234,10 +234,10 @@ fun RootActivity.getReports(callback: FleetCallback<MutableList<Report>>) {
 
 fun RootActivity.signOut() {
     auth.signOut()
-    database.key = null
     ioScope.launch {
         val user = dao.getCurrentUser(database.key!!).value
         if (user != null) dao.removeUser(user)
+        database.key = null
 
         uiScope.launch {
             startActivity(Intent(applicationContext, MainActivity::class.java))

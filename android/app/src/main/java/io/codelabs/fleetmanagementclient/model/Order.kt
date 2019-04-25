@@ -32,4 +32,5 @@ data class Order(
         const val PARCEL = "parcel"
         const val EMS = "ems"
     }
+
 }
