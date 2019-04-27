@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Domestic Test Mails System</title>
+    <!-- Favicon -->
+    <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Icons -->
+    <link href="./assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- Argon CSS -->
+    <link type="text/css" href="./assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link type="text/css" href="./assets/css/global.css" rel="stylesheet">
+    <link type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner -->
+    <div id="overlay">
+        <div class="spinner"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Sidenav -->
+    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+        <div class="container-fluid">
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+                aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Collapse header -->
+                <div class="navbar-collapse-header d-md-none">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="./index.html">
+                                <img src="./assets/img/brand/blue.png">
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false"
+                                aria-label="Toggle sidenav">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form -->
+                <form id="user-search-form-collapsed" class="mt-4 mb-3 d-md-none">
+                    <div class="input-group input-group-rounded input-group-merge">
+                        <input type="search" id="search-input-collapsed"
+                            class="form-control form-control-rounded form-control-prepended"
+                            placeholder="Search user..." aria-label="Search user...">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- Navigation -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">
+                            <i class="ni ni-tv-2 text-primary"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#require-auth" onclick="navUpload()">
+                            <i class="ni ni-cloud-upload-96 text-pink"></i> Upload Item
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#require-auth" onclick="navUsers()">
+                            <i class="ni ni-single-02 text-primary"></i> Manage Users
+                        </a>
+                    </li>
+                </ul>
+                <!-- Divider -->
+                <hr class="my-3">
+                <!-- Heading -->
+                <h6 class="navbar-heading text-muted">Options</h6>
+                <!-- Navigation -->
+                <ul class="navbar-nav mb-md-3">
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="signOut()" id="logout-text" href="#logout">
+                            <i class="ni ni-spaceship"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./users.html">Manage
+                    Users</a>
+                <!-- Form -->
+                <form id="user-search-form"
+                    class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input class="form-control" id="search-input" placeholder="Search user..." type="text">
+                        </div>
+                    </div>
+                </form>
+                <!-- User -->
+                <ul class="navbar-nav align-items-center d-none d-md-flex">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0" href="#" role="button" aria-expanded="false">
+                            <div class="media align-items-center">
+                                <div class="media-body ml-2 d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold" id="current-user-email"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0"
+                            href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=f5a9b930-ed2f-40a0-8996-f112ff2a865f"
+                            role="button" target="__blank" aria-expanded="false">
+                            <div class="media align-items-center">
+                                <div class="media-body ml-2 d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold">Download App</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Header -->
+        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+            style="min-height: 400px; background-image: url(./assets/img/theme/img-2-1200x1000.jpg); background-size: cover; background-position: center top;">
+            <!-- Mask -->
+            <span class="mask bg-gradient-default opacity-8"></span>
+            <div class="container-fluid">
+                <div class="header-body"></div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--7">
+
+            <div class="row mt-5">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Registered Users</h3>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                    <a href="#" class="btn btn-danger" onclick="printReport()">Print PDF Report</a>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Email Address</th>
+                                        <th scope="col">Unique Key</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Last Seen</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-container"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="row align-items-center justify-content-xl-between">
+                    <div class="col-xl-6">
+                        <div class="copyright text-center text-xl-left text-muted">
+                            <a href="./404.html" class="font-weight-bold ml-1">About Us</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+                            <li class="nav-item">
+                                &copy;
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script>, Designed by
+                                <a href="https://codelabs.netlify.com" target="_blank">Quabynah Codelabs</a>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Notify Modal Start -->
+            <div class="col-md-4">
+                <div class="modal fade" id="alert-modal" tabindex="-1" role="dialog"
+                    aria-labelledby="modal-notification" aria-hidden="true">
+                    <div class="modal-dialog modal-primary modal-dialog-centered modal-" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="modal-title-notification">Your attention is required</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="py-3 text-center">
+                                    <i class="ni ni-bell-55 ni-3x"></i>
+                                    <h4 class="heading mt-4" id="alert-title"></h4>
+                                    <p id="alert-message"></p>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Ok, Got it</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Notify Modal End -->
+
+            <!-- Modal Start -->
+            <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+                aria-hidden="true">
+                <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body p-0">
+                            <div class="card bg-secondary shadow border-0">
+                                <div class="card-body px-lg-5 py-lg-5">
+                                    <div class="text-center text-muted mb-4">
+                                        <small>Sign in to get started</small>
+                                    </div>
+                                    <form role="form">
+                                        <div class="form-group mb-3">
+                                            <div class="input-group input-group-alternative">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                                </div>
+                                                <input class="form-control" placeholder="Email" id="email-login"
+                                                    type="email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="ni ni-lock-circle-open"></i></span>
+                                                </div>
+                                                <input class="form-control" placeholder="Password" id="password-login"
+                                                    type="password">
+                                            </div>
+                                        </div>
+                                        <div class="row my-4">
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-primary" onclick="login()">Sign
+                                                    in</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-neutral" data-dismiss="modal"
+                                                    onclick="showRegister()">Sign
+                                                    Up</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal End -->
+
+            <!-- Register Modal -->
+            <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register"
+                aria-hidden="true">
+                <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body p-0">
+                            <div class="card bg-secondary shadow border-0">
+                                <div class="card-body px-lg-5 py-lg-5">
+                                    <div class="text-center text-muted mb-4">
+                                        <small>Create new account</small>
+                                    </div>
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="ni ni-circle-08"></i></span>
+                                                </div>
+                                                <input class="form-control" id="full-name-register"
+                                                    placeholder="Full Name" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                                </div>
+                                                <input class="form-control" id="email-register" placeholder="Email"
+                                                    type="email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="ni ni-compass-04"></i></span>
+                                                </div>
+                                                <select id="sending-office-register"
+                                                    class="form-control form-control-alternative">
+                                                    <option>Dansoman</option>
+                                                    <option>Madina</option>
+                                                    <option>Latebiokoshie</option>
+                                                    <option>Accra Central</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="ni ni-map-big"></i></span>
+                                                </div>
+                                                <select id="sending-reg-register"
+                                                    class="form-control form-control-alternative">
+                                                    <option>Greater Accra</option>
+                                                    <option>Central Region</option>
+                                                    <option>Eastern Region</option>
+                                                    <option>Brong-Ahafo Region</option>
+                                                    <option>Western Region</option>
+                                                    <option>Volta Region</option>
+                                                    <option>Upper-East Region</option>
+                                                    <option>Upper-West Region</option>
+                                                    <option>Northern Region</option>
+                                                    <option>Ashanti Region</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group input-group-alternative">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="ni ni-lock-circle-open"></i></span>
+                                                </div>
+                                                <input class="form-control" id="password-register"
+                                                    placeholder="Password" type="password">
+                                            </div>
+                                        </div>
+                                        <div class="row my-4">
+                                            <div class="col-12">
+                                                <div class="custom-control custom-control-alternative custom-checkbox">
+                                                    <input class="custom-control-input" id="customCheckRegister"
+                                                        type="checkbox">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary mt-4"
+                                                onclick="register()">Create account</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Register Modal End -->
+
+            <!-- Item details Modal Start -->
+            <div class="modal fade" id="modal-item-details" tabindex="-1" role="dialog"
+                aria-labelledby="modal-item-details" aria-hidden="true">
+                <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body p-0">
+                            <div class="card bg-secondary shadow border-0">
+                                <div class="card-body px-lg-5 py-lg-5">
+                                    <div class="text-center text-muted mb-4">
+                                        <h3>Showing details for...</h3>
+                                    </div>
+                                    <div class="px-4">
+                                        <div class="text-center mt-5">
+                                            <h3 id="item-key"></h3>
+                                        </div>
+                                        <div class="mt-5 border-top text-center">
+                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"
+                                                    id="item-type"></i></div>
+                                            <div><i class="ni education_hat mr-2" id="item-city"></i></b></div>
+                                        </div>
+                                        <div class="mt-5 border-top text-center">
+                                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"
+                                                    id="item-recipient"></i></div>
+                                            <div><i class="ni education_hat mr-2" id="item-sender"></i></div>
+                                            <div><i class="ni education_hat mr-2" id="item-duration"></i></div>
+                                        </div>
+                                        <div class="mt-5 mb-5 py-5 border-top text-center">
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-9">
+                                                    <div id="item-comment" class="text-dark mb-5"></div>
+                                                    <button class="btn btn-default btn-raised" id="clearItem"
+                                                        onclick="printItem()">Print Details</button>
+                                                    <hr>
+                                                    <button class="btn btn-info btn-raised" data-dismiss="modal">Go
+                                                        back</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Item details Modal End -->
+
+
+            <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+
+            <script>
+                // Initialize Firebase
+                var config = {
+                    apiKey: "AIzaSyA1YVUgV_G-2Mi9G-09o0hL76YLk7qMdU4",
+                    authDomain: "fleet-mobile-app.firebaseapp.com",
+                    databaseURL: "https://fleet-mobile-app.firebaseio.com",
+                    projectId: "fleet-mobile-app",
+                    storageBucket: "fleet-mobile-app.appspot.com",
+                    messagingSenderId: "242841878369"
+                };
+                firebase.initializeApp(config);
+            </script>
+
+            <!-- Argon Scripts -->
+            <!-- Core -->
+            <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+            <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Optional JS -->
+            <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+            <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+            <!-- Argon JS -->
+            <script src="./assets/js/argon.js?v=1.0.0"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/10.11.0/validator.min.js"></script>
+            <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+            <script src="./assets/js/global.js"></script>
+            <script src="./assets/js/users.js"></script>
+</body>
+
+</html>

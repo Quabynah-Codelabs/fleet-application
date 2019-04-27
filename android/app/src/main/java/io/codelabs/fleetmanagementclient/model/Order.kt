@@ -12,7 +12,9 @@ import kotlinx.android.parcel.Parcelize
 data class Order(
     @PrimaryKey
     val key: String,
+    @SerializedName("office")
     val city: String,
+    @SerializedName("receiving_region")
     val region: String,
     val item: String = Type.LETTER,
     val sender: String,

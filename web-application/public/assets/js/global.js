@@ -54,7 +54,7 @@ $(document).ready(() => {
 
                     $('#current-user-email').text(email)
 
-                    notify(data.email, false)
+                    // notify(data.email, false)
                 }
             }).catch((reason) => {
                 notify(reason.message, true)
@@ -69,6 +69,16 @@ const navUpload = () => {
 
     if (uid) {
         window.location.href = "upload.html"
+    } else {
+        $('#modal-form').modal('show')
+    }
+}
+
+const navUsers = () => {
+    let uid = window.localStorage.getItem('user-key')
+
+    if (uid) {
+        window.location.href = "users.html"
     } else {
         $('#modal-form').modal('show')
     }
@@ -298,8 +308,8 @@ const submitItem = () => {
 
     db.collection('fleet-orders').doc(code).set({
         key: code,
-        region: rregion,
-        city: rcity,
+        receiving_region: rregion,
+        office: rcity,
         sender: sender,
         timestamp: time,
         recipient: recipient,
