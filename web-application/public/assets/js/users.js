@@ -10,10 +10,10 @@ $(document).ready(() => {
     });
 
     // Load live data
-    loadLiveData()
+    // loadLiveData()
 
     // Get data once until page has been refreshed
-    // loadStaticData()
+    loadStaticData()
 
     // View action
     $(document).on('click', 'a[data-href]#view-user', function (ev) {
@@ -43,7 +43,11 @@ $(document).ready(() => {
                             // Update UI with callback
                             toggleLoading(false);
                             notify('User deleted successfully', false);
-                        }).catch(err => {});
+                            clearTable();
+                            loadStaticData();
+                        }).catch(err => {
+                            console.log(err.message)
+                        });
                     }).catch(err => {
                         toggleLoading(false);
                         notify('Unable to remove user information from the system. This may be due to a poor internet connection. Please try again later.\n' + err.message, true);
@@ -95,7 +99,7 @@ const loadLiveData = () => {
                     <th scope="row">
                         <div class="media align-items-center">
                             <a href="#" class="avatar rounded-circle mr-3">
-                                <img alt="Image placeholder" src="${avatar}">
+                                <img alt="Image placeholder" src="${avatar && avatar != 'null' ? avatar : './assets/img/icons/common/avatar_placeholder_large.png'}">
                             </a>
                             <div class="media-body">
                                 <span class="mb-0 text-sm">${name}</span>
@@ -136,6 +140,10 @@ const loadLiveData = () => {
         toggleLoading(false);
         notify(err.message);
     });
+};
+
+const clearTable = () => {
+    $('#users-container').empty();
 }
 
 // Load data snapshots from the server
@@ -160,7 +168,7 @@ const loadStaticData = () => {
                     <th scope="row">
                         <div class="media align-items-center">
                             <a href="#" class="avatar rounded-circle mr-3">
-                                <img alt="Image placeholder" src="${avatar}">
+                                <img alt="Image placeholder" src="${avatar && avatar != 'null' ? avatar : './assets/img/icons/common/avatar_placeholder_large.png'}">
                             </a>
                             <div class="media-body">
                                 <span class="mb-0 text-sm">${name}</span>
@@ -220,18 +228,28 @@ const searchFor = async () => {
 
     // Perform actual query
     toggleLoading(true);
+    let results = [];
 
-    await db.collection('fleet-users').where('name', '==', query).orderBy('timestamp')
+    // Fetch all users that have the same name as the query
+    await db.collection('fleet-users')
+        .where('name', '==', query)
+        // .orderBy('timestamp')
         .limit(100)
         .get()
         .then(snapshots => {
             toggleLoading(false);
             notify(`${snapshots.docs.length} items found!`, false);
+            snapshots.docs.forEach(doc => {
+                if (doc.exists) {
+                    results.push(doc.data());
+                }
+            });
         }).catch(err => {
             toggleLoading(false);
             notify(err.message, true);
             console.log(err.message);
-
         });
 
+        // return results from query
+        return results;
 };
