@@ -92,7 +92,7 @@
                 <h6 class="navbar-heading text-muted">Options</h6>
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
+                    <li class="nav-item" id="logout">
                         <a class="nav-link" onclick="signOut()" id="logout-text" href="#logout">
                             <i class="ni ni-spaceship"></i>
                         </a>
@@ -134,7 +134,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link pr-0"
-                            href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=f5a9b930-ed2f-40a0-8996-f112ff2a865f"
+                            href="https://firebasestorage.googleapis.com/v0/b/fleet-mobile-app.appspot.com/o/app-debug.apk?alt=media&amp;token=0d166898-15f9-405a-8ebe-714ead73b930"
                             role="button" target="__blank" aria-expanded="false">
                             <div class="media align-items-center">
                                 <div class="media-body ml-2 d-none d-lg-block">
@@ -178,8 +178,8 @@
                                         <th scope="col">Full Name</th>
                                         <th scope="col">Email Address</th>
                                         <th scope="col">Unique Key</th>
-                                        <th scope="col">Created At</th>
-                                        <th scope="col">Last Seen</th>
+                                        <th scope="col">Created On</th>
+                                        <th scope="col">Last Seen (on App)</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -189,6 +189,39 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row mt-5" id="super-admin-tab">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Administrators</h3>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                        <a href="#" class="btn btn-danger" onclick="printReport()">Print PDF Report</a>
+                                    </div> -->
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Email Address</th>
+                                        <th scope="col">Unique Key</th>
+                                        <th scope="col">Admin Role</th>
+                                        <th scope="col">Created On</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-container"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Footer -->
             <footer class="footer">
                 <div class="row align-items-center justify-content-xl-between">

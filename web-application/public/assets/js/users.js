@@ -14,6 +14,7 @@ $(document).ready(() => {
 
     // Get data once until page has been refreshed
     loadStaticData()
+    loadStaticAdminData()
 
     // View action
     $(document).on('click', 'a[data-href]#view-user', function (ev) {
@@ -212,6 +213,73 @@ const loadStaticData = () => {
 }
 
 
+const loadStaticAdminData = () => {
+    db.collection('fleet-admin')
+        // .where('key', '!=', window.localStorage.getItem('user-key'))
+        .get()
+        .then(snapshots => {
+            if (snapshots.empty) {
+                notify('No users found', false);
+            } else {
+                console.log(snapshots.docs[0].data());
+
+                snapshots.docs.forEach(doc => {
+                    var key = doc.data().key
+                    var name = doc.data().name
+                    var email = doc.data().email
+                    var role = doc.data().role
+                    var lastSeen = doc.data().timestamp
+                    var avatar = doc.data().photoUrl
+
+                    $('#admin-container').append(`
+                    <tr data-href="${key}" id="view-user">
+                        <th scope="row">
+                            <div class="media align-items-center">
+                                <a href="#" class="avatar rounded-circle mr-3">
+                                    <img alt="Image placeholder" src="${avatar && avatar != 'null' && avatar != 'undefined' ? avatar : './assets/img/icons/common/avatar_placeholder_large.png'}">
+                                </a>
+                                <div class="media-body">
+                                    <span class="mb-0 text-sm">${name}</span>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            ${email}
+                        </td>
+                        <td>
+                            ${key}
+                        </td>
+                        <td>
+                            ${role.toUpperCase()}
+                        </td>
+                        <td>
+                        ${new Date(lastSeen).toDateString()}
+                        </td>
+                        <td class="text-right">
+                            <div class="dropdown">
+                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                    <a class="dropdown-item" data-href="${key}" id="view-user" href="#view">View</a>
+                                    <a class="dropdown-item" data-href="${key}" id="delete-admin" href="#delete">Delete</a>
+                                    <a class="dropdown-item" data-href="${key}" id="edit-admin" href="#edit">Edit Role</a>
+                                    <a class="dropdown-item" data-href="${key}" id="block-user" href="#block">Block</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `)
+                });
+            }
+        }).catch(err => {
+            toggleLoading(false);
+            notify(err.message);
+        });
+}
+
+
 // Query functions
 const searchFor = async () => {
     // Get query
@@ -250,6 +318,6 @@ const searchFor = async () => {
             console.log(err.message);
         });
 
-        // return results from query
-        return results;
+    // return results from query
+    return results;
 };

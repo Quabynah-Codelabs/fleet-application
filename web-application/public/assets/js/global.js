@@ -30,9 +30,9 @@ $(document).ready(() => {
     })
 
     // Get admin's information from the database
-    if (uid) {
-
+    if (uid && uid != 'null') {
         // Set logout text
+        $('#logout').show()
         $('#logout-text').text('Sign out')
 
         // Get admin info
@@ -41,6 +41,7 @@ $(document).ready(() => {
                 if (response.exists) {
                     // Get data, if any
                     var data = response.data()
+
                     email = data.email
                     sender = data.name
                     sending_region = data.sending_region
@@ -55,19 +56,27 @@ $(document).ready(() => {
                     $('#current-user-email').text(email)
 
                     // notify(data.email, false)
+
+                    var adminTab = $('#super-admin-tab')
+                    if (data.role === 'super-admin') {
+                        adminTab.show()
+                    } else {
+                        adminTab.hide()
+                    }
                 }
             }).catch((reason) => {
                 notify(reason.message, true)
             })
     } else {
-        $('#logout-text').text('Login')
+        // $('#logout-text').text('Login')
+        $('#logout').hide()
     }
 });
 
 const navUpload = () => {
     let uid = window.localStorage.getItem('user-key')
 
-    if (uid) {
+    if (uid && uid != 'null') {
         window.location.href = "upload.html"
     } else {
         $('#modal-form').modal('show')
@@ -77,7 +86,7 @@ const navUpload = () => {
 const navUsers = () => {
     let uid = window.localStorage.getItem('user-key')
 
-    if (uid) {
+    if (uid && uid != 'null') {
         window.location.href = "users.html"
     } else {
         $('#modal-form').modal('show')
@@ -116,31 +125,50 @@ const login = () => {
                     // Navigate to the dashboard
                     // window.location.href = "dashboard.html"
 
-                    window.localStorage.setItem('user-key', userInfo.user.uid)
+                    db.collection('fleet-admin').doc(userInfo.user.uid)
+                        .get().then(snapshot => {
+                            if (snapshot.exists) {
+                                window.localStorage.setItem('user-key', userInfo.user.uid)
+                                // Remove loading toggle
+                                toggleLoading(false)
+                                // Dismiss Modal
+                                $('#modal-form').modal('hide');
+                                notify('Login was successful', false);
+                                $('#logout').show()
+                            } else {
+                                toggleLoading(false);
+                                notify('Sorry! You are not registered as an administrator', true);
+                                $('#modal-form').modal('hide')
+                            }
+                        }).catch(err => {
+                            toggleLoading(false);
+                            notify(err.message, true);
+                            $('#modal-form').modal('hide')
+                        });
 
                     // Push user's data to the database
-                    db.collection('fleet-admin').doc(auth.currentUser.uid)
-                        .set({
-                            key: `${auth.currentUser.uid}`,
-                            name: "Admin",
-                            email: auth.currentUser.email,
-                            sending_office: "Dansoman",
-                            sending_region: "Greater Accra",
-                            photoUrl: `${auth.currentUser.photoUrl}`,
-                            token: null,
-                            timestamp: `${new Date().getTime()}`,
-                            role: 'admin'
-                        }).then(() => {
-                            // Remove loading toggle
-                            toggleLoading(false)
-                            // Dismiss Modal
-                            $('#modal-form').modal('hide')
-                        }).catch((err) => {
-                            // Remove loading toggle
-                            toggleLoading(false)
-                            $('#modal-form').modal('hide')
-                            notify(err.message, true)
-                        })
+                    // db.collection('fleet-admin').doc(auth.currentUser.uid)
+                    //     .set({
+                    //         key: `${auth.currentUser.uid}`,
+                    //         name: "Admin",
+                    //         email: auth.currentUser.email,
+                    //         sending_office: "Dansoman",
+                    //         sending_region: "Greater Accra",
+                    //         photoUrl: `${auth.currentUser.photoUrl}`,
+                    //         token: null,
+                    //         timestamp: `${new Date().getTime()}`,
+                    //         role: 'admin'
+                    //     }).then(() => {
+                    //         // Remove loading toggle
+                    //         toggleLoading(false)
+                    //         // Dismiss Modal
+                    //         $('#modal-form').modal('hide')
+                    //     }).catch((err) => {
+                    //         // Remove loading toggle
+                    //         toggleLoading(false)
+                    //         $('#modal-form').modal('hide')
+                    //         notify(err.message, true)
+                    //     })
                 }).catch((err) => {
                     // Remove loading toggle
                     toggleLoading(false)
@@ -167,6 +195,7 @@ const register = () => {
     var nameField = $('#full-name-register')
     var officeField = $('#sending-office-register')
     var regionField = $('#sending-reg-register')
+    var adminField = $('#role-register')
 
     var isValid = !validator.isEmpty(emailField.val()) && !validator.isEmpty(passwordField.val())
     if (isValid) {
@@ -192,13 +221,15 @@ const register = () => {
                                 sending_region: officeField.val(),
                                 photoUrl: `${auth.currentUser.photoUrl}`,
                                 token: null,
-                                timestamp: `${new Date().getTime()}`,
-                                role: 'admin'
+                                timestamp: new Date().getTime(),
+                                role: adminField.val().toLocaleLowerCase()
                             }).then(() => {
                                 // Remove loading toggle
                                 toggleLoading(false)
                                 // Dismiss modal
                                 $('#modal-register').modal('hide')
+                                notify('Account creation was successful', false);
+                                $('#logout').show()
                             }).catch((err) => {
                                 // Remove loading toggle
                                 toggleLoading(false)
@@ -250,7 +281,9 @@ const signOut = () => {
         if (confirm("Do you wish to sign out?")) {
             auth.signOut().then(() => {
                 window.localStorage.setItem('user-key', null)
-                $('#logout-text').text('Login')
+                // $('#logout-text').text('Login')
+                $('#logout').hide()
+                window.location.href = 'index.html'
             }).catch((err) => {
                 notify(err.message, true)
             })
