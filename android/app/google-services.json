@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "242841878369-2gt75ea16pr58385nn4kl9eo9s1l1hde.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.codelabs.fleetmanagementclient",
+            "certificate_hash": "c11d545f2fb712fb89c3b8dfbc05873bb8658d8d"
+          }
+        },
+        {
           "client_id": "242841878369-fcp5b1qkh688bib45h7766q0m8keov9e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "242841878369-7lg1ekilg2lpva41gc328q8sh4p0nhu4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

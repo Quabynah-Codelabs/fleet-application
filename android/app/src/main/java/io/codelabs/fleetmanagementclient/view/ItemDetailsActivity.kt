@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.RootActivity
@@ -41,9 +40,11 @@ class ItemDetailsActivity : RootActivity() {
                 }
 
                 override fun onError(e: String?) {
-                    snackbar.setDuration(BaseTransientBottomBar.LENGTH_LONG)
+                    /*snackbar.setDuration(BaseTransientBottomBar.LENGTH_LONG)
                         .setText(e.toString())
-                        .show()
+                        .show()*/
+                    toast(e.toString(), true)
+                    finishAfterTransition()
                 }
 
                 override fun onSuccess(response: Order?) {
