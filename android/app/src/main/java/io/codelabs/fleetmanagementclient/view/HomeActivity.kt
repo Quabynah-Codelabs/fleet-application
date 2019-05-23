@@ -23,7 +23,7 @@ import io.codelabs.fleetmanagementclient.databinding.ActivityHomeBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrders
 import io.codelabs.fleetmanagementclient.datasource.remote.updateUser
-import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.User
 import io.codelabs.fleetmanagementclient.view.recyclerview.OrderViewHolder
 import io.codelabs.recyclerview.GridItemDividerDecoration
@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 /**
  * Home screen
  */
-class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
+class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
 
 
     private lateinit var binding: ActivityHomeBinding
@@ -90,7 +90,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
         debugLog("Copied text: ${clipboardManager.primaryClip?.getItemAt(0)?.text}")
         MaterialDialog(this@HomeActivity).show {
             input(
-                hint = "Order ID",
+                hint = "MailItem ID",
                 prefill = clipboardManager.primaryClip?.getItemAt(0)?.text.toString(),
                 inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
             ) { dialog, sequence ->
@@ -98,7 +98,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
                 debugLog(sequence)
             }
             cancelOnTouchOutside(false)
-            title(text = "Receive Postal Order")
+            title(text = "Receive Postal MailItem")
             positiveButton(text = "Verify") { materialDialog ->
                 materialDialog.dismiss()
                 val orderId = getInputField().text.toString()
@@ -127,7 +127,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
         Snackbar.make(binding.container, e.toString(), Snackbar.LENGTH_LONG).show()
     }
 
-    override fun onSuccess(response: MutableList<Order>?) {
+    override fun onSuccess(response: MutableList<MailItem>?) {
         if (response != null) {
             binding.loading.visibility = View.GONE
             if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
@@ -147,7 +147,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
                 withLayoutManager(LinearLayoutManager(this@HomeActivity))
                 withDataSource(dataSourceOf(response))
                 withEmptyView(View.inflate(this@HomeActivity, R.layout.item_empty, null))
-                withItem<Order>(R.layout.item_order) {
+                withItem<MailItem>(R.layout.item_order) {
                     onBind(::OrderViewHolder) { _, item ->
                         key.text = item.key
                         type.text = item.item
@@ -160,7 +160,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<Order>> {
                 }
 
                 withClickListener { _, item ->
-                    if (item is Order) {
+                    if (item is MailItem) {
                         this@HomeActivity.startActivity(
                             Intent(
                                 this@HomeActivity,

@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "orders")
+@Entity(tableName = "mailItems")
 @Parcelize
-data class Order(
+data class MailItem(
     @PrimaryKey
     val key: String,
     @SerializedName("office")

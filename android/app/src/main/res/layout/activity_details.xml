@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
 >
     <data>
-        <variable name="order" type="io.codelabs.fleetmanagementclient.model.Order"/>
+        <variable name="mailItem" type="io.codelabs.fleetmanagementclient.model.MailItem"/>
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -31,39 +31,40 @@
 
             <include android:id="@+id/loading"
                      layout="@layout/loading"
-                     android:visibility="@{order == null ? android.view.View.VISIBLE : android.view.View.GONE}"/>
+                     android:visibility="@{mailItem == null ? android.view.View.VISIBLE : android.view.View.GONE}"/>
 
 
             <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
                                                        android:layout_height="match_parent"
-                                                       android:visibility="@{order == null ? android.view.View.GONE : android.view.View.VISIBLE}"
+                                                       android:visibility="@{mailItem == null ? android.view.View.GONE : android.view.View.VISIBLE}"
                                                        android:orientation="vertical">
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
                                                                          android:layout_height="wrap_content"
-                                                                         app:icon="@drawable/ic_info"
+                                                                         app:icon="@drawable/twotone_mail_outline_24px"
                                                                          app:title="@string/code"
+                                                                         app:widget="@layout/copy"
                                                                          android:onClick="copyCode"
-                                                                         app:summary="@{order.key}"/>
+                                                                         app:summary="@{mailItem.key}"/>
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
                                                                          android:layout_height="wrap_content"
-                                                                         app:icon="@drawable/ic_share_live_location"
+                                                                         app:icon="@drawable/twotone_location_on_24px"
                                                                          app:title="@string/city"
-                                                                         app:summary="@{order.city}"/>
+                                                                         app:summary="@{mailItem.city}"/>
 
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
                                                                          android:layout_height="wrap_content"
-                                                                         app:icon="@drawable/ic_share_location"
+                                                                         app:icon="@drawable/twotone_map_24px"
                                                                          app:title="@string/region"
-                                                                         app:summary="@{order.region}"/>
+                                                                         app:summary="@{mailItem.region}"/>
 
                 <io.codelabs.fleetmanagementclient.widget.PreferenceView android:layout_width="match_parent"
                                                                          android:layout_height="wrap_content"
-                                                                         app:icon="@drawable/ic_work"
+                                                                         app:icon="@drawable/twotone_view_carousel_24px"
                                                                          app:title="@string/item_type"
-                                                                         app:summary="@{order.item}"/>
+                                                                         app:summary="@{mailItem.item}"/>
 
                 <!-- <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
                                                           android:layout_height="wrap_content"
@@ -81,13 +82,12 @@
                                                                           app:icon="@drawable/ic_build"
                                                                           app:title="@string/code"
                                                                           app:widget="@layout/copy"
-                                                                          app:summary="@{order.key}"/>-->
+                                                                          app:summary="@{mailItem.key}"/>-->
 
                 <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
                                                                    android:layout_height="wrap_content"
                                                                    app:cornerRadius="@dimen/padding_normal"
                                                                    android:layout_gravity="center_horizontal"
-                                                                   android:layout_marginEnd="@dimen/fab_margin"
                                                                    android:layout_marginTop="@dimen/spacing_xxlarge"
                                                                    app:icon="@drawable/ic_payment"
                                                                    android:text="@string/make_payment"

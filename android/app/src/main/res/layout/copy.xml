@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-           xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:padding="@dimen/spacing_normal"
-           android:src="@drawable/ic_print"
-           android:backgroundTint="?attr/selectableItemBackgroundBorderless" tools:ignore="ContentDescription"/>
+<io.codelabs.widget.ForegroundImageView xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="@dimen/spacing_normal"
+             android:layout_gravity="center_vertical"
+             android:src="@drawable/twotone_file_copy_24px"
+             tools:ignore="ContentDescription"/>

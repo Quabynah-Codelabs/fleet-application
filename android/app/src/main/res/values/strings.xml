@@ -7,7 +7,7 @@
     <string name="app_channel_id">FLEET_CHANNEL_ID</string>
     <string name="receive_item">Receive item</string>
     <string name="signed_in_as">Signed in as %s</string>
-    <string name="code">Code</string>
+    <string name="code">Item ID</string>
     <string name="region">Region</string>
     <string name="city">Destination</string>
     <string name="sender">Sender information</string>

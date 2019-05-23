@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.fleetmanagementclient.model.User
 
-@Database(entities = [User::class, Order::class, Report::class], version = 5, exportSchema = true)
+@Database(entities = [User::class, MailItem::class, Report::class], version = 6, exportSchema = true)
 abstract class FleetDatabase : RoomDatabase() {
 
     abstract fun dao(): FleetDao

@@ -6,7 +6,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.iid.FirebaseInstanceId
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
-import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.fleetmanagementclient.model.User
 import io.codelabs.fleetmanagementclient.view.MainActivity
@@ -20,9 +20,9 @@ object DatabaseReference {
 }
 
 /**
- * Get all [Order]s from the database
+ * Get all [MailItem]s from the database
  */
-fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
+fun RootActivity.getOrders(callback: FleetCallback<MutableList<MailItem>>) {
     callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF)
         .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -34,7 +34,7 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
                 return@addSnapshotListener
             }
 
-            val orders = snapshot?.toObjects(Order::class.java)
+            val orders = snapshot?.toObjects(MailItem::class.java)
             if (orders == null) {
                 callback.onError("Orders cannot be found")
                 callback.onComplete()
@@ -47,9 +47,9 @@ fun RootActivity.getOrders(callback: FleetCallback<MutableList<Order>>) {
 }
 
 /**
- * Get [Order] by [key]
+ * Get [MailItem] by [key]
  */
-fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
+fun RootActivity.getOrderById(key: String, callback: FleetCallback<MailItem>) {
     callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF).document(key).addSnapshotListener(this) { snapshot, exception ->
         if (exception != null) {
@@ -58,9 +58,9 @@ fun RootActivity.getOrderById(key: String, callback: FleetCallback<Order>) {
             return@addSnapshotListener
         }
 
-        val order = snapshot?.toObject(Order::class.java)
+        val order = snapshot?.toObject(MailItem::class.java)
         if (order == null) {
-            callback.onError("Order with key: $key cannot be found")
+            callback.onError("MailItem with key: $key cannot be found")
             callback.onComplete()
             return@addSnapshotListener
         } else {

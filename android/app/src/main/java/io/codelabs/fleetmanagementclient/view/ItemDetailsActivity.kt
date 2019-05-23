@@ -13,7 +13,7 @@ import io.codelabs.fleetmanagementclient.datasource.FleetCallback
 import io.codelabs.fleetmanagementclient.datasource.remote.clearOrder
 import io.codelabs.fleetmanagementclient.datasource.remote.createReport
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrderById
-import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
@@ -27,13 +27,13 @@ class ItemDetailsActivity : RootActivity() {
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
         if (intent.hasExtra(EXTRA_ORDER)) {
-            binding.order = intent.getParcelableExtra(EXTRA_ORDER)
+            binding.mailItem = intent.getParcelableExtra(EXTRA_ORDER)
             bindUI()
         } else if (intent.hasExtra(EXTRA_ORDER_ID)) {
             val orderId = intent.getStringExtra(EXTRA_ORDER_ID)
             val snackbar = Snackbar.make(binding.container, "Fetching item details...", Snackbar.LENGTH_INDEFINITE)
 
-            getOrderById(orderId, object : FleetCallback<Order> {
+            getOrderById(orderId, object : FleetCallback<MailItem> {
 
                 override fun onStarted() {
                     snackbar.show()
@@ -47,10 +47,10 @@ class ItemDetailsActivity : RootActivity() {
                     finishAfterTransition()
                 }
 
-                override fun onSuccess(response: Order?) {
+                override fun onSuccess(response: MailItem?) {
                     snackbar.dismiss()
                     debugLog("$response")
-                    binding.order = response
+                    binding.mailItem = response
                     bindUI()
                 }
             })
@@ -58,18 +58,18 @@ class ItemDetailsActivity : RootActivity() {
     }
 
     private fun bindUI() {
-        debugLog(binding.order)
+        debugLog(binding.mailItem)
     }
 
     fun copyCode(v: View?) {
-        val clipData = ClipData.newPlainText("Copy item code...", binding.order?.key)
+        val clipData = ClipData.newPlainText("Copy item code...", binding.mailItem?.key)
         clipboardManager.primaryClip = clipData
         toast("Code copied")
     }
 
     fun receiveOrder(v: View?) {
         // Clear the user's order
-        clearOrder(binding.order!!.key, object : FleetCallback<Void> {
+        clearOrder(binding.mailItem!!.key, object : FleetCallback<Void> {
             override fun onStarted() {
                 toast("Clearing your item...")
             }
@@ -80,19 +80,19 @@ class ItemDetailsActivity : RootActivity() {
 
             override fun onSuccess(response: Void?) {
                 val message =
-                    "Item of type: ${binding.order?.item}. Item was received ${DateUtils.getRelativeTimeSpanString(
-                        binding.order?.timestamp!!,
+                    "Item of type: ${binding.mailItem?.item}. Item was received ${DateUtils.getRelativeTimeSpanString(
+                        binding.mailItem?.timestamp!!,
                         System.currentTimeMillis(),
                         DateUtils.SECOND_IN_MILLIS
-                    )}. The code for this item is: ${binding.order?.key}."
+                    )}. The code for this item is: ${binding.mailItem?.key}."
                 createReport(
                     Report(
                         message,
-                        binding.order?.sender!!,
-                        binding.order?.key!!,
-                        binding.order?.region!!,
-                        binding.order?.city!!,
-                        binding.order?.timestamp ?: System.currentTimeMillis()
+                        binding.mailItem?.sender!!,
+                        binding.mailItem?.key!!,
+                        binding.mailItem?.region!!,
+                        binding.mailItem?.city!!,
+                        binding.mailItem?.timestamp ?: System.currentTimeMillis()
                     ), null
                 )
             }

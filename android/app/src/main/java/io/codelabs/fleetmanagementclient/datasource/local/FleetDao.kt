@@ -2,7 +2,7 @@ package io.codelabs.fleetmanagementclient.datasource.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import io.codelabs.fleetmanagementclient.model.Order
+import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.Report
 import io.codelabs.fleetmanagementclient.model.User
 
@@ -22,16 +22,16 @@ interface FleetDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun createOrder(vararg orders: Order)
+    fun createOrder(vararg mailItems: MailItem)
 
     @Delete
-    fun removeOrder(vararg orders: Order)
+    fun removeOrder(vararg mailItems: MailItem)
 
-    @Query("SELECT * FROM orders WHERE `key` = :key")
-    fun getOrderById(key: String): LiveData<Order>
+    @Query("SELECT * FROM mailItems WHERE `key` = :key")
+    fun getOrderById(key: String): LiveData<MailItem>
 
-    @Query("SELECT * FROM orders ORDER BY timestamp DESC")
-    fun getAllOrders(): LiveData<MutableList<Order>>
+    @Query("SELECT * FROM mailItems ORDER BY timestamp DESC")
+    fun getAllOrders(): LiveData<MutableList<MailItem>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
