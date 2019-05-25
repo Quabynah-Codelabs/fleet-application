@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:title="@string/filter"
+          app:showAsAction="ifRoom"
+          android:icon="@drawable/ic_filter_white"
+          android:id="@+id/menu_filter"/>
+
     <item android:title="@string/my_reports"
           app:showAsAction="never"
           android:id="@+id/menu_reports"/>

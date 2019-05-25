@@ -22,6 +22,34 @@ object DatabaseReference {
 /**
  * Get all [MailItem]s from the database
  */
+fun RootActivity.getOrdersByRegion(region: String, callback: FleetCallback<MutableList<MailItem>>) {
+    callback.onStarted()
+    firestore.collection(DatabaseReference.ORDERS_REF)
+        .orderBy("timestamp", Query.Direction.DESCENDING)
+        .whereEqualTo("region", region)
+        .whereEqualTo("received", false)
+        .addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                callback.onError(exception.localizedMessage)
+                callback.onComplete()
+                return@addSnapshotListener
+            }
+
+            val orders = snapshot?.toObjects(MailItem::class.java)
+            if (orders == null) {
+                callback.onError("Orders cannot be found")
+                callback.onComplete()
+                return@addSnapshotListener
+            } else {
+                callback.onSuccess(orders)
+                callback.onComplete()
+            }
+        }
+}
+
+/**
+ * Get all [MailItem]s from the database
+ */
 fun RootActivity.getOrders(callback: FleetCallback<MutableList<MailItem>>) {
     callback.onStarted()
     firestore.collection(DatabaseReference.ORDERS_REF)

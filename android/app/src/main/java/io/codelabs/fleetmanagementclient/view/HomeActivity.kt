@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
@@ -21,7 +22,9 @@ import io.codelabs.fleetmanagementclient.R
 import io.codelabs.fleetmanagementclient.core.RootActivity
 import io.codelabs.fleetmanagementclient.databinding.ActivityHomeBinding
 import io.codelabs.fleetmanagementclient.datasource.FleetCallback
+import io.codelabs.fleetmanagementclient.datasource.Region
 import io.codelabs.fleetmanagementclient.datasource.remote.getOrders
+import io.codelabs.fleetmanagementclient.datasource.remote.getOrdersByRegion
 import io.codelabs.fleetmanagementclient.datasource.remote.updateUser
 import io.codelabs.fleetmanagementclient.model.MailItem
 import io.codelabs.fleetmanagementclient.model.User
@@ -81,7 +84,34 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
                 }
             }
 
-            R.id.menu_reports -> startActivity(Intent(this@HomeActivity,ReportsActivity::class.java))
+            R.id.menu_filter -> {
+                val regions = mutableListOf<String>().apply {
+                    add(Region.AR)
+                    add(Region.BAR)
+                    add(Region.CR)
+                    add(Region.ER)
+                    add(Region.GA)
+                    add(Region.NR)
+                    add(Region.UER)
+                    add(Region.UWR)
+                    add(Region.WR)
+                    add(Region.VR)
+                    add("None")
+                }
+                MaterialDialog(this).show {
+                    title(text = "Select a filter...")
+                    listItemsSingleChoice(items = regions, waitForPositiveButton = false) { dialog, _, text ->
+                        dialog.dismiss()
+
+                        if (text == "None") this@HomeActivity.getOrders(this@HomeActivity)
+                        else this@HomeActivity.getOrdersByRegion(text, this@HomeActivity)
+                    }
+                    cancelOnTouchOutside(false)
+                    negativeButton(text = "Dismiss") { it.dismiss() }
+                }
+            }
+
+            R.id.menu_reports -> startActivity(Intent(this@HomeActivity, ReportsActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }
@@ -129,6 +159,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
 
     override fun onSuccess(response: MutableList<MailItem>?) {
         if (response != null) {
+            debugLog(response)
             binding.loading.visibility = View.GONE
             if (response.isEmpty()) binding.itemEmptyContainer.visibility = View.VISIBLE
             else binding.itemEmptyContainer.visibility = View.GONE
@@ -172,6 +203,8 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
                     }
                 }
             }
+
+
         } else {
             binding.loading.visibility = View.GONE
             Snackbar.make(binding.container, "Items data could not be found", Snackbar.LENGTH_LONG).show()
