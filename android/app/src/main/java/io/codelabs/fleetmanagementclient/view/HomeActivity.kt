@@ -102,9 +102,13 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
                     title(text = "Select a filter...")
                     listItemsSingleChoice(items = regions, waitForPositiveButton = false) { dialog, _, text ->
                         dialog.dismiss()
-
-                        if (text == "None") this@HomeActivity.getOrders(this@HomeActivity)
-                        else this@HomeActivity.getOrdersByRegion(text, this@HomeActivity)
+                        if (text == "None") {
+                            this@HomeActivity.getOrders(this@HomeActivity)
+                            binding.toolbar.title = "Showing all regions"
+                        } else {
+                            this@HomeActivity.getOrdersByRegion(text, this@HomeActivity)
+                            binding.toolbar.title = text
+                        }
                     }
                     cancelOnTouchOutside(false)
                     negativeButton(text = "Dismiss") { it.dismiss() }
