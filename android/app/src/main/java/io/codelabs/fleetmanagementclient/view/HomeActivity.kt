@@ -102,6 +102,7 @@ class HomeActivity : RootActivity(), FleetCallback<MutableList<MailItem>> {
                     title(text = "Select a filter...")
                     listItemsSingleChoice(items = regions, waitForPositiveButton = false) { dialog, _, text ->
                         dialog.dismiss()
+                        this@HomeActivity.toast("Fetching data...")
                         if (text == "None") {
                             this@HomeActivity.getOrders(this@HomeActivity)
                             binding.toolbar.title = "Showing all regions"
