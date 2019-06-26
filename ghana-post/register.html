@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Register</title>
+    <title>Ghana Post - Register</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -25,9 +25,11 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
 
-  <body class="bg-gradient-primary">
+  <body class="bg-light text-center">
     <div class="container">
       <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -45,7 +47,7 @@
                       <input
                         type="text"
                         class="form-control form-control-user"
-                        id="exampleFirstName"
+                        id="auth_first_name"
                         placeholder="First Name"
                       />
                     </div>
@@ -53,7 +55,7 @@
                       <input
                         type="text"
                         class="form-control form-control-user"
-                        id="exampleLastName"
+                        id="auth_last_name"
                         placeholder="Last Name"
                       />
                     </div>
@@ -62,7 +64,7 @@
                     <input
                       type="email"
                       class="form-control form-control-user"
-                      id="exampleInputEmail"
+                      id="auth_email"
                       placeholder="Email Address"
                     />
                   </div>
@@ -71,7 +73,7 @@
                       <input
                         type="password"
                         class="form-control form-control-user"
-                        id="exampleInputPassword"
+                        id="auth_password"
                         placeholder="Password"
                       />
                     </div>
@@ -79,30 +81,17 @@
                       <input
                         type="password"
                         class="form-control form-control-user"
-                        id="exampleRepeatPassword"
-                        placeholder="Repeat Password"
+                        id="auth_confirm_password"
+                        placeholder="Confirm Password"
                       />
                     </div>
                   </div>
                   <a
-                    href="login.html"
+                    href="#register"
                     class="btn btn-primary btn-user btn-block"
+                    onclick="registerAccount()"
                   >
                     Register Account
-                  </a>
-                  <hr />
-                  <a
-                    href="index.html"
-                    class="btn btn-google btn-user btn-block"
-                  >
-                    <i class="fab fa-google fa-fw"></i> Register with Google
-                  </a>
-                  <a
-                    href="index.html"
-                    class="btn btn-facebook btn-user btn-block"
-                  >
-                    <i class="fab fa-facebook-f fa-fw"></i> Register with
-                    Facebook
                   </a>
                 </form>
                 <hr />
@@ -132,5 +121,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Validator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/11.0.0/validator.min.js"></script>
+
+    <!-- Auth JS -->
+    <script src="js/auth/register.js"></script>
   </body>
 </html>

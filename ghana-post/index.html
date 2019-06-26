@@ -8,9 +8,9 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="author" content="Quabynah Codelabs" />
 
-    <title>Ghana Post - Landing</title>
+    <title>Ghana Post - Login</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -49,8 +49,7 @@
                         <input
                           type="email"
                           class="form-control form-control-user"
-                          id="exampleInputEmail"
-                          aria-describedby="emailHelp"
+                          id="auth_email"
                           placeholder="Enter Email Address..."
                         />
                       </div>
@@ -58,7 +57,7 @@
                         <input
                           type="password"
                           class="form-control form-control-user"
-                          id="exampleInputPassword"
+                          id="auth_password"
                           placeholder="Password"
                         />
                       </div>
@@ -67,16 +66,17 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            id="customCheck"
+                            id="auth_checkbox"
                           />
-                          <label class="custom-control-label" for="customCheck"
+                          <label class="custom-control-label" for="auth_checkbox" aria-checked="true"
                             >Remember Me</label
                           >
                         </div>
                       </div>
                       <a
-                        href="index.html"
+                        href="#login"
                         class="btn btn-primary btn-user btn-block"
+                        onclick="loginUser()"
                       >
                         Login
                       </a>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="text-center">
                       <a class="small" href="register.html"
-                        >Create an Account!</a
+                        >Not registered? Create an account instead</a
                       >
                     </div>
                   </div>
@@ -114,8 +114,10 @@
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <!-- Validator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/11.0.0/validator.min.js"></script>
+
+    <!-- Auth JS -->
+    <script src="js/auth/login.js"></script>
   </body>
 </html>
