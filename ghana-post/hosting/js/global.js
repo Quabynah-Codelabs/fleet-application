@@ -118,17 +118,21 @@ const getUserToken = () => {
 const sendTokenToServer = token => {
   //   showNotification(token);
   try {
-    db.collection("tokens")
-      .doc(token)
-      .set({
-        token
-      })
-      .then(() => {
-        console.log(`token updated successfully @ : ${new Date()}`);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (auth.currentUser && auth.currentUser.email != "super@ghanapost.com") {
+      db.collection("users")
+        .doc(auth.currentUser.uid)
+        .update({
+          token
+        })
+        .then(() => {
+          console.log(`token updated successfully @ : ${new Date()}`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      console.log("Cannot upload token because user is not yet signed in");
+    }
   } catch (error) {
     console.log(error);
   }

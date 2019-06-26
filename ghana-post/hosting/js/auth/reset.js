@@ -12,8 +12,8 @@ const resetPassword = () => {
   } else {
     // Send password reset link
     showLoading(true); 
-    // firebase.auth()
-    showNotification("Hello world")
+    console.log(auth);
+    
     // window.location.href = "index.html";
   }
 };
