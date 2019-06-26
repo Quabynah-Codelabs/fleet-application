@@ -12,7 +12,7 @@ const resetPassword = () => {
   } else {
     // Send password reset link
     showLoading(true); 
-    showNotification('This is an awesome notification') 
+    firebase.auth()
     // window.location.href = "index.html";
   }
 };
