@@ -14,11 +14,20 @@ firebase.initializeApp(firebaseConfig);
 let auth = firebase.auth();
 let db = firebase.firestore();
 let bucket = firebase.storage().reference;
+let messaging = firebase.messaging();
+
+// Global
 var loading;
 
 // Create Firebase Initialization
 $(document).ready(function() {
+  // Firebase initialization test
   console.log(`Firebase SDK initialized as: ${firebase.app().name}`);
+
+  //   Messaging initialization
+  initMessaging();
+
+  //   Init globals
   loading = $("#loading");
   if (loading) showLoading(false);
 });
@@ -34,50 +43,60 @@ const showLoading = state => {
 
 // Show notification
 const showNotification = message => {
-    function onShowNotification() {
-        console.log("notification is shown!");
-      }
-  
-      function onCloseNotification() {
-        console.log("notification is closed!");
-      }
-  
-      function onClickNotification() {
-        console.log("notification was clicked!");
-      }
-  
-      function onErrorNotification() {
-        console.error(
-          "Error showing notification. You may need to request permission."
-        );
-      }
-  
-      function onPermissionGranted() {
-        console.log("Permission has been granted by the user");
-        doNotification();
-      }
-  
-      function onPermissionDenied() {
-        console.warn("Permission has been denied by the user");
-      }
-  
-      function doNotification() {
-        var myNotification = new Notify("GhanaPost", {
-          body: message,
-          tag: new Date().getTime().toString(),
-          notifyShow: onShowNotification,
-          notifyClose: onCloseNotification,
-          notifyClick: onClickNotification,
-          notifyError: onErrorNotification,
-          timeout: 4
-        });
-  
-        myNotification.show();
-      }
-  
-      if (!Notify.needsPermission) {
-        doNotification();
-      } else if (Notify.isSupported()) {
-        Notify.requestPermission(onPermissionGranted, onPermissionDenied);
-      }
+  function onPermissionGranted() {
+    console.log("Permission has been granted by the user");
+    doNotification(message);
+  }
+
+  if (!Notify.needsPermission) {
+    doNotification(message);
+  } else if (Notify.isSupported()) {
+    Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+  }
 };
+
+const initMessaging = () => {
+  // Add the public key generated from the console here.
+  messaging.usePublicVapidKey(
+    "BE0bwbvsrKuUvxE8gUmLLs_7ZMzQCaqsyfBC94piZ84QBOUnXS2PfcoOUF7tF5BfrZjJNPG66OLp4ub5f-ynNwg"
+  );
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+    } else {
+      console.log("Unable to get permission to notify.");
+    }
+  });
+};
+
+// Callbacks
+function doNotification(message) {
+  var myNotification = new Notify("GhanaPost", {
+    body: message,
+    tag: new Date().getTime().toString(),
+    notifyShow: onShowNotification,
+    notifyClose: onCloseNotification,
+    notifyClick: onClickNotification,
+    notifyError: onErrorNotification,
+    timeout: 4
+  });
+
+  myNotification.show();
+}
+function onShowNotification() {
+  console.log("notification is shown!");
+}
+function onCloseNotification() {
+  console.log("notification is closed!");
+}
+function onClickNotification() {
+  console.log("notification was clicked!");
+}
+function onErrorNotification() {
+  console.error(
+    "Error showing notification. You may need to request permission."
+  );
+}
+function onPermissionDenied() {
+  console.warn("Permission has been denied by the user");
+}
