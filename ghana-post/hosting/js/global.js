@@ -14,9 +14,20 @@ firebase.initializeApp(firebaseConfig);
 let auth = firebase.auth();
 let db = firebase.firestore();
 let bucket = firebase.storage().reference;
+var loading;
 
 // Create Firebase Initialization
 $(document).ready(function() {
   console.log(`Firebase SDK initialized as: ${firebase.app().name}`);
-  $("#loading").css("display", "none");
+  loading = $("#loading");
+  if (loading) showLoading(false);
 });
+
+// Toggle loading state
+const showLoading = state => {
+  if (state) {
+    loading.css("display", "block");
+  } else {
+    loading.css("display", "none");
+  }
+};

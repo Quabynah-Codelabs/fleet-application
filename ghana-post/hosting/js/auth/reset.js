@@ -10,7 +10,7 @@ const resetPassword = () => {
     alert("Please enter a valid email address");
   } else {
     // Send password reset link
-
-    window.location.href = "index.html";
+    loading.css("display", "block");
+    // window.location.href = "index.html";
   }
 };
