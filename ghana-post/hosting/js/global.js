@@ -55,6 +55,7 @@ const showNotification = message => {
   }
 };
 
+// Init Firebase Messaging Service
 const initMessaging = () => {
   // Add the public key generated from the console here.
   messaging.usePublicVapidKey(
@@ -62,11 +63,38 @@ const initMessaging = () => {
   );
   Notification.requestPermission().then(permission => {
     if (permission === "granted") {
-      console.log("Notification permission granted.");
+      console.log("Firebase notification permission granted.");
+      getUserToken();
     } else {
-      console.log("Unable to get permission to notify.");
+      onPermissionDenied();
     }
   });
+};
+
+// Get Firebase User's device token
+const getUserToken = () => {
+  messaging
+    .getToken()
+    .then(currentToken => {
+      if (currentToken) {
+          sendTokenToServer(currentToken);
+      } else {
+        // Show permission request.
+        console.log(
+          "No Instance ID token available. Request permission to generate one."
+        );
+      }
+    })
+    .catch(err => {
+      console.log("An error occurred while retrieving token. ", err);
+      console.log("Error retrieving Instance ID token. ", err);
+    //   setTokenSentToServer(false);
+    });
+};
+
+// Send device token to server
+const sendTokenToServer = token => {
+    showNotification(token);
 };
 
 // Callbacks
@@ -74,6 +102,7 @@ function doNotification(message) {
   var myNotification = new Notify("GhanaPost", {
     body: message,
     tag: new Date().getTime().toString(),
+    closeOnClick: true,
     notifyShow: onShowNotification,
     notifyClose: onCloseNotification,
     notifyClick: onClickNotification,
