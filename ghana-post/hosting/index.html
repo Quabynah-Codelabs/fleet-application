@@ -26,6 +26,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/global.css" />
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/index.css" />
   </head>
 
@@ -43,6 +44,9 @@
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Welcome back</h1>
+                      <p class="mb-4">
+                        Sign in with your administrator account to get started
+                      </p>
                     </div>
                     <form class="user">
                       <div class="form-group">
@@ -82,6 +86,13 @@
                         onclick="loginUser()"
                       >
                         Login
+                      </a>
+                      <a
+                        href="#request_auth"
+                        class="btn btn-outline-secondary btn-user btn-block disabled"
+                        onclick="requestAuth()"
+                      >
+                        Request new account (Beta)
                       </a>
                     </form>
                     <!-- Loading -->
@@ -134,6 +145,9 @@
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
+    
+    <!-- Bootstrap Notify -->
+    <script src="https://cdn.jsdelivr.net/npm/notifyjs@3.0.0/dist/notify.min.js"></script>
 
     <!-- Global JS -->
     <script src="js/global.js"></script>

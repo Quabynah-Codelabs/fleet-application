@@ -1,0 +1,9 @@
+{
+  "gcm_sender_id": "103953800507",
+  "theme_color": "#5e0154",
+  "orientation": "landscape",
+  "display": "standalone",
+  "start_url": "/",
+  "short_name": "GhanaPost",
+  "name": "Ghana Post Test Transmission"
+}

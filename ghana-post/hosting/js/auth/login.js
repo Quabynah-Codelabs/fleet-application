@@ -23,3 +23,7 @@ const loginUser = () => {
     window.location.href = "dashboard.html";
   }
 };
+
+const requestAuth = () => {
+  
+}

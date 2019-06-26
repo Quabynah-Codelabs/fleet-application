@@ -65,36 +65,73 @@ const initMessaging = () => {
     if (permission === "granted") {
       console.log("Firebase notification permission granted.");
       getUserToken();
+      monitorUserToken();
     } else {
       onPermissionDenied();
     }
   });
 };
 
+// Monitor token refresh
+const monitorUserToken = () => {
+  // Callback fired if Instance ID token is updated.
+  messaging.onTokenRefresh(() => {
+    messaging
+      .getToken()
+      .then(refreshedToken => {
+        console.log("Token refreshed.");
+        // Send Instance ID token to app server.
+        sendTokenToServer(refreshedToken);
+      })
+      .catch(err => {
+        console.log("Unable to retrieve refreshed token ", err);
+      });
+  });
+};
+
 // Get Firebase User's device token
 const getUserToken = () => {
-  messaging
-    .getToken()
-    .then(currentToken => {
-      if (currentToken) {
+  if (!window.location.href.includes("127.0.0.1")) {
+    messaging
+      .getToken()
+      .then(currentToken => {
+        if (currentToken) {
           sendTokenToServer(currentToken);
-      } else {
-        // Show permission request.
-        console.log(
-          "No Instance ID token available. Request permission to generate one."
-        );
-      }
-    })
-    .catch(err => {
-      console.log("An error occurred while retrieving token. ", err);
-      console.log("Error retrieving Instance ID token. ", err);
-    //   setTokenSentToServer(false);
-    });
+        } else {
+          // Show permission request.
+          console.log(
+            "No Instance ID token available. Request permission to generate one."
+          );
+        }
+      })
+      .catch(err => {
+        console.log("An error occurred while retrieving token. ", err);
+        console.log("Error retrieving Instance ID token. ", err);
+        //   setTokenSentToServer(false);
+      });
+  } else {
+    console.log("Cannot run firebase notification on localhost");
+  }
 };
 
 // Send device token to server
 const sendTokenToServer = token => {
-    showNotification(token);
+  //   showNotification(token);
+  try {
+    db.collection("tokens")
+      .doc(token)
+      .set({
+        token
+      })
+      .then(() => {
+        console.log(`token updated successfully @ : ${new Date()}`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Callbacks
