@@ -68,7 +68,10 @@
                             class="custom-control-input"
                             id="auth_checkbox"
                           />
-                          <label class="custom-control-label" for="auth_checkbox" aria-checked="true"
+                          <label
+                            class="custom-control-label"
+                            for="auth_checkbox"
+                            aria-checked="true"
                             >Remember Me</label
                           >
                         </div>
@@ -81,6 +84,19 @@
                         Login
                       </a>
                     </form>
+                    <!-- Loading -->
+                    <div
+                      class="d-flex justify-content-center mt-5 mb-5"
+                      id="loading"
+                    >
+                      <div
+                        class="spinner-grow "
+                        role="status"
+                        style="display: block;"
+                      >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
                     <hr />
                     <div class="text-center">
                       <a class="small" href="forgot-password.html"
@@ -101,6 +117,12 @@
       </div>
     </div>
 
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -113,6 +135,9 @@
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Global JS -->
+    <script src="js/global.js"></script>
 
     <!-- Validator -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/11.0.0/validator.min.js"></script>
