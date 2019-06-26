@@ -29,7 +29,51 @@ const registerAccount = () => {
       alert("Your passwords do not match");
     } else {
       // Create user account
-      window.location.href = "dashboard.html";
+      // window.location.href = "dashboard.html";
+      auth
+        .createUserWithEmailAndPassword(email.val(), password.val())
+        .then(result => {
+          var user = result.user;
+          storeUser(user, fName.val(), lName.val());
+        })
+        .catch(err => {
+          console.log(err.message);
+          showLoading(false);
+          showNotification(err.message);
+        });
     }
   }
+};
+
+// Store user information in the database
+const storeUser = (user, fName, lName) => {
+  db.collection("users")
+    .doc(user.uid)
+    .set({
+      username: user.displayName,
+      email: user.email,
+      avatar: user.photoURL,
+      first_name: fName,
+      last_name: lName,
+      createdAt: new Date().getTime(),
+      roles: [
+        "can_manage_records",
+        "can_create_items",
+        "can_update_profile",
+        "can_view_stats"
+      ],
+      token: "",
+      uid: user.uid
+    })
+    .then(() => {
+      showLoading(false);
+      showNotification("User created successfully");
+      // Navigate to dashboard
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => {
+      console.log(err.message);
+      showLoading(false);
+      showNotification(err.message);
+    });
 };

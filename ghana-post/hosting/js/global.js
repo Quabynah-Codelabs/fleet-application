@@ -19,6 +19,9 @@ let messaging = firebase.messaging();
 // Global
 var loading;
 
+// User details
+var username, email, photoUrl, uid, emailVerified;
+
 // Create Firebase Initialization
 $(document).ready(function() {
   // Firebase initialization test
@@ -26,6 +29,9 @@ $(document).ready(function() {
 
   //   Messaging initialization
   initMessaging();
+
+  // Auth listener
+  initAuth();
 
   //   Init globals
   loading = $("#loading");
@@ -53,6 +59,94 @@ const showNotification = message => {
   } else if (Notify.isSupported()) {
     Notify.requestPermission(onPermissionGranted, onPermissionDenied);
   }
+};
+
+// Authentication
+const initAuth = () => {
+  auth.onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      console.log(`Signed in as ${user.email}`);
+      username = user.displayName;
+      email = user.email;
+      photoUrl = user.photoURL;
+      emailVerified = user.emailVerified;
+      uid = user.uid;
+
+      // Get provider details
+      user.providerData.forEach(function(profile) {
+        console.log("Sign-in provider: " + profile.providerId);
+        console.log("  Provider-specific UID: " + profile.uid);
+        console.log("  Name: " + profile.displayName);
+        console.log("  Email: " + profile.email);
+        console.log("  Photo URL: " + profile.photoURL);
+      });
+    } else {
+      // No user is signed in.
+      console.log("Not signed in");
+    }
+  });
+};
+
+// Update user
+const updateUser = (newName, newAvatar) => {
+  var user = auth.currentUser;
+  showLoading(true);
+  user
+    .updateProfile({
+      displayName: newName,
+      photoURL: newAvatar != null ? newAvatar : user.photoURL.toString()
+    })
+    .then(function() {
+      // Update successful.
+      console.log("Update was successful");
+      showLoading(false);
+      showNotification("User profile updated successfully");
+    })
+    .catch(function(error) {
+      // An error happened.
+      console.log("Error updating user", error);
+      showLoading(false);
+      showNotification(error.message);
+    });
+};
+
+// Verify email address
+const verifyEmail = () => {
+  var user = auth.currentUser;
+  showLoading(true);
+  user
+    .sendEmailVerification()
+    .then(function() {
+      // Email sent.
+      showNotification("Verification sent");
+      showLoading(false);
+    })
+    .catch(function(error) {
+      // An error happened.
+      console.log(error);
+      showNotification(error.message);
+      showLoading(false);
+    });
+};
+
+// Delete a user
+const deleteUser = () => {
+  var user = auth.currentUser;
+  showLoading(true);
+  user
+    .delete()
+    .then(function() {
+      // User deleted.
+      showNotification("User deleted successfully");
+      showLoading(false);
+    })
+    .catch(function(error) {
+      // An error happened.
+      console.log(error);
+      showNotification(error.message);
+      showLoading(false);
+    });
 };
 
 // Init Firebase Messaging Service
