@@ -22,7 +22,7 @@ const resetFields = () => {};
 
 // Submit item
 const submitItem = () => {
-    showNotification("Hello world")
+  showNotification("Hello world");
 };
 
 // Load form

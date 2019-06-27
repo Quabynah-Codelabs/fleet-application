@@ -11,13 +11,13 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Get SDKs
-let auth = firebase.auth();
-let db = firebase.firestore();
-let bucket = firebase.storage().reference;
-let messaging = firebase.messaging();
+var auth = firebase.auth();
+var db = firebase.firestore();
+var bucket = firebase.storage().reference;
+var messaging = firebase.messaging();
 
 // Roles
-let defaultRoles = [
+var defaultRoles = [
   "can_manage_records",
   "can_create_items",
   "can_update_profile",
@@ -26,8 +26,8 @@ let defaultRoles = [
   "receive_item",
   "has_regional_office"
 ];
-let allRoles = defaultRoles.concat(["can_create_user", "can_delete_user"]);
-let superAdminRoles = [
+var allRoles = defaultRoles.concat(["can_create_user", "can_delete_user"]);
+var superAdminRoles = [
   "can_manage_records",
   "can_update_profile",
   "can_view_profile",
@@ -37,14 +37,14 @@ let superAdminRoles = [
 ];
 
 // Page loader
-const loader = `<div id="overlay" class="spinner-container">
+var loader = `<div id="overlay" class="spinner-container">
                   <div class="spinner"></div>
                   <div class="spinner-desc container text-center">
                     <h4 class="spinner-content text-dark">Fetching your data...</h4>
                     <p class="lead text-muted">This will only take a moment</p>
                   </div>
                 </div>`;
-const togglePageLoader = state => {
+var togglePageLoader = state => {
   if (state) {
     var body = $(document.body);
     body.append(loader);
@@ -80,7 +80,7 @@ $(document).ready(function() {
 });
 
 // Toggle loading state
-const showLoading = state => {
+var showLoading = state => {
   if (state) {
     loading.css("display", "block");
   } else {
@@ -89,7 +89,7 @@ const showLoading = state => {
 };
 
 // Show notification
-const showNotification = message => {
+var showNotification = message => {
   function onPermissionGranted() {
     console.log("Permission has been granted by the user");
     doNotification(message);
@@ -103,7 +103,7 @@ const showNotification = message => {
 };
 
 // Authentication
-const initAuth = () => {
+var initAuth = () => {
   auth.onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
@@ -139,7 +139,7 @@ const initAuth = () => {
 };
 
 // Update user
-const updateUser = (newName, newAvatar) => {
+var updateUser = (newName, newAvatar) => {
   var user = auth.currentUser;
   showLoading(true);
   user
@@ -162,7 +162,7 @@ const updateUser = (newName, newAvatar) => {
 };
 
 // Logout
-const logout = () => {
+var logout = () => {
   if (auth.currentUser) {
     auth
       .signOut()
@@ -180,7 +180,7 @@ const logout = () => {
 };
 
 // Verify email address
-const verifyEmail = () => {
+var verifyEmail = () => {
   var user = auth.currentUser;
   showLoading(true);
   user
@@ -199,7 +199,7 @@ const verifyEmail = () => {
 };
 
 // Delete a user
-const deleteUser = () => {
+var deleteUser = () => {
   var user = auth.currentUser;
   showLoading(true);
   user
@@ -218,7 +218,7 @@ const deleteUser = () => {
 };
 
 // Init Firebase Messaging Service
-const initMessaging = () => {
+var initMessaging = () => {
   // Add the public key generated from the console here.
   messaging.usePublicVapidKey(
     "BE0bwbvsrKuUvxE8gUmLLs_7ZMzQCaqsyfBC94piZ84QBOUnXS2PfcoOUF7tF5BfrZjJNPG66OLp4ub5f-ynNwg"
@@ -235,7 +235,7 @@ const initMessaging = () => {
 };
 
 // Monitor token refresh
-const monitorUserToken = () => {
+var monitorUserToken = () => {
   // Callback fired if Instance ID token is updated.
   messaging.onTokenRefresh(() => {
     messaging
@@ -252,7 +252,7 @@ const monitorUserToken = () => {
 };
 
 // Get Firebase User's device token
-const getUserToken = () => {
+var getUserToken = () => {
   if (!window.location.href.includes("127.0.0.1")) {
     messaging
       .getToken()
@@ -277,7 +277,7 @@ const getUserToken = () => {
 };
 
 // Send device token to server
-const sendTokenToServer = token => {
+var sendTokenToServer = token => {
   //   showNotification(token);
   try {
     if (auth.currentUser && auth.currentUser.email != "super@ghanapost.com") {
@@ -347,7 +347,7 @@ function onPermissionDenied() {
 }
 
 // Build sidebar
-const buildSidebarWithRoles = (roles, activePath) => {
+var buildSidebarWithRoles = (roles, activePath) => {
   togglePageLoader(false);
   // console.log(`Roles for user: ${roles}`);
   roles.forEach(roleItem => {
@@ -449,14 +449,14 @@ const buildSidebarWithRoles = (roles, activePath) => {
 };
 
 // Setup route with data to reduce page load time
-const setupRouteWithData = (route, roles) => {
+var setupRouteWithData = (route, roles) => {
   window.localStorage.setItem("roles", roles);
   window.location.href = route;
 };
 
 var currentUser = {};
 // Load current user's info
-const loadUserInfo = () => {
+var loadUserInfo = () => {
   if (auth.currentUser) {
     if (email == "super@ghanapost.com") {
       $("#username").text("Super Admin");
@@ -491,6 +491,6 @@ const loadUserInfo = () => {
 };
 
 // Set the name of the page
-const setPageName = pageName => {
+var setPageName = pageName => {
   $("#page_title").text(pageName);
 };
