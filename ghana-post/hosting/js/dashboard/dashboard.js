@@ -31,7 +31,7 @@ const loadRolesByLevel = level => {
   switch (level) {
     case "super":
       console.log("Super admin roles being updated...");
-      buildSidebarWithRoles(allRoles,"");
+      buildSidebarWithRoles(superAdminRoles,"");
       break;
     case "admin":
       console.log("Basic admin roles being updated...");

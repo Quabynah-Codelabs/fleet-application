@@ -27,6 +27,14 @@ let defaultRoles = [
   "has_regional_office"
 ];
 let allRoles = defaultRoles.concat(["can_create_user", "can_delete_user"]);
+let superAdminRoles = [
+  "can_manage_records",
+  "can_update_profile",
+  "can_view_profile",
+  "can_view_stats",
+  "can_create_user",
+  "can_delete_user"
+];
 
 // Page loader
 const loader = `<div id="overlay" class="spinner-container">
