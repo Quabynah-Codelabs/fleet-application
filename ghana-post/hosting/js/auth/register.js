@@ -28,8 +28,8 @@ const registerAccount = () => {
     if (!hasValidPassword) {
       alert("Your passwords do not match");
     } else {
+      showLoading(true);
       // Create user account
-      // window.location.href = "dashboard.html";
       auth
         .createUserWithEmailAndPassword(email.val(), password.val())
         .then(result => {
@@ -55,13 +55,8 @@ const storeUser = (user, fName, lName) => {
       avatar: user.photoURL,
       first_name: fName,
       last_name: lName,
-      createdAt: new Date().getTime(),
-      roles: [
-        "can_manage_records",
-        "can_create_items",
-        "can_update_profile",
-        "can_view_stats"
-      ],
+      created_at: new Date().getTime(),
+      roles: defaultRoles,
       token: "",
       uid: user.uid
     })

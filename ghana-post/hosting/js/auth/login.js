@@ -20,10 +20,24 @@ const loginUser = () => {
       window.localStorage.setItem("gp_user_pwd", password.val());
     }
 
-    window.location.href = "dashboard.html";
+    showLoading(true);
+    // Create user account
+    auth
+      .signInWithEmailAndPassword(email.val(), password.val())
+      .then(result => {
+        var user = result.user;
+        // getUser(user);
+        showLoading(false);
+        showNotification("User signed in successfully");
+        // Navigate to dashboard
+        window.location.href = "dashboard.html";
+      })
+      .catch(err => {
+        console.log(err.message);
+        showLoading(false);
+        showNotification(err.message);
+      });
   }
 };
 
-const requestAuth = () => {
-  
-}
+const requestAuth = () => {};

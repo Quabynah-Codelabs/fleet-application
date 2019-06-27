@@ -16,6 +16,14 @@ let db = firebase.firestore();
 let bucket = firebase.storage().reference;
 let messaging = firebase.messaging();
 
+// Roles
+let defaultRoles = [
+  "can_manage_records",
+  "can_create_items",
+  "can_update_profile",
+  "can_view_stats"
+];
+
 // Global
 var loading;
 
@@ -109,6 +117,24 @@ const updateUser = (newName, newAvatar) => {
       showLoading(false);
       showNotification(error.message);
     });
+};
+
+// Logout
+const logout = () => {
+  if (auth.currentUser) {
+    auth
+      .signOut()
+      .then(() => {
+        window.location.href = "index.html";
+      })
+      .catch(err => {
+        console.log(err.message);
+        showNotification(err.message);
+      });
+  } else {
+    showNotification("You are not logged in");
+    window.location.href = "index.html";
+  }
 };
 
 // Verify email address
