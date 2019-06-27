@@ -16,6 +16,11 @@ exports.populateStats = functions.pubsub
       percentage = 0.0,
       updated_at = ctx.timestamp;
 
+    // Run through for inbounds
+    // Run through for outbounds
+    // Run through for on-time
+    // Run through for late
+
     // Return stats
     return admin
       .firestore()

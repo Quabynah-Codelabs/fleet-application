@@ -117,10 +117,13 @@ const addListenersForStats = async () => {
   // OnTime
   await stats.doc("on-time").onSnapshot(doc => {
     console.log(`OnTime: ${doc.data()}`);
+    $("#ontime_progress").css("width", data.percentage);
   });
 
   // Inbounds
   await stats.doc("late").onSnapshot(doc => {
     console.log(`Late: ${doc.data()}`);
+    var data = doc.data();
+    $("#late_progress").css("width", data.percentage);
   });
 };
