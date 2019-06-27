@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Remove this function once application is connected to the right data source
   setTimeout(() => {
-    updateWithDummy();
+    addListenersForStats();
     updateUserRoles();
   }, 2000);
 });
@@ -31,10 +31,9 @@ const loadRolesByLevel = level => {
   switch (level) {
     case "super":
       console.log("Super admin roles being updated...");
-      buildSidebarWithRoles(superAdminRoles,"");
+      buildSidebarWithRoles(superAdminRoles, "");
       $("#username").text("Super Admin");
-      $("#user_avatar").attr(
-        "src","./img/default.svg");
+      $("#user_avatar").attr("src", "./img/default.svg");
       break;
     case "admin":
       console.log("Basic admin roles being updated...");
@@ -60,7 +59,7 @@ const loadRolesByLevel = level => {
               `${data.avatar ? data.avatar : "./img/default.svg"}`
             );
             // Build sidebar
-            buildSidebarWithRoles(data.roles,"");
+            buildSidebarWithRoles(data.roles, "");
           } else {
             // Sign out user
             showNotification("Cannot get your records. Please sign in again");
@@ -72,7 +71,6 @@ const loadRolesByLevel = level => {
       break;
   }
 };
-
 
 // Variables
 // Failed
@@ -102,4 +100,27 @@ const updateWithDummy = () => {
   inboundsAmt.text("328474");
 };
 
+const addListenersForStats = async () => {
+  // Get stats collection
+  var stats = db.collection("stats");
 
+  // Inbounds
+  await stats.doc("inbounds").onSnapshot(doc => {
+    console.log(`Inbounds: ${doc.data()}`);
+  });
+
+  // Outbounds
+  await stats.doc("outbounds").onSnapshot(doc => {
+    console.log(`Outbounds: ${doc.data()}`);
+  });
+
+  // OnTime
+  await stats.doc("on-time").onSnapshot(doc => {
+    console.log(`OnTime: ${doc.data()}`);
+  });
+
+  // Inbounds
+  await stats.doc("late").onSnapshot(doc => {
+    console.log(`Late: ${doc.data()}`);
+  });
+};
