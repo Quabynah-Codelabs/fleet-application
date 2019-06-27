@@ -19,7 +19,7 @@ const resetFields = () => {};
 
 // Submit item
 const submitItem = () => {
-  showNotification("Hello world");
+  togglePageLoader(true);
 };
 
 // Load form

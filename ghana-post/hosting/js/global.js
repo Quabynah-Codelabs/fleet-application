@@ -40,7 +40,7 @@ var superAdminRoles = [
 var loader = `<div id="overlay" class="spinner-container">
                   <div class="spinner"></div>
                   <div class="spinner-desc container text-center">
-                    <h4 class="spinner-content text-dark">Fetching your data...</h4>
+                    <h4 class="spinner-content text-dark">Making a request...</h4>
                     <p class="lead text-muted">This will only take a moment</p>
                   </div>
                 </div>`;
