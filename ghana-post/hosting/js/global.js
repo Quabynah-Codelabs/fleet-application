@@ -398,7 +398,7 @@ var buildSidebarWithRoles = (roles, activePath) => {
       case "receive_item":
         $("#dynamic_content").append(`
           <li class="nav-item">
-          <a class="nav-link collapsed" href="#upload" data-href="receive.html">
+          <a class="nav-link collapsed" href="#upload" data-href="receive_item.html">
           <i class="material-icons">
           move_to_inbox
           </i>
