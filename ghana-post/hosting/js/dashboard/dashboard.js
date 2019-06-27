@@ -32,6 +32,9 @@ const loadRolesByLevel = level => {
     case "super":
       console.log("Super admin roles being updated...");
       buildSidebarWithRoles(superAdminRoles,"");
+      $("#username").text("Super Admin");
+      $("#user_avatar").attr(
+        "src","./img/default.svg");
       break;
     case "admin":
       console.log("Basic admin roles being updated...");

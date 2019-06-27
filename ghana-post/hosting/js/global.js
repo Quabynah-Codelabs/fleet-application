@@ -453,3 +453,44 @@ const setupRouteWithData = (route, roles) => {
   window.localStorage.setItem("roles", roles);
   window.location.href = route;
 };
+
+var currentUser = {};
+// Load current user's info
+const loadUserInfo = () => {
+  if (auth.currentUser) {
+    if (email == "super@ghanapost.com") {
+      $("#username").text("Super Admin");
+      $("#user_avatar").attr("src", "./img/default.svg");
+    } else {
+      db.collection("users")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            var data = doc.data();
+            currentUser = data;
+            // Set username
+            $("#username").text(
+              data.first_name
+                ? `${data.first_name} ${data.last_name}`
+                : data.email
+            );
+            // Set avatar
+            $("#user_avatar").attr(
+              "src",
+              `${data.avatar ? data.avatar : "./img/default.svg"}`
+            );
+          } else {
+            console.log("User data could not be found");
+          }
+        });
+    }
+  } else {
+    console.log("Cannot find current user");
+  }
+};
+
+// Set the name of the page
+const setPageName = pageName => {
+  $("#page_title").text(pageName);
+};

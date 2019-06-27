@@ -37,7 +37,7 @@
     <!-- Main Content -->
     <div class="wrapper">
       <!-- Page Wrapper -->
-    <div id="wrapper">
+      <div id="wrapper">
         <!-- Sidebar -->
         <ul
           class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -53,10 +53,10 @@
             </div>
             <div class="sidebar-brand-text mx-3">GhanaPost</div>
           </a>
-  
+
           <!-- Divider -->
           <hr class="sidebar-divider my-0" />
-  
+
           <!-- Nav Item - Dashboard -->
           <li class="nav-item">
             <a class="nav-link" href="./dashboard.html">
@@ -65,22 +65,431 @@
               <span>Dashboard</span></a
             >
           </li>
-  
+
           <!-- Divider -->
           <hr class="sidebar-divider" />
-  
+
           <!-- Load roles here dynamically -->
           <div id="dynamic_content"></div>
-  
+
           <!-- Divider -->
           <hr class="sidebar-divider d-none d-md-block" />
-  
+
           <!-- Sidebar Toggler (Sidebar) -->
           <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
           </div>
         </ul>
         <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+            <!-- Topbar -->
+            <nav
+              class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            >
+              <!-- Sidebar Toggle (Topbar) -->
+              <button
+                id="sidebarToggleTop"
+                class="btn btn-link d-md-none rounded-circle mr-3"
+              >
+                <i class="fa fa-bars"></i>
+              </button>
+
+              <!-- Topbar Search -->
+              <form
+                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+              >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control bg-light border-0 small"
+                    placeholder="Search for..."
+                    aria-label="Search"
+                    aria-describedby="basic-addon2"
+                  />
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Topbar Navbar -->
+              <ul class="navbar-nav ml-auto">
+                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                <li class="nav-item dropdown no-arrow d-sm-none">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="searchDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-search fa-fw"></i>
+                  </a>
+                  <!-- Dropdown - Messages -->
+                  <div
+                    class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                    aria-labelledby="searchDropdown"
+                  >
+                    <form class="form-inline mr-auto w-100 navbar-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control bg-light border-0 small"
+                          placeholder="Search for..."
+                          aria-label="Search"
+                          aria-describedby="basic-addon2"
+                        />
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </li>
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    id="user_profile_info"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <span
+                      class="mr-2 d-none d-lg-inline text-gray-600 small"
+                      id="username"
+                      >Loading...</span
+                    >
+                    <img
+                      class="img-profile rounded-circle"
+                      src="./img/default.svg"
+                      id="user_avatar"
+                    />
+                  </a>
+                  <!-- Dropdown - User Information -->
+                  <div
+                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown"
+                  >
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="userDropdown"
+                      role="button"
+                      data-toggle="modal"
+                      data-target="#logoutModal"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i
+                        class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-black"
+                      ></i>
+                      Logout
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Page content -->
+            <div class="container-fluid">
+              <!-- Page Heading -->
+              <div
+                class="d-sm-flex align-items-center justify-content-between mb-4"
+              >
+                <h1 class="h3 mb-0 text-gray-800" id="page_title"></h1>
+                <a
+                  href="#"
+                  onclick="resetFields()"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                >
+                  Reset fields
+                </a>
+              </div>
+
+              <!-- Item information -->
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      >
+                        Item Information
+                      </div>
+                      <form class="user mt-5">
+                        <div class="pl-lg-4">
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-item"
+                                  >Type</label
+                                >
+                                <select
+                                  id="input-item"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>Parcel</option>
+                                  <option>EMS</option>
+                                  <option>Letter</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-duration"
+                                  >Duration (in days)</label
+                                >
+                                <select
+                                  id="input-duration"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="my-4" />
+
+                        <!-- Sender -->
+                        <h6 class="heading-small text-muted mb-4">
+                          Sender's Information
+                        </h6>
+                        <div class="pl-lg-4">
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-sender"
+                                  >Username</label
+                                >
+                                <input
+                                  type="text"
+                                  id="input-sender"
+                                  disabled
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                />
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-email"
+                                  >Email address</label
+                                >
+                                <input
+                                  type="email"
+                                  id="input-email"
+                                  disabled
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-s-city"
+                                  >Office</label
+                                >
+                                <select
+                                  id="input-s-city"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>Dansoman</option>
+                                  <option>Madina</option>
+                                  <option>Latebiokoshie</option>
+                                  <option>Accra Central</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-s-region"
+                                  >Region</label
+                                >
+                                <select
+                                  id="input-s-region"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>Greater Accra</option>
+                                  <option>Central Region</option>
+                                  <option>Eastern Region</option>
+                                  <option>Brong-Ahafo Region</option>
+                                  <option>Western Region</option>
+                                  <option>Volta Region</option>
+                                  <option>Upper-East Region</option>
+                                  <option>Upper-West Region</option>
+                                  <option>Northern Region</option>
+                                  <option>Ashanti Region</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Recipient -->
+                        <h6 class="heading-small text-muted mb-4">
+                          Recipient's Information
+                        </h6>
+                        <div class="pl-lg-4">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-r-region"
+                                  >Region</label
+                                >
+                                <select
+                                  id="input-r-region"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>Greater Accra</option>
+                                  <option>Central Region</option>
+                                  <option>Eastern Region</option>
+                                  <option>Brong-Ahafo Region</option>
+                                  <option>Western Region</option>
+                                  <option>Volta Region</option>
+                                  <option>Upper-East Region</option>
+                                  <option>Upper-West Region</option>
+                                  <option>Northern Region</option>
+                                  <option>Ashanti Region</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-r-city"
+                                  >Office</label
+                                >
+                                <select
+                                  id="input-r-city"
+                                  class="form-control form-control-alternative"
+                                >
+                                  <option>Dansoman</option>
+                                  <option>Madina</option>
+                                  <option>Latebiokoshie</option>
+                                  <option>Accra Central</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-country"
+                                  >Country</label
+                                >
+                                <input
+                                  type="text"
+                                  id="input-country"
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                  value="Ghana"
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-recipient"
+                                  >Recipient</label
+                                >
+                                <select
+                                  id="input-recipient"
+                                  class="form-control form-control-alternative"
+                                ></select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Comment -->
+                        <h6 class="heading-small text-muted mb-4">
+                          Additional Information
+                        </h6>
+                        <div class="pl-lg-4">
+                          <div class="form-group">
+                            <label>Comment (Optional)</label>
+                            <textarea
+                              rows="4"
+                              id="input-comment"
+                              class="form-control form-control-alternative"
+                              placeholder="Type your message here..."
+                            ></textarea>
+                          </div>
+                          <div class="text-center my-5">
+                            <a
+                              href="#submit"
+                              onclick="submitItem()"
+                              class="btn btn-primary"
+                              >Submit Item</a
+                            >
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <footer class="sticky-footer">
+            <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                <span
+                  >Copyright &copy;
+                  <a target="__blank" href="https://quabynah-codelabs.web.app/"
+                    >Quabynah Codelabs</a
+                  >
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script></span
+                >
+              </div>
+            </div>
+          </footer>
+          <!-- End of Footer -->
+        </div>
+      </div>
     </div>
 
     <!-- Scroll to Top Button-->
