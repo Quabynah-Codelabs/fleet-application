@@ -1,7 +1,4 @@
 $(document).ready(function() {
-  // Disable loading
-  togglePageLoader(false);
-
   //   Set page title
   setPageName("Mail Items");
 
@@ -26,4 +23,7 @@ const submitItem = () => {
 };
 
 // Load form
-const loadForm = () => {};
+const loadForm = () => {
+  // Disable loading
+  togglePageLoader(false);
+};
