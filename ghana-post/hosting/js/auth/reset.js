@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  // Load Firebase SDK
+  togglePageLoader(false);
 });
 
 //   Reset user's password

@@ -19,6 +19,10 @@
       type="text/css"
     />
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
     />
@@ -54,7 +58,8 @@
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
           <a class="nav-link" href="./dashboard.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
+            <i class="material-icons">dashboard</i>
             <span>Dashboard</span></a
           >
         </li>
@@ -62,45 +67,8 @@
         <!-- Divider -->
         <hr class="sidebar-divider" />
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-          Options
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseTwo"
-            aria-expanded="true"
-            aria-controls="collapseTwo"
-          >
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Items</span>
-          </a>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Select Item Category</h6>
-              <a class="collapse-item" href="#inbounds">Inbounds</a>
-              <a class="collapse-item" href="#outbounds">Outbounds</a>
-            </div>
-          </div>
-        </li>
-
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#upload">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Dispatch Item</span>
-          </a>
-        </li>
+        <!-- Load roles here dynamically -->
+        <div id="dynamic_content"></div>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block" />
@@ -201,8 +169,7 @@
                   <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small"
                     id="username"
-                    >Aikens, Joe (Mr.)</span
-                  >
+                  ></span>
                   <img
                     class="img-profile rounded-circle"
                     src="./img/default.svg"
@@ -535,14 +502,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="logoutModal" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -595,6 +555,9 @@
 
     <!-- Bootstrap Notify -->
     <script src="https://cdn.jsdelivr.net/npm/notifyjs@3.0.0/dist/notify.min.js"></script>
+
+    <!-- Musquito JS -->
+    <script src="vendor/musquito/js/musquito-1.1.2.min.js"></script>
 
     <!-- Global JS -->
     <script src="js/global.js"></script>
