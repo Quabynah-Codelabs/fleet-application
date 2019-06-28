@@ -213,7 +213,93 @@
                 <h1 class="h3 mb-0 text-gray-800" id="page_title"></h1>
               </div>
 
-              <!-- Rest of body goes here -->
+              <!-- Item information -->
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      >
+                        Item Information
+                      </div>
+                      <form class="user mt-5">
+                        <div class="pl-lg-4">
+                          <div class="row">
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="item_code_start"
+                                  >Mail Item ID*</label
+                                >
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_start"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Loading..."
+                                      value=""
+                                      disabled
+                                    />
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_actual"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Enter code here"
+                                      value="" required
+                                    />
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_end"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Loading..."
+                                      value=""
+                                      disabled
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="sender_zone"
+                                  >Zone</label
+                                >
+                                <input
+                                  type="text"
+                                  id="sender_zone"
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                  value=""
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-center my-5">
+                            <a
+                              href="#submit"
+                              onclick="receiveItem()"
+                              class="btn btn-primary"
+                              >Receive Item</a
+                            >
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -212,9 +212,8 @@
               >
                 <h1 class="h3 mb-0 text-gray-800" id="page_title"></h1>
                 <a
-                  href="#"
-                  onclick="resetFields()"
-                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                  href="dispatch.html"
+                  class="d-none d-sm-inline-block btn btn-sm btn-outline-danger shadow-sm"
                 >
                   Reset fields
                 </a>
@@ -238,11 +237,12 @@
                                 <label
                                   class="form-control-label"
                                   for="item_type"
-                                  >Type</label
+                                  >Type*</label
                                 >
                                 <select
                                   id="item_type"
                                   class="form-control form-control-alternative"
+                                  required
                                 >
                                   <option>Parcel</option>
                                   <option>EMS</option>
@@ -255,17 +255,75 @@
                                 <label
                                   class="form-control-label"
                                   for="standard_days"
-                                  >Duration (in days)</label
+                                  >Standard days (in days)</label
                                 >
-                                <select
+                                <input
+                                  type="text"
                                   id="standard_days"
                                   class="form-control form-control-alternative"
+                                  placeholder="2"
+                                  value="2"
+                                  disabled
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="item_code_start"
+                                  >Mail Item ID*</label
                                 >
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                </select>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_start"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Loading..."
+                                      value=""
+                                      disabled
+                                    />
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_actual"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Enter code here"
+                                      value="" required
+                                    />
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input
+                                      type="text"
+                                      id="item_code_end"
+                                      class="form-control form-control-alternative"
+                                      placeholder="Loading..."
+                                      value=""
+                                      disabled
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="sender_zone"
+                                  >Zone</label
+                                >
+                                <input
+                                  type="text"
+                                  id="sender_zone"
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                  value=""
+                                  disabled
+                                />
                               </div>
                             </div>
                           </div>
@@ -287,15 +345,14 @@
                                   for="sending_office"
                                   >Office</label
                                 >
-                                <select
+                                <input
+                                  type="text"
                                   id="sending_office"
                                   class="form-control form-control-alternative"
-                                >
-                                  <option>Dansoman</option>
-                                  <option>Madina</option>
-                                  <option>Latebiokoshie</option>
-                                  <option>Accra Central</option>
-                                </select>
+                                  placeholder="Loading..."
+                                  value=""
+                                  disabled
+                                />
                               </div>
                             </div>
                             <div class="col-lg-6">
@@ -305,21 +362,14 @@
                                   for="sending_region"
                                   >Region</label
                                 >
-                                <select
+                                <input
+                                  type="text"
                                   id="sending_region"
                                   class="form-control form-control-alternative"
-                                >
-                                  <option>Greater Accra</option>
-                                  <option>Central Region</option>
-                                  <option>Eastern Region</option>
-                                  <option>Brong-Ahafo Region</option>
-                                  <option>Western Region</option>
-                                  <option>Volta Region</option>
-                                  <option>Upper-East Region</option>
-                                  <option>Upper-West Region</option>
-                                  <option>Northern Region</option>
-                                  <option>Ashanti Region</option>
-                                </select>
+                                  placeholder="Loading..."
+                                  value=""
+                                  disabled
+                                />
                               </div>
                             </div>
                           </div>
@@ -343,6 +393,7 @@
                                 <select
                                   id="receiving_region"
                                   class="form-control form-control-alternative"
+                                  data-href="receiving_region"
                                 >
                                   <option>Greater Accra</option>
                                   <option>Central Region</option>
@@ -367,6 +418,7 @@
                                 <select
                                   id="receiving_office"
                                   class="form-control form-control-alternative"
+                                  data-href="receiving_office"
                                 >
                                   <option>Dansoman</option>
                                   <option>Madina</option>
@@ -384,7 +436,7 @@
                                 >
                                 <input
                                   type="text"
-                                  id="input-country"
+                                  id="item_country"
                                   class="form-control form-control-alternative"
                                   placeholder="Loading..."
                                   value="Ghana"

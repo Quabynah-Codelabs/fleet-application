@@ -20,6 +20,11 @@ exports.populateStats = functions.pubsub
     // Firestore
     var firestore = admin.firestore();
 
+    // Standard days in milliseconds
+    var standardDaysMillis = 86400000;
+
+    // Multiply standard days by standardDaysMillis to get the expected time
+
     // Collections
     // var inbounds = [],
     //   outbounds = [],
@@ -33,7 +38,17 @@ exports.populateStats = functions.pubsub
       .then(snapshots => {
         snapshots.forEach(doc => {
           var data = doc.data();
-          console.log(`Data returned from docs: ${data}`);
+          var standardDays = data.standard_days;
+          var timeReceived = data.time_received;
+          var timeSent = data.time_sent;
+          console.log(
+            `Received: ${new Date(
+              timeReceived
+            )} & Sent: ${new Date(
+              timeSent
+            )}. Expected: ${standardDays * standardDaysMillis}`
+          );
+          console.log(`Data returned from docs: ${data.code}`);
         });
       })
       .catch(err => {
