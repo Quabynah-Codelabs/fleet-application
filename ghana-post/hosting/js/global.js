@@ -480,6 +480,13 @@ var loadUserInfo = () => {
               "src",
               `${data.avatar ? data.avatar : "./img/default.svg"}`
             );
+
+            // Set global variables
+            username = data.first_name + " " + data.last_name;
+            uid = data.uid;
+            photoUrl = data.avatar;
+            email = data.email;
+            emailVerified = data.verified;
           } else {
             console.log("User data could not be found");
           }

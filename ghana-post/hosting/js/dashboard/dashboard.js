@@ -107,23 +107,30 @@ const addListenersForStats = async () => {
   // Inbounds
   await stats.doc("inbounds").onSnapshot(doc => {
     console.log(`Inbounds: ${doc.data()}`);
+    var data = doc.data();
   });
 
   // Outbounds
   await stats.doc("outbounds").onSnapshot(doc => {
     console.log(`Outbounds: ${doc.data()}`);
+    var data = doc.data();
   });
 
   // OnTime
   await stats.doc("on-time").onSnapshot(doc => {
     console.log(`OnTime: ${doc.data()}`);
-    $("#ontime_progress").css("width", data.percentage);
+    var data = doc.data();
+    if (data) {
+      $("#ontime_progress").css("width", data.percentage);
+    }
   });
 
-  // Inbounds
+  // Late
   await stats.doc("late").onSnapshot(doc => {
     console.log(`Late: ${doc.data()}`);
     var data = doc.data();
-    $("#late_progress").css("width", data.percentage);
+    if (data) {
+      $("#late_progress").css("width", data.percentage);
+    }
   });
 };

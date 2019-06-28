@@ -237,11 +237,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-item"
+                                  for="item_type"
                                   >Type</label
                                 >
                                 <select
-                                  id="input-item"
+                                  id="item_type"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>Parcel</option>
@@ -254,11 +254,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-duration"
+                                  for="standard_days"
                                   >Duration (in days)</label
                                 >
                                 <select
-                                  id="input-duration"
+                                  id="standard_days"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>2</option>
@@ -284,45 +284,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-sender"
-                                  >Username</label
-                                >
-                                <input
-                                  type="text"
-                                  id="input-sender"
-                                  disabled
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="input-email"
-                                  >Email address</label
-                                >
-                                <input
-                                  type="email"
-                                  id="input-email"
-                                  disabled
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="input-s-city"
+                                  for="sending_office"
                                   >Office</label
                                 >
                                 <select
-                                  id="input-s-city"
+                                  id="sending_office"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>Dansoman</option>
@@ -336,11 +302,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-s-region"
+                                  for="sending_region"
                                   >Region</label
                                 >
                                 <select
-                                  id="input-s-region"
+                                  id="sending_region"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>Greater Accra</option>
@@ -371,11 +337,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-r-region"
+                                  for="receiving_region"
                                   >Region</label
                                 >
                                 <select
-                                  id="input-r-region"
+                                  id="receiving_region"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>Greater Accra</option>
@@ -395,11 +361,11 @@
                               <div class="form-group">
                                 <label
                                   class="form-control-label"
-                                  for="input-r-city"
+                                  for="receiving_office"
                                   >Office</label
                                 >
                                 <select
-                                  id="input-r-city"
+                                  id="receiving_office"
                                   class="form-control form-control-alternative"
                                 >
                                   <option>Dansoman</option>
@@ -427,21 +393,6 @@
                               </div>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="input-recipient"
-                                  >Recipient</label
-                                >
-                                <select
-                                  id="input-recipient"
-                                  class="form-control form-control-alternative"
-                                ></select>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                         <hr class="my-4" />
                         <!-- Comment -->
@@ -455,7 +406,7 @@
                             <label>Comment (Optional)</label>
                             <textarea
                               rows="4"
-                              id="input-comment"
+                              id="comment"
                               class="form-control form-control-alternative"
                               placeholder="Type your message here..."
                             ></textarea>
