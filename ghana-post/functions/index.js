@@ -11,12 +11,6 @@ exports.helloWorld = functions.https.onRequest(async (request, response) => {
 exports.populateStats = functions.pubsub
   .schedule("every 2 minutes")
   .onRun(ctx => {
-    // Fields
-    var count = 0,
-      total = 0,
-      percentage = 0.0,
-      updated_at = ctx.timestamp;
-
     // Firestore
     var firestore = admin.firestore();
 
@@ -41,14 +35,24 @@ exports.populateStats = functions.pubsub
           var standardDays = data.standard_days;
           var timeReceived = data.time_received;
           var timeSent = data.time_sent;
-          console.log(
-            `Received: ${new Date(
-              timeReceived
-            )} & Sent: ${new Date(
-              timeSent
-            )}. Expected: ${standardDays * standardDaysMillis}`
-          );
-          console.log(`Data returned from docs: ${data.code}`);
+          var office = data.sending_office;
+
+          // Fields
+          var count = 0,
+            total = 0,
+            percentage = 0.0,
+            updated_at = ctx.timestamp;
+
+          if (office) {
+            
+          }
+
+          // console.log(
+          //   `Received: ${data.date} & Sent: ${new Date(
+          //     timeSent
+          //   )}. Expected: ${standardDays * standardDaysMillis}`
+          // );
+          // console.log(`Data returned from docs: ${data.code}`);
         });
       })
       .catch(err => {
