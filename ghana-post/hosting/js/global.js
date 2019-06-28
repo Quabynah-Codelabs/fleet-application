@@ -164,12 +164,15 @@ var updateUser = (newName, newAvatar) => {
 // Logout
 var logout = () => {
   if (auth.currentUser) {
+    togglePageLoader(true);
     auth
       .signOut()
       .then(() => {
+        togglePageLoader(false);
         window.location.href = "index.html";
       })
       .catch(err => {
+        togglePageLoader(false);
         console.log(err.message);
         showNotification(err.message);
       });
