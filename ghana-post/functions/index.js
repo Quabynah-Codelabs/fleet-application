@@ -20,38 +20,56 @@ exports.populateStats = functions.pubsub
     // Firestore
     var firestore = admin.firestore();
 
-    // Tasks
-    var tasks = [];
-    tasks.push(firestore.collection("items").get());
+    // Collections
+    // var inbounds = [],
+    //   outbounds = [],
+    //   ontime = [],
+    //   late = [];
 
-    // Run through for inbounds
-    // Run through for outbounds
-    // Run through for on-time
-    // Run through for late
-
-    return Promise.all(tasks)
-      .then(results => {
-        if (results) {
-          var inbounds = [],
-            outbounds = [],
-            ontime = [],
-            late = [];
-
-          // results.forEach(doc => {
-          //   console.log(doc.data());
-          //   // Get data for each field
-          //   var data = doc.data();
-          // });
-          return console.log(results);
-        } else {
-          console.log("No items found");
-        }
+    // Get all items
+    return firestore
+      .collection("items")
+      .get()
+      .then(snapshots => {
+        snapshots.forEach(doc => {
+          var data = doc.data();
+          console.log(`Data returned from docs: ${data}`);
+        });
       })
       .catch(err => {
         if (err) {
-          return console.log(err.message);
+          return console.log(err);
         }
       });
+
+    // // Tasks
+    // var tasks = [];
+    // tasks.push(firestore.collection("items").get());
+
+    // // Run through for inbounds
+    // // Run through for outbounds
+    // // Run through for on-time
+    // // Run through for late
+
+    // return Promise.all(tasks)
+    //   .then(results => {
+    //     if (results) {
+
+    //       // results.forEach(doc => {
+    //       //   console.log(doc.data());
+    //       //   // Get data for each field
+    //       //   var data = doc.data();
+    //       // });
+    //       return console.log(results);
+    //     } else {
+    //       console.log("No items found");
+    //     }
+    //   })
+    //   .catch(err => {
+    //     if (err) {
+    //       return console.log(err.message);
+    //     }
+    //   });
 
     // Return stats
     // return firestore.collection("stats").doc("inbounds")
