@@ -142,6 +142,44 @@
         </div>
       </footer>
       <!-- End of Footer -->
+
+      <!-- Logout Modal-->
+      <div class="modal fade" id="login_modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="login_modal">
+                Welcome back!
+              </h5>
+              <button
+                class="close"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              It seems you are already logged in as
+              <strong><p class="text-dark" id="auth_email_address"></p></strong>
+            </div>
+            <div class="modal-footer">
+              <a
+                href="dashboard.html"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="javascript:window.location.href = 'dashboard.html'"
+              >
+                Continue
+              </a>
+              <a class="btn btn-outline-danger" href="#" onclick="logout()"
+                >Logout</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Firebase JS -->

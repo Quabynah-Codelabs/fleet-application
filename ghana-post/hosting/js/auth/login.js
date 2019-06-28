@@ -1,5 +1,13 @@
 $(document).ready(function() {
   togglePageLoader(false);
+
+  setTimeout(() => {
+    var modal = $("#login_modal");
+    if (auth.currentUser) {
+      $("#auth_email_address").text(auth.currentUser.email);
+      modal.modal("show");
+    }
+  }, 2000);
 });
 
 const loginUser = () => {
