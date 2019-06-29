@@ -3,8 +3,37 @@ $(document).ready(function() {
   setTimeout(() => {
     addListenersForStats();
     updateUserRoles();
+    addFilterListener();
   }, 2000);
 });
+
+const addFilterListener = () => {
+  var filters = $("#filters");
+  $(document).on("click", "a[data-href].dropdown-item", function() {
+    $("#monthly").removeClass("active");
+    $("#quarterly").removeClass("active");
+    $("#weekly").removeClass("active");
+
+    $(`${this.dataset.href}`).addClass("active");
+    loadData(this.id);
+  });
+};
+
+// Load data by duration
+const loadData = duration => {
+  console.log(duration);
+
+  switch (duration) {
+    case "monthly":
+      break;
+    case "weekly":
+      break;
+    case "quarterly":
+      break;
+    default:
+      break;
+  }
+};
 
 // Generate printable report for transactions
 const generateReport = () => {
