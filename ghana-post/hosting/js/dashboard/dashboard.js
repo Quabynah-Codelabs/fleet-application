@@ -148,7 +148,7 @@ const addListenersForStats = office => {
       $("#late_progress").css("width", percentage);
     });
 
-  // // Inbounds
+  // Inbounds
   stats
     .where("receiving_office", "==", office)
     .where("type", "==", "inbounds")
@@ -164,7 +164,7 @@ const addListenersForStats = office => {
       $("#inbounds_progress").css("width", percentage);
     });
 
-  // // Outbounds
+  // Outbounds
   stats
     .where("sending_office", "==", office)
     .where("type", "==", "outbounds")
@@ -180,7 +180,7 @@ const addListenersForStats = office => {
       $("#outbounds_progress").css("width", percentage);
     });
 
-  // // OnTime
+  // OnTime
   stats
     .where("sending_office", "==", office)
     .where("type", "==", "ontime")
