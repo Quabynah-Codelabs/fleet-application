@@ -1,9 +1,7 @@
 $(document).ready(function() {
   // Remove this function once application is connected to the right data source
   setTimeout(() => {
-    addListenersForStats();
     updateUserRoles();
-    addFilterListener();
   }, 2000);
 });
 
@@ -89,6 +87,7 @@ const loadRolesByLevel = level => {
             );
             // Build sidebar
             buildSidebarWithRoles(data.roles, "");
+            addListenersForStats(data.office);
           } else {
             // Sign out user
             showNotification("Cannot get your records. Please sign in again");
@@ -129,37 +128,71 @@ const updateWithDummy = () => {
   inboundsAmt.text("328474");
 };
 
-const addListenersForStats = async () => {
+const addListenersForStats = office => {
   // Get stats collection
   var stats = db.collection("stats");
 
-  // Inbounds
-  await stats.doc("inbounds").onSnapshot(doc => {
-    console.log(`Inbounds: ${doc.data()}`);
-    var data = doc.data();
-  });
-
-  // Outbounds
-  await stats.doc("outbounds").onSnapshot(doc => {
-    console.log(`Outbounds: ${doc.data()}`);
-    var data = doc.data();
-  });
-
-  // OnTime
-  await stats.doc("on-time").onSnapshot(doc => {
-    console.log(`OnTime: ${doc.data()}`);
-    var data = doc.data();
-    if (data) {
-      $("#ontime_progress").css("width", data.percentage);
-    }
-  });
-
   // Late
-  await stats.doc("late").onSnapshot(doc => {
-    console.log(`Late: ${doc.data()}`);
-    var data = doc.data();
-    if (data) {
-      $("#late_progress").css("width", data.percentage);
-    }
-  });
+  stats
+    .where("sending_office", "==", office)
+    .where("type", "==", "late")
+    .onSnapshot(function(querySnapshot) {
+      var records = [];
+      querySnapshot.forEach(function(doc) {
+        records.push(doc.data().key);
+      });
+
+      // Add to page
+      var percentage = records.length;
+      $("#late_count").text(records.length);
+      $("#late_progress").css("width", percentage);
+    });
+
+  // // Inbounds
+  stats
+    .where("sending_office", "==", office)
+    .where("type", "==", "inbounds")
+    .onSnapshot(function(querySnapshot) {
+      var records = [];
+      querySnapshot.forEach(function(doc) {
+        records.push(doc.data().key);
+      });
+
+      // Add to page
+      var percentage = records.length;
+      $("#inbounds_count").text(records.length);
+      $("#inbounds_progress").css("width", percentage);
+    });
+
+  // // Outbounds
+  stats
+    .where("receiving_office", "==", office)
+    .where("type", "==", "outbounds")
+    .onSnapshot(function(querySnapshot) {
+      var records = [];
+      querySnapshot.forEach(function(doc) {
+        records.push(doc.data().key);
+      });
+
+      // Add to page
+      var percentage = records.length;
+      $("#outbounds_count").text(records.length);
+      $("#outbounds_progress").css("width", percentage);
+    });
+
+  // // OnTime
+  stats
+    .where("sending_office", "==", office)
+    .where("type", "==", "ontime")
+    .onSnapshot(function(querySnapshot) {
+      var records = [];
+      querySnapshot.forEach(function(doc) {
+        records.push(doc.data().key);
+      });
+
+      // Add to page
+      var percentage = records.length;
+      $("#ontime_count").text(records.length);
+      $("#ontime_progress").css("width", percentage);
+    });
 };
