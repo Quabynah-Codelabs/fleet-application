@@ -22,8 +22,31 @@ $(document).ready(function() {
   $(document).on("change", "select[data-href]#receiving_region", function(ev) {
     ev.preventDefault();
     computeStandardDays();
+    computeItemCode();
+  });
+  $(document).on("change", "select[data-href]#receiving_office", function(ev) {
+    ev.preventDefault();
+    computeItemCode();
   });
 });
+
+const computeItemCode = () => {
+  var rOffice = $("#receiving_office").val();
+  var sOffice = $("#sending_office").val();
+  var rRegion = $("#receiving_region").val();
+  var code =
+    sOffice.substr(0, 3).toUpperCase() +
+    "-" +
+    rRegion.substr(0, 1).toUpperCase() +
+    rRegion
+      .substr(rRegion.indexOf(" ") + 1)
+      .substr(0, 1)
+      .toUpperCase() +
+    "-" +
+    rOffice.substr(0, 3).toUpperCase();
+  console.log(code);
+  $("#item_code_actual").val(code);
+};
 
 // Submit item
 const submitItem = () => {
@@ -48,51 +71,56 @@ const submitItem = () => {
   } else if (isInValid(itemCode.val())) {
     alert("Please enter the code for the item...");
   } else {
-    togglePageLoader(true);
-    var code =
-      $("#item_code_start").val() + itemCode.val() + $("#item_code_end").val();
+    if (confirm("Do you wish to disptach this item now?")) {
+      togglePageLoader(true);
+      var code =
+        $("#item_code_start").val() +
+        itemCode.val() +
+        $("#item_code_end").val();
 
-    // Get date variable
-    var date = new Date();
+      // Get date variable
+      var date = new Date();
 
-    // Create document
-    var doc = db.collection("items").doc();
+      // Create document
+      var doc = db.collection("items").doc();
 
-    // Create item
-    var item = {
-      code,
-      sending_office: sendingOffice.val(),
-      sending_region: sendingRegion.val(),
-      receiving_region: receivingRegion.val(),
-      receiving_office: receivingOffice.val(),
-      time_sent: date.getTime(),
-      received: false,
-      time_received: null,
-      standard_days: parseInt(standardDays.val()),
-      sender_uid: uid,
-      sender_name: username,
-      zone: parseInt(zone.val()),
-      type: itemType.val(),
-      comment: comment.val().trim(),
-      date,
-      key: doc.id
-    };
+      // Create item
+      var item = {
+        code,
+        sending_office: sendingOffice.val(),
+        sending_region: sendingRegion.val(),
+        receiving_region: receivingRegion.val(),
+        receiving_office: receivingOffice.val(),
+        time_sent: date.getTime(),
+        received: false,
+        time_received: null,
+        standard_days: parseInt(standardDays.val()),
+        sender_uid: uid,
+        sender_name: username,
+        zone: parseInt(zone.val()),
+        type: itemType.val(),
+        comment: comment.val().trim(),
+        date,
+        key: doc.id
+      };
 
-    console.log(item);
+      console.log(item);
 
-    // Set data fields
-    doc
-      .set(item)
-      .then(() => {
-        togglePageLoader(false);
-        showNotification("Item sent successfully");
-        $("#comment").val("");
-      })
-      .catch(err => {
-        togglePageLoader(false);
-        showNotification(err.message);
-        return console.log(err.message);
-      });
+      // Set data fields
+      doc
+        .set(item)
+        .then(() => {
+          togglePageLoader(false);
+          showNotification("Item sent successfully");
+          $("#comment").val("");
+          $("#item_code_actual").val("");
+        })
+        .catch(err => {
+          togglePageLoader(false);
+          showNotification(err.message);
+          return console.log(err.message);
+        });
+    }
   }
 };
 
@@ -129,7 +157,7 @@ const loadForm = () => {
             "-"
         );
         $("#item_code_end").val("-" + new Date().getFullYear());
-        // computeStandardDays(id);
+        computeItemCode();
         // Disable loading
         togglePageLoader(false);
       } else {
