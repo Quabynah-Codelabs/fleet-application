@@ -150,7 +150,7 @@ const addListenersForStats = office => {
 
   // // Inbounds
   stats
-    .where("sending_office", "==", office)
+    .where("receiving_office", "==", office)
     .where("type", "==", "inbounds")
     .onSnapshot(function(querySnapshot) {
       var records = [];
@@ -166,7 +166,7 @@ const addListenersForStats = office => {
 
   // // Outbounds
   stats
-    .where("receiving_office", "==", office)
+    .where("sending_office", "==", office)
     .where("type", "==", "outbounds")
     .onSnapshot(function(querySnapshot) {
       var records = [];
