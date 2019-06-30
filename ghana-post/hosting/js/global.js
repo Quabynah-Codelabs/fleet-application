@@ -421,14 +421,14 @@ var buildSidebarWithRoles = (roles, activePath) => {
         `);
         break;
       case "has_regional_office":
-        $("#dynamic_content").append(`
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="#upload" data-href="office.html">
-        <i class="material-icons">home</i>
-          <span>Regional Office</span>
-        </a>
-      </li>
-        `);
+      //   $("#dynamic_content").append(`
+      //   <li class="nav-item">
+      //   <a class="nav-link collapsed" href="#upload" data-href="office.html">
+      //   <i class="material-icons">home</i>
+      //     <span>Regional Office</span>
+      //   </a>
+      // </li>
+      //   `);
         break;
       case "can_create_user" || "can_delete_user":
         $("#dynamic_content").append(`
