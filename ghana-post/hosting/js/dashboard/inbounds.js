@@ -10,6 +10,10 @@ $(document).ready(function() {
   buildSidebarWithRoles(roles, "inbounds.html");
   setTimeout(() => {
     loadUserInfo();
-    loadForm();
+    loadTable();
   }, 1200);
 });
+
+const loadTable = () => {
+
+};

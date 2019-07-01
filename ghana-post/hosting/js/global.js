@@ -37,13 +37,8 @@ var superAdminRoles = [
 ];
 
 // Page loader
-var loader = `<div id="overlay" class="spinner-container">
-                  <div class="spinner"></div>
-                  <div class="spinner-desc container text-center">
-                    <h4 class="spinner-content text-dark">Making a request...</h4>
-                    <p class="lead text-muted">This will only take a moment</p>
-                  </div>
-                </div>`;
+var loader =
+  "<div id='overlay' class='spinner-container'><div class='spinner'></div><div class='spinner-desc container text-center'><h4 class='spinner-content text-dark'>Making a request...</h4><p class='lead text-muted'>This will only take a moment</p></div></div>";
 var togglePageLoader = state => {
   if (state) {
     var body = $(document.body);
@@ -353,6 +348,7 @@ function onPermissionDenied() {
 var buildSidebarWithRoles = (roles, activePath) => {
   togglePageLoader(false);
   // console.log(`Roles for user: ${roles}`);
+   $("#dynamic_content").empty();
   roles.forEach(roleItem => {
     switch (roleItem) {
       case "can_view_stats":
@@ -411,24 +407,24 @@ var buildSidebarWithRoles = (roles, activePath) => {
           `);
         break;
       case "can_update_profile" || "can_view_profile":
-      //   $("#dynamic_content").append(`
-      //   <li class="nav-item">
-      //   <a class="nav-link collapsed" href="#upload" data-href="user.html">
-      //   <i class="material-icons">perm_identity</i>
-      //     <span>My Profile</span>
-      //   </a>
-      // </li>
-      //   `);
+        //   $("#dynamic_content").append(`
+        //   <li class="nav-item">
+        //   <a class="nav-link collapsed" href="#upload" data-href="user.html">
+        //   <i class="material-icons">perm_identity</i>
+        //     <span>My Profile</span>
+        //   </a>
+        // </li>
+        //   `);
         break;
       case "has_regional_office":
-      //   $("#dynamic_content").append(`
-      //   <li class="nav-item">
-      //   <a class="nav-link collapsed" href="#upload" data-href="office.html">
-      //   <i class="material-icons">home</i>
-      //     <span>Regional Office</span>
-      //   </a>
-      // </li>
-      //   `);
+        //   $("#dynamic_content").append(`
+        //   <li class="nav-item">
+        //   <a class="nav-link collapsed" href="#upload" data-href="office.html">
+        //   <i class="material-icons">home</i>
+        //     <span>Regional Office</span>
+        //   </a>
+        // </li>
+        //   `);
         break;
       case "can_create_user" || "can_delete_user":
         $("#dynamic_content").append(`
