@@ -411,14 +411,14 @@ var buildSidebarWithRoles = (roles, activePath) => {
           `);
         break;
       case "can_update_profile" || "can_view_profile":
-        $("#dynamic_content").append(`
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="#upload" data-href="user.html">
-        <i class="material-icons">perm_identity</i>
-          <span>My Profile</span>
-        </a>
-      </li>
-        `);
+      //   $("#dynamic_content").append(`
+      //   <li class="nav-item">
+      //   <a class="nav-link collapsed" href="#upload" data-href="user.html">
+      //   <i class="material-icons">perm_identity</i>
+      //     <span>My Profile</span>
+      //   </a>
+      // </li>
+      //   `);
         break;
       case "has_regional_office":
       //   $("#dynamic_content").append(`
