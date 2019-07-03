@@ -32,7 +32,6 @@ const toggleTableState = state => {
 
 const loadTable = () => {
   // Load table information here
-  $("#dataTable").DataTable();
   var tableBody = $("data_table_body");
 
   // TODO: retrieve details for the current office only
@@ -40,6 +39,7 @@ const loadTable = () => {
     // .where("receiving_office", "==", "")
     .get()
     .then(snapshots => {
+      $("#dataTable").DataTable();
       if (snapshots.empty) {
         toggleTableState(true);
         showNotification("No mail items found. Please try again later");
@@ -50,7 +50,7 @@ const loadTable = () => {
         snapshots.forEach(doc => {
           var mailItem = doc.data();
           tableBody.append(`
-          <tr data-href="${doc.id}">
+          <tr data-href="${doc.id}" style="cursor: pointer;">
             <td>${mailItem.key}</td>
             <td>${mailItem.type.toUpperCase()}</td>
             <td>${mailItem.sending_office}</td>

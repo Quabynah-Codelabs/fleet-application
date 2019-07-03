@@ -49,7 +49,7 @@ const loadTable = () => {
         snapshots.forEach(doc => {
           var mailItem = doc.data();
           tableBody.append(`
-          <tr data-href="${doc.id}">
+          <tr data-href="${doc.id}" style="cursor: pointer;">
             <td>${mailItem.key}</td>
             <td>${mailItem.type.toUpperCase()}</td>
             <td>${mailItem.receiving_office}</td>
