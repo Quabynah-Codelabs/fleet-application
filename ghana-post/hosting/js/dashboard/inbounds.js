@@ -10,7 +10,7 @@ $(document).ready(function() {
   buildSidebarWithRoles(roles, "inbounds.html");
 
   // Hide table until content has been loaded completely
-  // toggleTableState(false);
+  toggleTableState(false);
 
   // load data onto page after a delay.
   // This is done to resolve the issue of having to load the page before loading the content
@@ -41,6 +41,7 @@ const loadTable = () => {
     .get()
     .then(snapshots => {
       if (snapshots.empty) {
+        toggleTableState(true);
         showNotification("No mail items found. Please try again later");
       } else {
         console.log(snapshots);

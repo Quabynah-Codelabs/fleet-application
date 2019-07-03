@@ -39,9 +39,10 @@ const loadTable = () => {
     .get()
     .then(snapshots => {
       if (snapshots.empty) {
-        // toggleTableState(false);
+        toggleTableState(true);
         showNotification("No mail items found. Please try again later");
       } else {
+        toggleTableState(true);
         console.log(snapshots);
         tableBody.empty();
 
