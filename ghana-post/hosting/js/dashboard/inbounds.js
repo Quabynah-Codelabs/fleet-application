@@ -44,11 +44,12 @@ const loadTable = () => {
         toggleTableState(true);
         showNotification("No mail items found. Please try again later");
       } else {
-        console.log(snapshots);
         tableBody.empty();
 
-        snapshots.forEach(doc => {
+        snapshots.docs.forEach(doc => {
           var mailItem = doc.data();
+          console.log(mailItem);
+          
           tableBody.append(`
           <tr data-href="${doc.id}" style="cursor: pointer;">
             <td>${mailItem.key}</td>
