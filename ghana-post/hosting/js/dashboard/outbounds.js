@@ -31,7 +31,7 @@ const toggleTableState = state => {
 const loadTable = () => {
   // Load table information here
   $("#dataTable").DataTable();
-  var tableBody = $("data_table_body");
+  var tableBody = $("#data_table_body");
 
   // TODO: retrieve details for the current office only
   db.collection("items")
