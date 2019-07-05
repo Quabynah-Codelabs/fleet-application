@@ -39,6 +39,7 @@ const loadRegionalDetails = () => {
           region = userInfo.data().region;
           loadTable();
         } else {
+          showNotification("Unable to load data");
         }
       })
       .catch(err => {
