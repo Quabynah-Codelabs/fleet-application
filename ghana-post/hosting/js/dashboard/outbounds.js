@@ -1,3 +1,5 @@
+var office, region;
+
 $(document).ready(function() {
   //   Set page title
   setPageName("Outbounds");
@@ -14,9 +16,35 @@ $(document).ready(function() {
 
   setTimeout(() => {
     loadUserInfo();
-    loadTable();
+    loadRegionalDetails();
   }, 1200);
 });
+
+const loadRegionalDetails = () => {
+  if (auth.currentUser && auth.currentUser.email == "super@ghanapost.com") {
+    office = "all";
+    region = "all";
+    loadTable();
+  } else {
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .get()
+      .then(userInfo => {
+        console.log(userInfo);
+
+        if (userInfo.exists) {
+          office = userInfo.data().office;
+          region = userInfo.data().region;
+          loadTable();
+        } else {
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+        showNotification(err.message);
+      });
+  }
+};
 
 const toggleTableState = state => {
   if (state) {
@@ -30,7 +58,6 @@ const toggleTableState = state => {
 
 const loadTable = () => {
   // Load table information here
-  $("#dataTable").DataTable();
   var tableBody = $("#data_table_body");
 
   // TODO: retrieve details for the current office only
@@ -43,7 +70,6 @@ const loadTable = () => {
         showNotification("No mail items found. Please try again later");
       } else {
         toggleTableState(true);
-        console.log(snapshots);
         tableBody.empty();
 
         snapshots.forEach(doc => {
@@ -52,13 +78,14 @@ const loadTable = () => {
           <tr data-href="${doc.id}" style="cursor: pointer;">
             <td>${mailItem.key}</td>
             <td>${mailItem.type.toUpperCase()}</td>
-            <td>${mailItem.receiving_office}</td>
-            <td>${mailItem.receiving_region}</td>
-            <td>${mailItem.date}</td>
-            <td></td>
+            <td>${mailItem.sending_office}</td>
+            <td>${mailItem.sending_region}</td>
+            <td>${new Date(mailItem.time_sent).toDateString()}</td>
           </tr>
         `);
         });
+
+        $("#dataTable").DataTable();
 
         // Handle click events
         $(document).on("click", "tr[data-href]", function() {
