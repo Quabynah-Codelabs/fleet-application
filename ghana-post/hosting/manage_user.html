@@ -221,155 +221,65 @@
                       <div
                         class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                       >
-                        Item Information
+                        Personal Information
                       </div>
                       <form class="user mt-5">
                         <div class="pl-lg-4">
                           <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                               <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="item_type"
-                                  >Type*</label
-                                >
-                                <select
-                                  id="item_type"
-                                  class="form-control form-control-alternative"
-                                  required
-                                >
-                                  <option>Parcel</option>
-                                  <option>EMS</option>
-                                  <option>Letter</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="standard_days"
-                                  >Standard days (in days)</label
-                                >
-                                <input
-                                  type="text"
-                                  id="standard_days"
-                                  class="form-control form-control-alternative"
-                                  placeholder="2"
-                                  value="2"
-                                  disabled
-                                />
-                              </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="item_code_start"
-                                  >Mail Item ID*</label
-                                >
                                 <div class="row">
                                   <div class="col-md-4">
+                                    <label
+                                      class="form-control-label"
+                                      for="sending_office"
+                                      >First Name</label
+                                    >
                                     <input
                                       type="text"
                                       id="item_code_start"
                                       class="form-control form-control-alternative"
-                                      placeholder="Loading..."
-                                      value=""
-                                      disabled
-                                    />
-                                  </div>
-                                  <div class="col-md-4">
-                                    <input
-                                      type="text"
-                                      id="item_code_actual"
-                                      class="form-control form-control-alternative"
-                                      placeholder="Enter code here"
+                                      placeholder="e.g. Jeremy"
                                       value=""
                                       required
                                     />
                                   </div>
                                   <div class="col-md-4">
+                                    <label
+                                      class="form-control-label"
+                                      for="sending_office"
+                                      >Last Name</label
+                                    >
+                                    <input
+                                      type="text"
+                                      id="item_code_actual"
+                                      class="form-control form-control-alternative"
+                                      placeholder="e.g. Huston"
+                                      value=""
+                                      required
+                                    />
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label
+                                      class="form-control-label"
+                                      for="sending_office"
+                                      >Email address</label
+                                    >
                                     <input
                                       type="text"
                                       id="item_code_end"
                                       class="form-control form-control-alternative"
-                                      placeholder="Loading..."
+                                      placeholder="e.g. mail@domain.com"
                                       value=""
-                                      disabled
                                     />
                                   </div>
                                 </div>
                               </div>
                             </div>
-
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="sender_zone"
-                                  >Zone</label
-                                >
-                                <input
-                                  type="text"
-                                  id="sender_zone"
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                  value=""
-                                  disabled
-                                />
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <hr class="my-4" />
 
-                        <!-- Sender -->
-                        <div
-                          class="text-xs font-weight-bold text-primary text-uppercase mb-4"
-                        >
-                          Sender's Information
-                        </div>
-                        <div class="pl-lg-4">
-                          <div class="row">
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="sending_office"
-                                  >Office</label
-                                >
-                                <input
-                                  type="text"
-                                  id="sending_office"
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                  value=""
-                                  disabled
-                                />
-                              </div>
-                            </div>
-                            <div class="col-lg-6">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="sending_region"
-                                  >Region</label
-                                >
-                                <input
-                                  type="text"
-                                  id="sending_region"
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                  value=""
-                                  disabled
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <hr class="my-4" />
                         <!-- Recipient -->
                         <div
                           class="text-xs font-weight-bold text-primary text-uppercase mb-4"
@@ -442,29 +352,76 @@
                           </div>
                         </div>
                         <hr class="my-4" />
-                        <!-- Comment -->
+
+                        <!-- Roles -->
                         <div
                           class="text-xs font-weight-bold text-primary text-uppercase mb-4"
                         >
-                          Additional Information
+                          User privileges
                         </div>
                         <div class="pl-lg-4">
-                          <div class="form-group">
-                            <label>Comment (Optional)</label>
-                            <textarea
-                              rows="4"
-                              id="comment"
-                              class="form-control form-control-alternative"
-                              placeholder="Type your message here..."
-                            ></textarea>
-                          </div>
-                          <div class="text-center my-5">
-                            <a
-                              href="#submit"
-                              onclick="submitItem()"
-                              class="btn btn-primary"
-                              >Submit Item</a
-                            >
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="receiving_region"
+                                  >Region</label
+                                >
+                                <select
+                                  id="receiving_region"
+                                  class="form-control form-control-alternative"
+                                  data-href="receiving_region"
+                                >
+                                  <option>Greater Accra</option>
+                                  <option>Central Region</option>
+                                  <option>Eastern Region</option>
+                                  <option>Brong-Ahafo Region</option>
+                                  <option>Western Region</option>
+                                  <option>Volta Region</option>
+                                  <option>Upper-East Region</option>
+                                  <option>Upper-West Region</option>
+                                  <option>Northern Region</option>
+                                  <option>Ashanti Region</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="receiving_office"
+                                  >Office</label
+                                >
+                                <select
+                                  id="receiving_office"
+                                  class="form-control form-control-alternative"
+                                  data-href="receiving_office"
+                                >
+                                  <option>Dansoman</option>
+                                  <option>Madina</option>
+                                  <option>Latebiokoshie</option>
+                                  <option>Accra Central</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label
+                                  class="form-control-label"
+                                  for="input-country"
+                                  >Country</label
+                                >
+                                <input
+                                  type="text"
+                                  id="item_country"
+                                  class="form-control form-control-alternative"
+                                  placeholder="Loading..."
+                                  value="Ghana"
+                                  disabled
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </form>
