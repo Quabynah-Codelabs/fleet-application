@@ -241,7 +241,6 @@
                                       class="form-control"
                                       placeholder="e.g. Jeremy"
                                       value=""
-                                      aria-describedby="basic-addon1"
                                       required
                                     />
                                   </div>
@@ -364,65 +363,44 @@
                           <div class="row">
                             <div class="col-lg-4">
                               <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="receiving_region"
-                                  >Region</label
-                                >
-                                <select
-                                  id="receiving_region"
-                                  class="form-control form-control-alternative"
-                                  data-href="receiving_region"
-                                >
-                                  <option>Greater Accra</option>
-                                  <option>Central Region</option>
-                                  <option>Eastern Region</option>
-                                  <option>Brong-Ahafo Region</option>
-                                  <option>Western Region</option>
-                                  <option>Volta Region</option>
-                                  <option>Upper-East Region</option>
-                                  <option>Upper-West Region</option>
-                                  <option>Northern Region</option>
-                                  <option>Ashanti Region</option>
-                                </select>
+                                <div class="custom-control custom-checkbox small">
+                                  <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="auth_checkbox"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="auth_checkbox"
+                                    aria-checked="true"
+                                    >Remember Me</label
+                                  >
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-lg-4">
                               <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="receiving_office"
-                                  >Office</label
-                                >
-                                <select
-                                  id="receiving_office"
-                                  class="form-control form-control-alternative"
-                                  data-href="receiving_office"
-                                >
-                                  <option>Dansoman</option>
-                                  <option>Madina</option>
-                                  <option>Latebiokoshie</option>
-                                  <option>Accra Central</option>
-                                </select>
+                                <div class="custom-control custom-checkbox small">
+                                  <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="auth_checkbox"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="auth_checkbox"
+                                    aria-checked="true"
+                                    >Remember Me</label
+                                  >
+                                </div>
                               </div>
                             </div>
-                            <div class="col-lg-4">
-                              <div class="form-group">
-                                <label
-                                  class="form-control-label"
-                                  for="input-country"
-                                  >Country</label
-                                >
-                                <input
-                                  type="text"
-                                  id="item_country"
-                                  class="form-control form-control-alternative"
-                                  placeholder="Loading..."
-                                  value="Ghana"
-                                  disabled
-                                />
-                              </div>
-                            </div>
+                          </div>
+                          <div class="text-center my-5">
+                            <a
+                              href="#submit"
+                              onclick="createUser()"
+                              class="btn btn-primary"
+                              >Create user</a
+                            >
                           </div>
                         </div>
                       </form>
